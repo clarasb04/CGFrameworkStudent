@@ -32,6 +32,13 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
+	int x = 100;
+	int y = 100;
+	int w = 400;
+	int h = 300;
+
+
+	framebuffer.DrawRect(x, y, w, h, Color::WHITE, 25, TRUE, Color::GREEN);
 
 	framebuffer.Render();
 }
