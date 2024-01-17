@@ -310,7 +310,7 @@ bool Image::SaveTGA(const char* filename)
 }
 
 void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
-	int borderWidth, bool isFilled, const Color& fillColor)
+	int borderWidth, bool isFilled , const Color& fillColor)
 {
 
 	if (isFilled) {
@@ -321,7 +321,6 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 		}
 	}
 
-	//falta el canviar els bordes
 
 	for (int i = -(borderWidth / 2); i < (w + ((borderWidth - 2) / 2)); ++i) {
 		for (int i0 = -(borderWidth / 2); i0 < (borderWidth / 2); i0++) {
@@ -335,6 +334,15 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 			SetPixel(x + y0, y + j, borderColor);
 			SetPixel(x + w - 1 + y0, y + j, borderColor);
 		}
+
+	}
+
+}
+
+void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
+	int borderWidth, bool isFilled, const Color& fillColor) {
+	for (int i = 0; i < 360*r*r; i++) {
+		SetPixel(x + r * cos(i / r), y + r * sin(i / r), borderColor);
 
 	}
 

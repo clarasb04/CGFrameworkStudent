@@ -80,6 +80,9 @@ public:
 	bool SaveTGA(const char* filename);
 
 	void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
+		int borderWidth, bool isFilled = false, const Color& fillColor = Color::WHITE);
+
+	void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 		int borderWidth, bool isFilled, const Color& fillColor);
 	// Used to easy code
 #ifndef IGNORE_LAMBDAS

@@ -32,13 +32,13 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	int x = 100;
-	int y = 100;
-	int w = 400;
-	int h = 300;
-
-
-	framebuffer.DrawRect(x, y, w, h, Color::WHITE, 25, TRUE, Color::GREEN);
+	int x = 600;
+	int y = 400;
+	
+	framebuffer.Fill(Color::BLACK);
+	int r = (5*(int) time) % 301;
+	framebuffer.DrawCircle(x, y, r, Color::WHITE, 5, FALSE, Color::GREEN);
+	
 
 	framebuffer.Render();
 }
