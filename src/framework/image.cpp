@@ -354,7 +354,7 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor);
 
 	if (isFilled) {
-		std::vector<Cell> table; //falta definir la estructura de cell
+		std::vector<Cell> table; 
 		table.resize(height);
 		ScanLineDDA(p0.x, p0.y, p1.x, p1.y, table);
 		ScanLineDDA(p1.x, p1.y, p2.x, p2.y, table);
@@ -362,7 +362,7 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 		for (int i = 0; i < height; i++) {
 			if (table[i].xmin <= table[i].xmax) {
 				for (int j = table[i].xmin; j <= table[i].xmax; j++) {
-					SetPixel(x, i, fillColor);
+					SetPixel(j, i, fillColor);
 				}
 			}
 		}
@@ -379,6 +379,10 @@ void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table
 	}
 
 	//falta feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer
+}
+
+void Image::DrawImage(const Image& image, int x, int y, bool top) {
+
 }
 
 
@@ -469,7 +473,5 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 		pixx += v[0];
 		pixy += v[1];
 	}
-
-
 
 }
