@@ -310,7 +310,7 @@ bool Image::SaveTGA(const char* filename)
 }
 
 void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
-	int borderWidth, bool isFilled , const Color& fillColor)
+	int borderWidth, bool isFilled, const Color& fillColor)
 {
 
 	if (isFilled) {
@@ -341,12 +341,46 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 
 void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 	int borderWidth, bool isFilled, const Color& fillColor) {
-	for (int i = 0; i < 360*r*r; i++) {
+	for (int i = 0; i < 360 * r * r; i++) {
 		SetPixel(x + r * cos(i / r), y + r * sin(i / r), borderColor);
 
 	}
 
 }
+
+void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, bool isFilled, const Color& fillColor) {
+	DrawLineDDA(p0.x, p0.y, p1.x, p1.y, borderColor);
+	DrawLineDDA(p1.x, p1.y, p2.x, p2.y, borderColor);
+	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor);
+
+	if (isFilled) {
+		std::vector<Cell> table; //falta definir la estructura de cell
+		table.resize(height);
+		ScanLineDDA(p0.x, p0.y, p1.x, p1.y, table);
+		ScanLineDDA(p1.x, p1.y, p2.x, p2.y, table);
+		ScanLineDDA(p2.x, p2.y, p0.x, p0.y, table);
+		for (int i = 0; i < height; i++) {
+			if (table[i].xmin <= table[i].xmax) {
+				for (int j = table[i].xmin; j <= table[i].xmax; j++) {
+					SetPixel(x, i, fillColor);
+				}
+			}
+		}
+	}
+}
+
+void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table) {
+	if (y0 < 0 || y1 < 0 || y0 >= height || y1 >= height) {
+		return;
+	}
+	if (y0 > y1) {
+		std::swap(x0, x1);
+		std::swap(y0, y1);
+	}
+
+	//falta feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer
+}
+
 
 #ifndef IGNORE_LAMBDAS
 
