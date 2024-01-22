@@ -36,8 +36,7 @@ void Application::Render(void)
 	int y = 400;
 	
 	framebuffer.Fill(Color::BLACK);
-	int r = (5*(int) time) % 301;
-	framebuffer.DrawCircle(x, y, r, Color::WHITE, 5, FALSE, Color::GREEN);
+	framebuffer.DrawRect(x, y, 400, 300, Color::GREEN, 15, TRUE);
 	
 
 	framebuffer.Render();
@@ -55,6 +54,7 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 	// KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
 	switch(event.keysym.sym) {
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
+		
 	}
 }
 
