@@ -377,6 +377,8 @@ void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table
 		std::swap(x0, x1);
 		std::swap(y0, y1);
 	}
+	int dx = x1 - x0;
+	int dy = y1 - y0;
 
 	//falta feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer
 }
