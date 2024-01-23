@@ -159,7 +159,7 @@ public:
 };
 
 class ParticleSystem {
-	static const int MAX_PARTICLES = 25;
+	static const int MAX_PARTICLES = 1000;
 
 	struct Particle {
 		Vector2 position;
