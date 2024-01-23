@@ -143,10 +143,18 @@ public:
 	void Resize(unsigned int width, unsigned int height);
 };
 
-class Buttton {
+class Button {
 public:
-	int tecla;
+	unsigned int tecla;
 	Image* imatge;
+	unsigned int x;
+	unsigned int y;
+
+	//Constructor
+	Button() { tecla = NULL; imatge = NULL; x = y = 0; }
+	Button(unsigned int tecla, Image* imatge, unsigned int x, unsigned int y);
+
+	bool IsMouseInside(Vector2 mousePosition);
 
 };
 

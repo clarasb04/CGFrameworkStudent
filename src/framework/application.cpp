@@ -17,6 +17,10 @@ Application::Application(const char* caption, int width, int height)
 	this->keystate = SDL_GetKeyboardState(nullptr);
 
 	this->framebuffer.Resize(w, h);
+
+	//cargar imatges
+
+	//fer els butons
 }
 
 Application::~Application()
@@ -39,8 +43,8 @@ void Application::Render(void)
 	Vector2 p2(600, 600);
 	
 	framebuffer.Fill(Color::BLACK);
-
-	framebuffer.DrawTriangle(p0, p1, p2, Color::RED, TRUE, Color::GREEN);
+	framebuffer.DrawRect(x, y, 400, 300, Color::GREEN, 15, TRUE);
+	
 
 	framebuffer.Render();
 }
@@ -57,6 +61,17 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 	// KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
 	switch(event.keysym.sym) {
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
+
+		case SDLK_0:;
+		case SDLK_1: framebuffer.DrawLineDDA();
+		case SDLK_2: framebuffer.DrawRect();
+		case SDLK_3: framebuffer.DrawRect();
+		case SDLK_4: framebuffer.DrawTriangle();
+		
+
+
+
+
 		
 	}
 }
