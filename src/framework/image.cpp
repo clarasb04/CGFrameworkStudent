@@ -343,8 +343,8 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 	int borderWidth, bool isFilled, const Color& fillColor) {
 	for (int i = 0; i < 360 * r * r; i++) {
 		SetPixel(x + r * cos(i / r), y + r * sin(i / r), borderColor);
-
 	}
+	
 
 }
 
@@ -382,6 +382,21 @@ void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table
 }
 
 void Image::DrawImage(const Image& image, int x, int y, bool top) {
+	if (!top) {
+		for (int i = 0; i < image.width * image.height; i++) {
+			int xi = i % image.width;
+			int yi = i / image.width;
+			SetPixel(x + xi, y + yi, image.pixels[i]);
+		}
+	}
+	else {
+		for (int i = 0; i < image.width * image.height; i++) {
+			int xi = i % image.width;
+			int yi = i / image.width;
+			SetPixel(x + xi, y - yi, image.pixels[i]);
+		}
+	}
+	
 
 }
 
@@ -474,4 +489,12 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 		pixy += v[1];
 	}
 
+}
+
+bool Button::IsMouseInside(Vector2 mousePosition) {
+	if (mousePosition.x > x && mousePosition.x < x + imatge->width) {
+		if (mousePosition.y > y && mousePosition.y < y + imatge->height) {
+			return TRUE;
+		}
+	}
 }
