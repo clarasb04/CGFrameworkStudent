@@ -21,8 +21,8 @@ class Entity;
 class Camera;
 
 struct Cell {
-	int xmin;
-	int xmax;
+	int xmin = INT_MAX;
+	int xmax = INT_MIN;
 };
 
 // A matrix of pixels

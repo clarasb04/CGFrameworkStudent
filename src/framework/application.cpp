@@ -38,10 +38,12 @@ void Application::Render(void)
 	// ...
 	int x = 600;
 	int y = 400;
+	Vector2 p0(200, 200);
+	Vector2 p1(500, 400);
+	Vector2 p2(600, 600);
 	
 	framebuffer.Fill(Color::BLACK);
-	int r = 10 + time * 5;
-	framebuffer.DrawCircle(x, y, r, Color::BLUE, 4, TRUE, Color::WHITE);
+	framebuffer.DrawRect(x, y, 400, 300, Color::GREEN, 15, TRUE);
 	
 
 	framebuffer.Render();
