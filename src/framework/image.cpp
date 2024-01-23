@@ -519,3 +519,38 @@ bool Button::IsMouseInside(Vector2 mousePosition) {
 		}
 	}
 }
+
+
+void ParticleSystem::Init() {
+	for (int i = 0; i < MAX_PARTICLES; i++) {
+		particles[i].position = Vector2(rand() % 1280, rand() % 720); 
+		particles[i].velocity = Vector2((rand() % 200 - 100) / 100.0f, (rand() % 200 - 100) / 100.0f); 
+		particles[i].color = Color(rand() % 256, rand() % 256, rand() % 256);
+		particles[i].acceleration = (rand() % 50) / 100.0f; 
+		particles[i].ttl = (rand() % 100) / 10.f;          
+		particles[i].inactive = false;
+	}
+};
+void ParticleSystem::Render(Image* framebuffer) {
+	framebuffer->Fill(Color::BLACK);
+	for (int i = 0; i < MAX_PARTICLES; ++i) {
+		if (!particles[i].inactive) {
+			framebuffer->SetPixelSafe(static_cast<int>(particles[i].position.x), static_cast<int>(particles[i].position.y), particles[i].color);
+		}
+	}
+};
+void ParticleSystem::Update(float dt) {
+	for (int i = 0; i < MAX_PARTICLES; ++i) {
+		if (!particles[i].inactive) {
+	
+			particles[i].position.x += particles[i].velocity.x * dt;
+			particles[i].position.y += particles[i].velocity.y * dt;
+						
+			particles[i].ttl -= dt;
+
+			if (particles[i].ttl <= 0.0f) {
+				particles[i].inactive = true;
+			}
+		}
+	}
+};

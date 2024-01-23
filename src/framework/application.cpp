@@ -27,12 +27,14 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
+	particleSystem.Init();
 }
 
 // Render one frame
 void Application::Render(void)
 {
 	// ...
+	/*
 	int x = 600;
 	int y = 400;
 	Vector2 p0(200, 200);
@@ -45,11 +47,15 @@ void Application::Render(void)
 	
 
 	framebuffer.Render();
+	*/
+	particleSystem.Render(&framebuffer);
+	framebuffer.Render();
 }
 
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
+	particleSystem.Update(seconds_elapsed);
 
 }
 
@@ -61,12 +67,13 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
 		case SDLK_0:;
-		//case SDLK_1: framebuffer.DrawLineDDA();
-		//case SDLK_2: framebuffer.DrawRect();
-		//case SDLK_3: framebuffer.DrawRect();
+		/*
+		case SDLK_1: framebuffer.DrawLineDDA();
+		case SDLK_2: framebuffer.DrawRect();
+		case SDLK_3: framebuffer.DrawRect();
 		case SDLK_4: framebuffer.DrawTriangle();
 		
-
+		*/
 
 
 
