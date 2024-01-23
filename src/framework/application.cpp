@@ -18,9 +18,6 @@ Application::Application(const char* caption, int width, int height)
 
 	this->framebuffer.Resize(w, h);
 
-	//cargar imatges
-
-	//fer els butons
 }
 
 Application::~Application()
@@ -44,6 +41,7 @@ void Application::Render(void)
 	
 	framebuffer.Fill(Color::BLACK);
 	framebuffer.DrawRect(x, y, 400, 300, Color::GREEN, 15, TRUE);
+
 	
 
 	framebuffer.Render();
@@ -63,9 +61,9 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
 		case SDLK_0:;
-		case SDLK_1: framebuffer.DrawLineDDA();
-		case SDLK_2: framebuffer.DrawRect();
-		case SDLK_3: framebuffer.DrawRect();
+		//case SDLK_1: framebuffer.DrawLineDDA();
+		//case SDLK_2: framebuffer.DrawRect();
+		//case SDLK_3: framebuffer.DrawRect();
 		case SDLK_4: framebuffer.DrawTriangle();
 		
 

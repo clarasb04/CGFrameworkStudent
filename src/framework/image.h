@@ -145,14 +145,13 @@ public:
 
 class Button {
 public:
-	unsigned int tecla;
 	Image* imatge;
 	unsigned int x;
 	unsigned int y;
 
 	//Constructor
-	Button() { tecla = NULL; imatge = NULL; x = y = 0; }
-	Button(unsigned int tecla, Image* imatge, unsigned int x, unsigned int y);
+	Button() { imatge = NULL; x = y = 0; }
+	Button( Image* imatge, unsigned int x, unsigned int y);
 
 	bool IsMouseInside(Vector2 mousePosition);
 
