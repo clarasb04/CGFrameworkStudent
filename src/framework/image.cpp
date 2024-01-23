@@ -349,9 +349,6 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 }
 
 void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, bool isFilled, const Color& fillColor) {
-	DrawLineDDA(p0.x, p0.y, p1.x, p1.y, borderColor);
-	DrawLineDDA(p1.x, p1.y, p2.x, p2.y, borderColor);
-	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor);
 
 	if (isFilled) {
 		std::vector<Cell> table; 
@@ -367,6 +364,11 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 			}
 		}
 	}
+
+	DrawLineDDA(p0.x, p0.y, p1.x, p1.y, borderColor);
+	DrawLineDDA(p1.x, p1.y, p2.x, p2.y, borderColor);
+	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor);
+
 }
 
 void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table) {
@@ -378,9 +380,26 @@ void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table
 		std::swap(y0, y1);
 	}
 	int dx = x1 - x0;
-	int dy = y1 - y0;
+	int  dy = y1 - y0;
 
-	//falta feeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer
+	if (dy == 0) {
+		return;
+	}
+
+	float m = static_cast<float>(dx) / static_cast<float>(dy);
+	float x = static_cast<float>(x0);
+
+	for (int y = y0; y <= y1; ++y) {
+		if (y >= 0 && y < height) {
+			if (x < table[y].xmin) {
+				table[y].xmin = static_cast<int>(x);
+			}
+			if (x > table[y].xmax) {
+				table[y].xmax = static_cast<int>(x);
+			}
+		}
+		x += m;
+	}
 }
 
 void Image::DrawImage(const Image& image, int x, int y, bool top) {

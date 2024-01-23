@@ -34,10 +34,13 @@ void Application::Render(void)
 	// ...
 	int x = 600;
 	int y = 400;
+	Vector2 p0(200, 200);
+	Vector2 p1(500, 400);
+	Vector2 p2(600, 600);
 	
 	framebuffer.Fill(Color::BLACK);
-	framebuffer.DrawRect(x, y, 400, 300, Color::GREEN, 15, TRUE);
-	
+
+	framebuffer.DrawTriangle(p0, p1, p2, Color::RED, TRUE, Color::GREEN);
 
 	framebuffer.Render();
 }
