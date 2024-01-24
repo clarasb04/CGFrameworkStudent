@@ -531,9 +531,19 @@ bool Button::IsMouseInside(Vector2 mousePosition) {
 
 void ParticleSystem::Init() {
 	for (int i = 0; i < MAX_PARTICLES; i++) {
-		particles[i].position = Vector2(rand() % 1280, rand() % 720); 
-		particles[i].velocity = Vector2((rand() % 200 - 100) / 100.0f, (rand() % 200 - 100) / 100.0f); 
-		particles[i].color = Color(rand() % 256, rand() % 256, rand() % 256);
+		particles[i].position = Vector2(rand() % 1280, rand() % 720);
+		if ((particles[i].position.y >= 80 && particles[i].position.y <= 160) || (particles[i].position.y >= 240 && particles[i].position.y <= 320) || (particles[i].position.y >= 400 && particles[i].position.y <= 480) || (particles[i].position.y >= 560 && particles[i].position.y <= 640)) {
+			particles[i].velocity = Vector2(rand() % 5, rand() % 5);
+		}
+		else {
+			particles[i].velocity = Vector2(-1 * (rand() % 5), -1 * (rand() % 5));
+		}
+		if ((particles[i].position.y >= 80 && particles[i].position.y <= 160) || (particles[i].position.y >= 240 && particles[i].position.y <= 320) || (particles[i].position.y >= 400 && particles[i].position.y <= 480) || (particles[i].position.y >= 560 && particles[i].position.y <= 640)) {
+			particles[i].color = Color::RED;
+		}
+		else {
+			particles[i].color = Color::YELLOW;
+		}
 		particles[i].acceleration = (rand() % 50) / 100.0f; 
 		particles[i].ttl = (rand() % 100) / 10.f;          
 		particles[i].inactive = false;
@@ -547,11 +557,13 @@ void ParticleSystem::Render(Image* framebuffer) {
 		}
 	}
 };
-void ParticleSystem::Update(float dt) {
+void ParticleSystem::Update(float dt) { 
 	for (int i = 0; i < MAX_PARTICLES; ++i) {
 		if (!particles[i].inactive) {
-	
-			particles[i].position.x += particles[i].velocity.x * dt;
+			
+			
+
+			particles[i].position.x += particles[i].velocity.x * dt * std::cos(particles[i].velocity.y/100.0f) * 10.0f;
 			particles[i].position.y += particles[i].velocity.y * dt;
 						
 			particles[i].ttl -= dt;
