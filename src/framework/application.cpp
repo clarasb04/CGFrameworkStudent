@@ -16,7 +16,8 @@ Application::Application(const char* caption, int width, int height)
 	this->window_height = h;
 	this->keystate = SDL_GetKeyboardState(nullptr);
 	this->framebuffer.Resize(w, h);
-
+	int mouse_start_x(0);
+	int mouse_start_y(0);
 }
 
 Application::~Application()
@@ -27,9 +28,9 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	//particleSystem.Init();
+	particleSystem.Init();
 
-
+	
 	Image* save = new Image();
 	save->LoadPNG("images/save.png");
 	Image* black = new Image();
@@ -81,7 +82,7 @@ void Application::Init(void)
 	b_blue = Button(blue, 598, 10);
 	b_cyan = Button(cyan, 640, 10);
 	
-
+	
 }
 
 // Render one frame
@@ -101,66 +102,96 @@ void Application::Render(void)
 	
 
 	framebuffer.Render();
-	*/
+	
 	//particleSystem.Render(&framebuffer);
-
-	framebuffer.DrawRect(0, 0,1280, 52, Color::GRAY, 1, TRUE, Color::GRAY);
-	framebuffer.DrawImage(*b_save.imatge, b_save.x, b_save.y, FALSE);
-	framebuffer.DrawImage(*b_load.imatge, b_load.x, b_load.y, FALSE);
-	framebuffer.DrawImage(*b_clear.imatge, b_clear.x, b_clear.y, FALSE);
-	framebuffer.DrawImage(*b_eraser.imatge, b_eraser.x, b_eraser.y, FALSE);
-	framebuffer.DrawImage(*b_line.imatge, b_line.x, b_line.y, FALSE);
-	framebuffer.DrawImage(*b_rect.imatge, b_rect.x, b_rect.y, FALSE);
-	framebuffer.DrawImage(*b_circle.imatge, b_circle.x, b_circle.y, FALSE);
-	framebuffer.DrawImage(*b_triang.imatge, b_triang.x, b_triang.y, FALSE);
-	framebuffer.DrawImage(*b_black.imatge, b_black.x, b_black.y, FALSE);
-	framebuffer.DrawImage(*b_white.imatge, b_white.x, b_white.y, FALSE);
-	framebuffer.DrawImage(*b_pink.imatge, b_pink.x, b_pink.y, FALSE);
-	framebuffer.DrawImage(*b_yell.imatge, b_yell.x, b_yell.y, FALSE);
-	framebuffer.DrawImage(*b_green.imatge, b_green.x, b_green.y, FALSE);
-	framebuffer.DrawImage(*b_red.imatge, b_red.x, b_red.y, FALSE);
-	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE);
-	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE);
+	*/
+	
 
 
-
-
-
+	framebuffer.DrawRect(0, 0,1280, 52, Color::GRAY, 1, TRUE, Color::GRAY); 
+	framebuffer.DrawImage(*b_save.imatge, b_save.x, b_save.y, FALSE);  
+	framebuffer.DrawImage(*b_load.imatge, b_load.x, b_load.y, FALSE); 
+	framebuffer.DrawImage(*b_clear.imatge, b_clear.x, b_clear.y, FALSE);  
+	framebuffer.DrawImage(*b_eraser.imatge, b_eraser.x, b_eraser.y, FALSE); 
+	framebuffer.DrawImage(*b_line.imatge, b_line.x, b_line.y, FALSE); 
+	framebuffer.DrawImage(*b_rect.imatge, b_rect.x, b_rect.y, FALSE); 
+	framebuffer.DrawImage(*b_circle.imatge, b_circle.x, b_circle.y, FALSE); 
+	framebuffer.DrawImage(*b_triang.imatge, b_triang.x, b_triang.y, FALSE); 
+	framebuffer.DrawImage(*b_black.imatge, b_black.x, b_black.y, FALSE); 
+	framebuffer.DrawImage(*b_white.imatge, b_white.x, b_white.y, FALSE); 
+	framebuffer.DrawImage(*b_pink.imatge, b_pink.x, b_pink.y, FALSE); 
+	framebuffer.DrawImage(*b_yell.imatge, b_yell.x, b_yell.y, FALSE); 
+	framebuffer.DrawImage(*b_green.imatge, b_green.x, b_green.y, FALSE); 
+	framebuffer.DrawImage(*b_red.imatge, b_red.x, b_red.y, FALSE); 
+	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE); 
+	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE); 
 
 	framebuffer.Render();
+	
+	switch (key) {
+	
+	case 6: particleSystem.Render(&framebuffer);
+		break;
+	}
+	
+
+	
 }
 
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-	//particleSystem.Update(seconds_elapsed);
+	particleSystem.Update(seconds_elapsed); 
 
 }
 
 //keyboard press event 
 void Application::OnKeyPressed( SDL_KeyboardEvent event )
-{
+{	
 	// KEY CODES: https://wiki.libsdl.org/SDL2/SDL_Keycode
 	switch(event.keysym.sym) {
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
-		case SDLK_0:;
-		/*
-		case SDLK_1: framebuffer.DrawLineDDA();
-		case SDLK_2: framebuffer.DrawRect();
-		case SDLK_3: framebuffer.DrawRect();
-		case SDLK_4: framebuffer.DrawTriangle();
-		
-		*/
-
-
-
-		
+		case SDLK_1: {
+			//Draw Lines
+			key = 1;
+			break;
+		}
+		case SDLK_2: {
+			//Draw Rectangles
+		}
+		case SDLK_3: {
+			//Draw Cercles
+		}
+		case SDLK_4: {
+			//Draw Triangles
+		}
+		case SDLK_5: {
+			//Paint
+		}
+		case SDLK_6: {
+			//Animation
+			key = 6;
+			break;
+		}
+		case SDLK_f: {
+			//Fill Shapes
+		}
+		case SDLK_PLUS: {
+			//Incrase Border
+		}
+		case SDLK_MINUS: {
+			//Decrease Border
+		}
+					
 	}
 }
 
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
+	mouse_start_x = event.x; 
+	mouse_start_y = event.y;
+
 	if (event.button == SDL_BUTTON_LEFT) {
 		if (b_clear.IsMouseInside(mouse_position)) {
 
@@ -168,19 +199,32 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		if(b_load.IsMouseInside(mouse_position)){
 
 		}
+
 	}
+	
 }
 
 void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 {
-	if (event.button == SDL_BUTTON_LEFT) {
+	mouse_start_x = event.x;
+	mouse_start_y = event.y; 
+	switch (key) {
 
+	case 1: framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, event.x, event.y, Color::WHITE);
+		break;
 	}
+
+	if (event.button == SDL_BUTTON_LEFT) {
+		
+	}
+	
+
+	
 }
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
-{
-	
+{ 
+
 }
 
 void Application::OnWheel(SDL_MouseWheelEvent event)

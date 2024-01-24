@@ -12,6 +12,10 @@ class Application
 {
 public:
 
+	int key;
+	int mouse_start_x;
+	int mouse_start_y;
+
 	// Window
 
 	SDL_Window* window = nullptr;
