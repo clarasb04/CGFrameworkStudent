@@ -15,7 +15,6 @@ Application::Application(const char* caption, int width, int height)
 	this->window_width = w;
 	this->window_height = h;
 	this->keystate = SDL_GetKeyboardState(nullptr);
-
 	this->framebuffer.Resize(w, h);
 
 }
