@@ -150,7 +150,7 @@ public:
 	unsigned int y;
 
 	//Constructor
-	Button() { imatge = NULL; x = y = 0; }
+	Button();
 	Button( Image* imatge, unsigned int x, unsigned int y);
 
 	bool IsMouseInside(Vector2 mousePosition);

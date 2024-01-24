@@ -24,10 +24,25 @@ Application::~Application()
 {
 }
 
+
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	particleSystem.Init();
+	//particleSystem.Init();
+
+
+	Image* toolbar_img = new Image();
+	toolbar_img->LoadPNG("images/toolbar.png");
+	
+
+
+
+
+
+
+	b1 =  Button(toolbar_img, 0, 0);
+	
+
 }
 
 // Render one frame
@@ -48,14 +63,18 @@ void Application::Render(void)
 
 	framebuffer.Render();
 	*/
-	particleSystem.Render(&framebuffer);
+	//particleSystem.Render(&framebuffer);
+	framebuffer.DrawImage(*b1.imatge, b1.x, b1.y, FALSE);
+
+
+
 	framebuffer.Render();
 }
 
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-	particleSystem.Update(seconds_elapsed);
+	//particleSystem.Update(seconds_elapsed);
 
 }
 

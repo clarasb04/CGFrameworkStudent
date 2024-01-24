@@ -511,6 +511,12 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 	}
 
 }
+Button::Button() = default;
+Button::Button(Image* imatge, unsigned int x, unsigned int y) {
+	this->imatge = imatge;
+	this->x = x;
+	this->y = y;
+}
 
 bool Button::IsMouseInside(Vector2 mousePosition) {
 	if (mousePosition.x > x && mousePosition.x < x + imatge->width) {
@@ -519,6 +525,8 @@ bool Button::IsMouseInside(Vector2 mousePosition) {
 		}
 	}
 }
+
+
 
 
 void ParticleSystem::Init() {
