@@ -191,12 +191,10 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
-	mouse_position.x = event.x;
-	mouse_position.y = event.y;
 	
-
 	if (event.button == SDL_BUTTON_LEFT) {
-		
+		mouse_start_x = mouse_position.x;
+		mouse_start_y = mouse_position.y;
 
 		if (b_clear.IsMouseInside(mouse_position)) {
 
@@ -211,15 +209,16 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 
 void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 {
-	
+	if (event.button == SDL_BUTTON_LEFT) {
+		mouse_end_x = mouse_position.x;
+		mouse_end_y = mouse_position.y;
+	}
 	switch(key){
-	case 1: framebuffer.DrawLineDDA(mouse_position.x, mouse_position.y, event.x, event.y, Color::WHITE);
+	case 1: framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, Color::WHITE);
 		
 	}
 
-	if (event.button == SDL_BUTTON_LEFT) {
-		
-	}
+	
 	
 
 	

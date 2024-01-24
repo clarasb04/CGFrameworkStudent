@@ -521,9 +521,10 @@ Button::Button(Image* imatge, unsigned int x, unsigned int y) {
 bool Button::IsMouseInside(Vector2 mousePosition) {
 	if (mousePosition.x > x && mousePosition.x < x + imatge->width) {
 		if (mousePosition.y > y && mousePosition.y < y + imatge->height) {
-			return TRUE;
+			return true;
 		}
 	}
+	return false;
 }
 
 

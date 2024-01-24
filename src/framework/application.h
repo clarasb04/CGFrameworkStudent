@@ -13,7 +13,10 @@ class Application
 public:
 
 	int key;
-	
+	int mouse_start_x = 0;
+	int mouse_start_y = 0;
+	int mouse_end_x = 0;
+	int mouse_end_y = 0;
 	// Window
 
 	SDL_Window* window = nullptr;
