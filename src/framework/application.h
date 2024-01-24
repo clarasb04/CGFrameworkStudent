@@ -57,6 +57,22 @@ public:
 		SDL_GetWindowSize(window,&w,&h);
 		return Vector2(float(w), float(h));
 	}
-	Button b1;
+	Button b_save;
+	Button b_load;
+	Button b_clear;
+	Button b_eraser;
+	Button b_line;
+	Button b_rect;
+	Button b_circle;
+	Button b_triang;
+	Button b_black;
+	Button b_white;
+	Button b_pink;
+	Button b_yell;
+	Button b_red;
+	Button b_blue;
+	Button b_cyan;
+	Button b_green;
+
 	ParticleSystem particleSystem;
 };

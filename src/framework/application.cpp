@@ -31,16 +31,37 @@ void Application::Init(void)
 	//particleSystem.Init();
 
 
-	Image* toolbar_img = new Image();
-	toolbar_img->LoadPNG("images/toolbar.png");
-	
+	Image* save = new Image();
+	save->LoadPNG("images/save.png");
+	/*Image* black = new Image();
+	//black->LoadPNG("images/black.png");
+	Image* blue = new Image();
+	//blue->LoadPNG("images/blue.png");
+	Image* circle = new Image();
+	//circle->LoadPNG("images/circle.png");
+	Image* clear = new Image();
+	clear->LoadPNG("images/clear.png");
+	Image* cyan = new Image();
+	//cyan->LoadPNG("images/cyan.png");
+	Image* eraser = new Image();
+	//eraser->LoadPNG("images/eraser.png");
+	Image* green = new Image();
+	//green->LoadPNG("images/green.png");
+	Image* line = new Image();
+	//line->LoadPNG("images/line.png");
+	Image* load = new Image();
+	load->LoadPNG("images/load.png");
+	Image* pink = new Image();
+	//pink->LoadPNG("images/pink.png");
+	Image* rect = new Image();
+	//rect->LoadPNG("images/rectangle.png");
+	Image* red = new Image();
+	//red->LoadPNG("images/red.png");
 
 
-
-
-
-
-	b1 =  Button(toolbar_img, 0, 0);
+	b_clear =  Button(clear, 10, 10);
+	b_load = Button(load, 52, 10);
+	*/
 	
 
 }
@@ -64,7 +85,9 @@ void Application::Render(void)
 	framebuffer.Render();
 	*/
 	//particleSystem.Render(&framebuffer);
-	framebuffer.DrawImage(*b1.imatge, b1.x, b1.y, FALSE);
+	framebuffer.DrawImage(*b_save.imatge, b_save.x, b_save.y, FALSE);
+	//framebuffer.DrawImage(*b_load.imatge, b_load.x, b_load.y, FALSE);
+
 
 
 
