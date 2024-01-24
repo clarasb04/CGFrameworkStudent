@@ -18,6 +18,7 @@ Application::Application(const char* caption, int width, int height)
 	this->framebuffer.Resize(w, h);
 	int mouse_start_x(0);
 	int mouse_start_y(0);
+	
 }
 
 Application::~Application()
@@ -123,7 +124,7 @@ void Application::Render(void)
 	framebuffer.DrawImage(*b_yell.imatge, b_yell.x, b_yell.y, FALSE); 
 	framebuffer.DrawImage(*b_green.imatge, b_green.x, b_green.y, FALSE); 
 	framebuffer.DrawImage(*b_red.imatge, b_red.x, b_red.y, FALSE); 
-	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE); 
+	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE);  
 	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE); 
 
 	framebuffer.Render();
@@ -155,6 +156,7 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_1: {
 			//Draw Lines
 			key = 1;
+			
 			break;
 		}
 		case SDLK_2: {
@@ -189,10 +191,13 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
-	mouse_start_x = event.x; 
-	mouse_start_y = event.y;
+	mouse_position.x = event.x;
+	mouse_position.y = event.y;
+	
 
 	if (event.button == SDL_BUTTON_LEFT) {
+		
+
 		if (b_clear.IsMouseInside(mouse_position)) {
 
 		}
@@ -206,12 +211,10 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 
 void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 {
-	mouse_start_x = event.x;
-	mouse_start_y = event.y; 
-	switch (key) {
-
-	case 1: framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, event.x, event.y, Color::WHITE);
-		break;
+	
+	switch(key){
+	case 1: framebuffer.DrawLineDDA(mouse_position.x, mouse_position.y, event.x, event.y, Color::WHITE);
+		
 	}
 
 	if (event.button == SDL_BUTTON_LEFT) {
