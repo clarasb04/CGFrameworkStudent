@@ -17,6 +17,11 @@ public:
 	int mouse_start_y = 0;
 	int mouse_end_x = 0;
 	int mouse_end_y = 0;
+	bool Fill = false;
+	int Border = 1;
+	Vector2 punt[3] = { {0,0},{0,0},{0,0} };
+
+
 	// Window
 
 	SDL_Window* window = nullptr;

@@ -16,8 +16,7 @@ Application::Application(const char* caption, int width, int height)
 	this->window_height = h;
 	this->keystate = SDL_GetKeyboardState(nullptr);
 	this->framebuffer.Resize(w, h);
-	int mouse_start_x(0);
-	int mouse_start_y(0);
+
 	
 }
 
@@ -104,7 +103,6 @@ void Application::Render(void)
 
 	framebuffer.Render();
 	
-	//particleSystem.Render(&framebuffer);
 	*/
 	
 
@@ -131,8 +129,8 @@ void Application::Render(void)
 	
 	switch (key) {
 	
-	case 6: particleSystem.Render(&framebuffer);
-		break;
+	case 6:particleSystem.Render(&framebuffer);
+	break; 
 	}
 	
 
@@ -156,20 +154,29 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_1: {
 			//Draw Lines
 			key = 1;
-			
 			break;
 		}
 		case SDLK_2: {
 			//Draw Rectangles
+			key = 2;
+			break;
 		}
 		case SDLK_3: {
 			//Draw Cercles
+			key = 3;
+
+			break;
 		}
 		case SDLK_4: {
 			//Draw Triangles
+			key = 4;
+	
+			break;
 		}
 		case SDLK_5: {
 			//Paint
+			key = 5;
+			break;
 		}
 		case SDLK_6: {
 			//Animation
@@ -178,12 +185,20 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		}
 		case SDLK_f: {
 			//Fill Shapes
+			Fill = true;
+			break;
 		}
 		case SDLK_PLUS: {
 			//Incrase Border
+			Border += 1;
+			break;
 		}
 		case SDLK_MINUS: {
 			//Decrease Border
+			if (Border > 1) {
+				Border -= 1;
+			}
+			break;
 		}
 					
 	}
@@ -203,6 +218,12 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 
 		}
 
+
+		if (key == 4) {
+			punt[0] = Vector2(mouse_start_x, mouse_start_y);
+			punt[1] = Vector2(event.x, event.y); //no ho agafa beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee		
+		}
+
 	}
 	
 }
@@ -214,8 +235,24 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		mouse_end_y = mouse_position.y;
 	}
 	switch(key){
-	case 1: framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, Color::WHITE);
-		
+	case 1: {
+		framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, Color::WHITE);
+		break;
+	}
+	case 2: {
+		//framebuffer.DrawRecta(int x, int y, int w, int h, Color::BLUE, Border, Fill, Color::RED); faltaaaaaaaaaaaaaaaaa les cordenades
+		break;
+	}
+	case 3: {
+		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, (mouse_start_x - mouse_end_x), Color::WHITE, Border, Fill, Color::RED);
+		break;
+	}
+	case 4: {
+		punt[2] = Vector2(event.x, event.y);
+		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], Color::WHITE, Fill, Color::GREEN);
+		break;
+	}
+
 	}
 
 	
