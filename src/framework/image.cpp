@@ -378,7 +378,7 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 		for (int i = 0; i < height; i++) {
 			if (table[i].xmin <= table[i].xmax) {
 				for (int j = table[i].xmin; j <= table[i].xmax; j++) {
-					SetPixel(j, i, fillColor);
+					SetPixelSafe(j, i, fillColor);
 				}
 			}
 		}
@@ -527,8 +527,8 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c, int bord
 	for (int i = 0; i < d; i++) {
 
 		for (int j = 0; j < borderWidth; ++j) {
-			SetPixel(pixx + j, (int)pixy, c);
-			SetPixel(pixx - j, (int)pixy, c);
+			SetPixelSafe(pixx + j, (int)pixy, c);
+			SetPixelSafe(pixx - j, (int)pixy, c);
 		
 		}
 		pixx += v[0];
