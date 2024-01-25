@@ -17,6 +17,7 @@ Application::Application(const char* caption, int width, int height)
 	this->keystate = SDL_GetKeyboardState(nullptr);
 	this->framebuffer.Resize(w, h);
 	this->border_color = Color::WHITE;
+	this->mouse_pressed = FALSE;
 
 	
 }
@@ -68,6 +69,8 @@ void Application::Init(void)
 	triang->LoadPNG("images/triangle.png");
 	Image* yell = new Image();
 	yell->LoadPNG("images/yellow.png");
+	Image* llapis = new Image();
+	llapis->LoadPNG("images/llapis.png");
 
 
 	b_clear =  Button(clear, 10, 10);
@@ -86,6 +89,7 @@ void Application::Init(void)
 	b_red = Button(red, 556, 10);
 	b_blue = Button(blue, 598, 10);
 	b_cyan = Button(cyan, 640, 10);
+	b_lliure = Button(llapis, 672, 10);
 	
 	
 }
@@ -129,6 +133,7 @@ void Application::Render(void)
 	framebuffer.DrawImage(*b_red.imatge, b_red.x, b_red.y, FALSE); 
 	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE);  
 	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE); 
+	framebuffer.DrawImage(*b_lliure.imatge, b_lliure.x, b_lliure.y, FALSE);
 
 
 
@@ -220,6 +225,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 	if (event.button == SDL_BUTTON_LEFT) {
 		mouse_start_x = mouse_position.x;
 		mouse_start_y = mouse_position.y;
+		mouse_pressed = TRUE;
 
 		if (b_clear.IsMouseInside(mouse_position)) {
 			for (int i = 0; i < 1280; i++) {
@@ -228,14 +234,17 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 				}
 			}
 		}
-		else if(b_load.IsMouseInside(mouse_position)){
-
+		else if(b_eraser.IsMouseInside(mouse_position)){
+			key = 7;
 		}
 		else if (b_save.IsMouseInside(mouse_position)) {
 			framebuffer.SaveTGA("images/dibuix_sense_titol.tga");
 		}
 		else if (b_load.IsMouseInside(mouse_position)) {
 			framebuffer.LoadTGA("images/dibuix_sense_titol.tga");
+		}
+		else if (b_lliure.IsMouseInside(mouse_position)) {
+			key = 5;
 		}
 
 
@@ -276,11 +285,12 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		else if (b_triang.IsMouseInside(mouse_position)) {
 			key = 4;
 		}
-
-
 		else if (key == 4) {
 			punt[0] = Vector2(mouse_start_x, mouse_start_y);
 			punt[1] = Vector2(event.x, event.y); //no ho agafa beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee		
+		}
+		else if (key == 5) {
+			framebuffer.SetPixel(mouse_position.x, mouse_position.y, border_color);
 		}
 
 	}
@@ -292,6 +302,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	if (event.button == SDL_BUTTON_LEFT) {
 		mouse_end_x = mouse_position.x;
 		mouse_end_y = mouse_position.y;
+		mouse_pressed = FALSE;
 	}
 	switch(key){
 	case 1: {
@@ -303,7 +314,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		break;
 	}
 	case 3: {
-		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, (mouse_start_x - mouse_end_x), border_color, Border, Fill, Color::RED);
+		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, abs(mouse_start_x - mouse_end_x), border_color, Border, Fill, Color::RED);
 		break;
 	}
 	case 4: {
@@ -323,7 +334,17 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 { 
+	if (mouse_pressed == TRUE && key == 7) {
+		
+		framebuffer.DrawRect(mouse_position.x, mouse_position.y, Border, Border, Color::BLACK,
+			1, TRUE, Color::BLACK);
+		
 
+	}
+	if (mouse_pressed == TRUE && key == 5) {
+		framebuffer.DrawRect(mouse_position.x, mouse_position.y, Border, Border, border_color,
+			1, TRUE, border_color);
+	}
 }
 
 void Application::OnWheel(SDL_MouseWheelEvent event)

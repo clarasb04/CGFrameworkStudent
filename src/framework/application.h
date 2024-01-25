@@ -84,6 +84,9 @@ public:
 	Button b_blue;
 	Button b_cyan;
 	Button b_green;
+	Button b_lliure;
+
+	bool mouse_pressed;
 
 	ParticleSystem particleSystem;
 };

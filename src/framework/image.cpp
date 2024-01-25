@@ -316,7 +316,7 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 	if (isFilled) {
 		for (int i = 1; i < w - 1; ++i) {
 			for (int j = 1; j < h - 1; ++j) {
-				SetPixel(x + i, y + j, fillColor);
+				SetPixelSafe(x + i, y + j, fillColor);
 			}
 		}
 	}
@@ -325,14 +325,14 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 	for (int i = -(borderWidth / 2); i < (w + ((borderWidth - 2) / 2)); ++i) {
 		for (int i0 = -(borderWidth / 2); i0 < (borderWidth / 2); i0++) {
 			SetPixelSafe(x + i, y + i0, borderColor);
-			SetPixel(x + i, y + h - 1 + i0, borderColor);
+			SetPixelSafe(x + i, y + h - 1 + i0, borderColor);
 		}
 	}
 
 	for (int j = 0; j < h; ++j) {
 		for (int y0 = -(borderWidth / 2); y0 < (borderWidth / 2); y0++) {
-			SetPixel(x + y0, y + j, borderColor);
-			SetPixel(x + w - 1 + y0, y + j, borderColor);
+			SetPixelSafe(x + y0, y + j, borderColor);
+			SetPixelSafe(x + w - 1 + y0, y + j, borderColor);
 		}
 
 	}
@@ -345,7 +345,7 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 		for (int i = -r; i < r; i++) {
 			for (int j = -r; j < r; j++) {
 				if (i * i + j * j < r * r) {
-					SetPixel(x + i, y + j, fillColor);
+					SetPixelSafe(x + i, y + j, fillColor);
 				}
 			}
 		}
@@ -353,7 +353,7 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 
 	//canviar pel borde
 	for (int i = 0; i < 360*6 * r; i++) {
-		SetPixel(x + r * cos(i / r), y + r * sin(i / r), borderColor);
+		SetPixelSafe(x + r * cos(i / r), y + r * sin(i / r), borderColor);
 	}
 	
 
