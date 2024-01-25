@@ -359,7 +359,7 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 
 }
 
-void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, bool isFilled, const Color& fillColor) {
+void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, int borderWidth, bool isFilled, const Color& fillColor) {
 
 	if (isFilled) {
 		std::vector<Cell> table; 
@@ -375,10 +375,10 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 			}
 		}
 	}
-
-	DrawLineDDA(p0.x, p0.y, p1.x, p1.y, borderColor);
-	DrawLineDDA(p1.x, p1.y, p2.x, p2.y, borderColor);
-	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor);
+	
+	DrawLineDDA(p0.x, p0.y, p1.x, p1.y, borderColor, borderWidth);
+	DrawLineDDA(p1.x, p1.y, p2.x, p2.y, borderColor, borderWidth);
+	DrawLineDDA(p2.x, p2.y, p0.x, p0.y, borderColor, borderWidth);
 
 }
 
@@ -506,7 +506,7 @@ void FloatImage::Resize(unsigned int width, unsigned int height)
 }
 
 //Drawing Lines
-void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
+void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c, int borderWidth) {
 	int dx = x1 - x0;
 	int dy = y1 - y0;
 	int d = std::max(abs(dx), abs(dy));
@@ -515,8 +515,14 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 	v[1] = static_cast<float>(dy) / d;
 	float pixx = (float)x0;
 	float pixy = (float)y0;
+	
 	for (int i = 0; i < d; i++) {
-		SetPixel(pixx, pixy, c);
+
+		for (int j = 0; j < borderWidth; ++j) {
+			SetPixel(pixx + j, (int)pixy, c);
+			SetPixel(pixx - j, (int)pixy, c);
+		
+		}
 		pixx += v[0];
 		pixy += v[1];
 	}
