@@ -77,19 +77,20 @@ void Application::Init(void)
 	b_load = Button(load, 52, 10);
 	b_save = Button(save, 94, 10);
 	b_eraser = Button(eraser, 136, 10);
-	b_line = Button(line, 178, 10);
-	b_rect = Button(rect, 220, 10);
-	b_circle = Button(circle, 262, 10);
-	b_triang = Button(triang, 304, 10);
-	b_black = Button(black, 346, 10);
-	b_white = Button(white, 388, 10);
-	b_pink = Button(pink, 430, 10);
-	b_yell = Button(yell, 472, 10);
-	b_green = Button(green, 514, 10);
-	b_red = Button(red, 556, 10);
-	b_blue = Button(blue, 598, 10);
-	b_cyan = Button(cyan, 640, 10);
-	b_lliure = Button(llapis, 672, 10);
+	b_pintar = Button(llapis, 178, 10);
+	b_line = Button(line, 220, 10);
+	b_rect = Button(rect, 262, 10);
+	b_circle = Button(circle, 304, 10);
+	b_triang = Button(triang, 346, 10);
+	b_black = Button(black, 388, 10);
+	b_white = Button(white, 430, 10);
+	b_pink = Button(pink, 472, 10);
+	b_yell = Button(yell, 514, 10);
+	b_green = Button(green, 556, 10);
+	b_red = Button(red, 598, 10);
+	b_blue = Button(blue, 640, 10);
+	b_cyan = Button(cyan, 682, 10);
+	
 	
 	
 }
@@ -97,24 +98,7 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	// ...
-	/*
-	int x = 600;
-	int y = 400;
-	Vector2 p0(200, 200);
-	Vector2 p1(500, 400);
-	Vector2 p2(600, 600);
 	
-	framebuffer.Fill(Color::BLACK);
-	framebuffer.DrawRect(x, y, 400, 300, Color::GREEN, 15, TRUE);
-
-	
-
-	framebuffer.Render();
-	
-	*/
-	
-
 
 	framebuffer.DrawRect(0, 0,1280, 52, Color::GRAY, 1, TRUE, Color::GRAY); 
 	framebuffer.DrawImage(*b_save.imatge, b_save.x, b_save.y, FALSE);  
@@ -133,7 +117,7 @@ void Application::Render(void)
 	framebuffer.DrawImage(*b_red.imatge, b_red.x, b_red.y, FALSE); 
 	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE);  
 	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE); 
-	framebuffer.DrawImage(*b_lliure.imatge, b_lliure.x, b_lliure.y, FALSE);
+	framebuffer.DrawImage(*b_pintar.imatge, b_pintar.x, b_pintar.y, FALSE);
 
 
 
@@ -243,7 +227,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		else if (b_load.IsMouseInside(mouse_position)) {
 			framebuffer.LoadTGA("images/dibuix_sense_titol.tga");
 		}
-		else if (b_lliure.IsMouseInside(mouse_position)) {
+		else if (b_pintar.IsMouseInside(mouse_position)) {
 			key = 5;
 		}
 
