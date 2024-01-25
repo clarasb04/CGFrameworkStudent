@@ -86,7 +86,7 @@ public:
 
 	void DrawRect(int x, int y, int w, int h, const Color& borderColor, int borderWidth, bool isFilled = false, const Color& fillColor = Color::WHITE);
 	void DrawCircle(int x, int y, int r, const Color& borderColor, int borderWidth, bool isFilled, const Color& fillColor);
-	void DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, bool isFilled, const Color& fillColor);
+	void DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, int borderWidth, bool isFilled, const Color& fillColor);
 	void ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table);
 
 	void Image::DrawImage(const Image& image, int x, int y, bool top);
@@ -109,7 +109,7 @@ public:
 
 
 	//Drawing Lines
-	void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c);
+	void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c, int borderWidth);
 #endif
 };
 

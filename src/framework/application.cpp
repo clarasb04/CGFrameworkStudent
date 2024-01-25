@@ -236,7 +236,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	}
 	switch(key){
 	case 1: {
-		framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, Color::WHITE);
+		framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, Color::WHITE, Border);
 		break;
 	}
 	case 2: {
@@ -249,7 +249,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	}
 	case 4: {
 		punt[2] = Vector2(event.x, event.y);
-		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], Color::WHITE, Fill, Color::GREEN);
+		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], Color::WHITE, Border, Fill, Color::GREEN);
 		break;
 	}
 
