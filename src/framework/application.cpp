@@ -304,7 +304,8 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		break;
 	}
 	case 4: {
-		punt[2] = Vector2(event.x, event.y);
+		//punt[1] = Vector2(event.x, event.y);
+		punt[2] = Vector2(mouse_end_x, mouse_end_y);
 		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Border, Fill, Color::GREEN);
 		break;
 	}
