@@ -234,6 +234,9 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		else if (b_save.IsMouseInside(mouse_position)) {
 			framebuffer.SaveTGA("images/dibuix_sense_titol.tga");
 		}
+		else if (b_load.IsMouseInside(mouse_position)) {
+			framebuffer.LoadTGA("images/dibuix_sense_titol.tga");
+		}
 
 
 
