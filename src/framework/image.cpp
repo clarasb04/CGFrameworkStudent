@@ -313,6 +313,15 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 	int borderWidth, bool isFilled, const Color& fillColor)
 {
 
+	if (w < 0) {
+		x = x + w;
+		w = -w;
+	}
+	if (h < 0) {
+		y = y + h;
+		h = -h;
+	}
+
 	if (isFilled) {
 		for (int i = 1; i < w - 1; ++i) {
 			for (int j = 1; j < h - 1; ++j) {
@@ -321,16 +330,15 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 		}
 	}
 
-
 	for (int i = -(borderWidth / 2); i < (w + ((borderWidth - 2) / 2)); ++i) {
-		for (int i0 = -(borderWidth / 2); i0 < (borderWidth / 2); i0++) {
+		for (int i0 = -(borderWidth / 2); i0 < (borderWidth / 2)+1; i0++) {
 			SetPixelSafe(x + i, y + i0, borderColor);
 			SetPixelSafe(x + i, y + h - 1 + i0, borderColor);
 		}
 	}
 
 	for (int j = 0; j < h; ++j) {
-		for (int y0 = -(borderWidth / 2); y0 < (borderWidth / 2); y0++) {
+		for (int y0 = -(borderWidth / 2); y0 < (borderWidth / 2)+1; y0++) {
 			SetPixelSafe(x + y0, y + j, borderColor);
 			SetPixelSafe(x + w - 1 + y0, y + j, borderColor);
 		}

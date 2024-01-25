@@ -225,7 +225,9 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			framebuffer.SaveTGA("images/dibuix_sense_titol.tga");
 		}
 		else if (b_load.IsMouseInside(mouse_position)) {
-			framebuffer.LoadTGA("images/dibuix_sense_titol.tga");
+			Image* load = new Image();
+			load->LoadPNG("images/fruits.png");
+			framebuffer.DrawImage(*load,0,0, FALSE);
 		}
 		else if (b_pintar.IsMouseInside(mouse_position)) {
 			key = 5;
@@ -234,29 +236,77 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 
 
 		else if (b_black.IsMouseInside(mouse_position)) {
-			border_color = Color::BLACK;
+			if (Fill) {
+				fill_color = Color::BLACK;
+			}
+			else {
+				border_color = Color::BLACK;
+			}
 		}
+
 		else if (b_white.IsMouseInside(mouse_position)) {
-			border_color = Color::WHITE;
+			if (Fill) {
+				fill_color = Color::WHITE;
+			}
+			else {
+				border_color = Color::WHITE;
+			}
 		}
+
 		else if (b_pink.IsMouseInside(mouse_position)) {
-			border_color = Color::PURPLE;
+			if (Fill) {
+				fill_color = Color::PURPLE;
+			}
+			else {
+				border_color = Color::PURPLE;
+			}
 		}
+
 		else if (b_yell.IsMouseInside(mouse_position)) {
-			border_color = Color::YELLOW;
+			if (Fill) {
+				fill_color = Color::YELLOW;
+			}
+			else {
+				border_color = Color::YELLOW;
+			}
 		}
+
 		else if (b_green.IsMouseInside(mouse_position)) {
-			border_color = Color::GREEN;
+			if (Fill) {
+				fill_color = Color::GREEN;
+			}
+			else {
+				border_color = Color::GREEN;
+			}
 		}
+
 		else if (b_red.IsMouseInside(mouse_position)) {
-			border_color = Color::RED;
+			if (Fill) {
+				fill_color = Color::RED;
+			}
+			else {
+				border_color = Color::RED;
+			}
 		}
+
 		else if (b_blue.IsMouseInside(mouse_position)) {
-			border_color = Color::BLUE;
+			if (Fill) {
+				fill_color = Color::BLUE;
+			}
+			else {
+				border_color = Color::BLUE;
+			}
 		}
+
 		else if (b_cyan.IsMouseInside(mouse_position)) {
-			border_color = Color::CYAN;
+			if (Fill) {
+				fill_color = Color::CYAN;
+			}
+			else {
+				border_color = Color::CYAN;
+			}
 		}
+
 		else if (b_line.IsMouseInside(mouse_position)) {
 			key = 1;
 		}
