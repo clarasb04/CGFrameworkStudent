@@ -359,11 +359,37 @@ void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 		}
 	}
 
-	//canviar pel borde
-	for (int i = 0; i < 360*6 * r; i++) {
-		SetPixelSafe(x + r * cos(i / r), y + r * sin(i / r), borderColor);
+	for (int w = 0; w < borderWidth; ++w) {
+		int x1 = 0;
+		int y1 = r + w;
+		int p = 1 - (r + w); 
+			
+		auto plotPoints = [this, x, y, w, borderColor](int x1, int y1) {
+			for (int i = -1; i <= 1; i += 2) {
+				for (int j = -1; j <= 1; j += 2) {
+					SetPixelSafe(x + i * x1, y + j * y1, borderColor);
+					SetPixelSafe(x + i * y1, y + j * x1, borderColor);
+				}
+			}
+		};
+		plotPoints(x1, y1);
+
+		while (x1 < y1) {
+			x1++;
+
+			if (p <= 0)
+				p = p + 2 * x1 + 1;
+			else {
+				y1--;
+				p = p + 2 * x1 - 2 * y1 + 1;
+			}
+			if (x1 > y1)
+				break;
+			plotPoints(x1, y1);
+			if (x1 != y1)
+				plotPoints(y1, x1);
+		}
 	}
-	
 
 }
 
