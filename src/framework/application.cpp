@@ -212,11 +212,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		mouse_pressed = TRUE;
 
 		if (b_clear.IsMouseInside(mouse_position)) {
-			for (int i = 0; i < 1280; i++) {
-				for (int j = 0; j < 720; j++) {
-					framebuffer.SetPixelSafe(i, j, Color::BLACK);
-				}
-			}
+			framebuffer.Fill(Color::BLACK);
 		}
 		else if(b_eraser.IsMouseInside(mouse_position)){
 			key = 7;
