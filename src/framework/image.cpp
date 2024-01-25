@@ -324,7 +324,7 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 
 	for (int i = -(borderWidth / 2); i < (w + ((borderWidth - 2) / 2)); ++i) {
 		for (int i0 = -(borderWidth / 2); i0 < (borderWidth / 2); i0++) {
-			SetPixel(x + i, y + i0, borderColor);
+			SetPixelSafe(x + i, y + i0, borderColor);
 			SetPixel(x + i, y + h - 1 + i0, borderColor);
 		}
 	}
