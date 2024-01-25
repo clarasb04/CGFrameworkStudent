@@ -18,6 +18,7 @@ Application::Application(const char* caption, int width, int height)
 	this->framebuffer.Resize(w, h);
 	this->border_color = Color::WHITE;
 	this->mouse_pressed = FALSE;
+	this->num_punts = 0;
 
 	
 }
@@ -320,13 +321,26 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		else if (b_triang.IsMouseInside(mouse_position)) {
 			key = 4;
 		}
+
 		else if (key == 4) {
-			punt[0] = Vector2(mouse_start_x, mouse_start_y);
-			punt[1] = Vector2(event.x, event.y); //no ho agafa beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee		
+			if (num_punts == -1) {
+				num_punts++;
+			}
+			else if (num_punts == 0) {
+				punt[0] = mouse_position;
+				num_punts = 1;
+			}
+			else if (num_punts == 1) {
+				punt[1] = mouse_position;
+				num_punts++;
+			}
+			else if (num_punts == 2) {
+				punt[2] = mouse_position;
+				num_punts = 0;
+				framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Border, Fill, fill_color);
+			}
 		}
-		else if (key == 5) {
-			framebuffer.SetPixel(mouse_position.x, mouse_position.y, border_color);
-		}
+		
 
 	}
 	
@@ -353,10 +367,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		break;
 	}
 	case 4: {
-		//punt[1] = Vector2(event.x, event.y);
-		punt[2] = Vector2(mouse_end_x, mouse_end_y);
-		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Border, Fill, fill_color);
-		break;
+		
 	}
 
 	}

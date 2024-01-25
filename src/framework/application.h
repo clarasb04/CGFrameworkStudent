@@ -20,6 +20,7 @@ public:
 	bool Fill = false;
 	int Border = 1;
 	Vector2 punt[3] = { {0,0},{0,0},{0,0} };
+	int num_punts;
 	Color border_color;
 	Color fill_color;
 
