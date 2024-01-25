@@ -363,7 +363,10 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		break;
 	}
 	case 3: {
-		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, abs(mouse_start_x - mouse_end_x), border_color, Border, Fill, fill_color);
+		int dx = mouse_start_x - mouse_end_x;
+		int dy = mouse_start_y - mouse_end_y;
+		int r = round(sqrt(dx * dx + dy * dy));
+		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, r, border_color, Border, Fill, fill_color);
 		break;
 	}
 	case 4: {
