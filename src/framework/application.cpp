@@ -29,7 +29,11 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
+	
+	
 	particleSystem.Init();
+	
+	
 
 	
 	Image* save = new Image();
@@ -132,8 +136,10 @@ void Application::Render(void)
 	
 	switch (key) {
 	
-	case 6:particleSystem.Render(&framebuffer);
-	break; 
+	case 6: {
+		particleSystem.Render(&framebuffer);
+		break;
+	}
 	}
 	
 
@@ -184,6 +190,7 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_6: {
 			//Animation
 			key = 6;
+			particleSystem.Init();
 			break;
 		}
 		case SDLK_f: {
