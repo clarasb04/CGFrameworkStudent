@@ -126,7 +126,6 @@ void Application::Render(void)
 	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE);  
 	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE); 
 
-	framebuffer.DrawRect(400, 200, -150 , 200, Color::WHITE, Border, FALSE, Color::RED);
 
 
 	framebuffer.Render();
@@ -226,7 +225,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 
 		}
 		else if (b_save.IsMouseInside(mouse_position)) {
-			framebuffer.SaveTGA("dibuix_sense_titol");
+			framebuffer.SaveTGA("images/dibuix_sense_titol.tga");
 		}
 
 
@@ -286,11 +285,11 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	}
 	switch(key){
 	case 1: {
-		framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, border_color);
+		framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, border_color, Border);
 		break;
 	}
 	case 2: {
-		framebuffer.DrawRect(mouse_start_x, mouse_start_y, mouse_end_x- mouse_start_x, mouse_end_y- mouse_start_y, border_color, Border, TRUE, Color::RED);
+		framebuffer.DrawRect(mouse_start_x, mouse_start_y, mouse_end_x- mouse_start_x, mouse_end_y- mouse_start_y, border_color, Border, Fill, Color::RED);
 		break;
 	}
 	case 3: {
@@ -299,7 +298,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	}
 	case 4: {
 		punt[2] = Vector2(event.x, event.y);
-		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Fill, Color::GREEN);
+		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Border, Fill, Color::GREEN);
 		break;
 	}
 
