@@ -184,7 +184,12 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		}
 		case SDLK_f: {
 			//Fill Shapes
-			Fill = true;
+			if (Fill) {
+				Fill = FALSE;
+			}
+			else {
+				Fill = TRUE;
+			}
 			break;
 		}
 		case SDLK_PLUS: {
@@ -340,17 +345,17 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		break;
 	}
 	case 2: {
-		framebuffer.DrawRect(mouse_start_x, mouse_start_y, mouse_end_x- mouse_start_x, mouse_end_y- mouse_start_y, border_color, Border, Fill, Color::RED);
+		framebuffer.DrawRect(mouse_start_x, mouse_start_y, mouse_end_x- mouse_start_x, mouse_end_y- mouse_start_y, border_color, Border, Fill, fill_color);
 		break;
 	}
 	case 3: {
-		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, abs(mouse_start_x - mouse_end_x), border_color, Border, Fill, Color::RED);
+		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, abs(mouse_start_x - mouse_end_x), border_color, Border, Fill, fill_color);
 		break;
 	}
 	case 4: {
 		//punt[1] = Vector2(event.x, event.y);
 		punt[2] = Vector2(mouse_end_x, mouse_end_y);
-		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Border, Fill, Color::GREEN);
+		framebuffer.DrawTriangle(punt[0], punt[1], punt[2], border_color, Border, Fill, fill_color);
 		break;
 	}
 
