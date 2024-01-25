@@ -581,7 +581,7 @@ void ParticleSystem::Update(float dt) {
 			
 			
 
-			particles[i].position.x += particles[i].velocity.x * dt * std::cos(particles[i].velocity.y/100.0f) * 10.0f;
+			particles[i].position.x += particles[i].velocity.x * dt * std::cos(particles[i].velocity.y / 100.0f) * 10.0f;
 			particles[i].position.y += particles[i].velocity.y * dt;
 						
 			particles[i].ttl -= dt;
