@@ -123,6 +123,11 @@ void Application::Render(void)
 	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE);
 
 
+	int r = (5 * time);
+	r = r % 350;
+
+	framebuffer.DrawCircle(500, 350,r, Color::WHITE, 3, TRUE, Color::GREEN);
+
 
 
 

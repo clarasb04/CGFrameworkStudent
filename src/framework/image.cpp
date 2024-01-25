@@ -341,7 +341,18 @@ void Image::DrawRect(int x, int y, int w, int h, const Color& borderColor,
 
 void Image::DrawCircle(int x, int y, int r, const Color& borderColor,
 	int borderWidth, bool isFilled, const Color& fillColor) {
-	for (int i = 0; i < 360 * r * r; i++) {
+	if (isFilled) {
+		for (int i = -r; i < r; i++) {
+			for (int j = -r; j < r; j++) {
+				if (i * i + j * j < r * r) {
+					SetPixel(x + i, y + j, fillColor);
+				}
+			}
+		}
+	}
+
+	//canviar pel borde
+	for (int i = 0; i < 360*6 * r; i++) {
 		SetPixel(x + r * cos(i / r), y + r * sin(i / r), borderColor);
 	}
 	
