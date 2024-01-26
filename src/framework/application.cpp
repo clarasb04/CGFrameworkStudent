@@ -72,6 +72,8 @@ void Application::Init(void)
 	yell->LoadPNG("images/yellow.png");
 	Image* llapis = new Image();
 	llapis->LoadPNG("images/llapis.png");
+	Image* fill_img = new Image();
+	fill_img->LoadPNG("images/fill.png");
 
 
 	b_clear =  Button(clear, 10, 10);
@@ -91,6 +93,7 @@ void Application::Init(void)
 	b_red = Button(red, 598, 10);
 	b_blue = Button(blue, 640, 10);
 	b_cyan = Button(cyan, 682, 10);
+	b_fill = Button(fill_img, 724, 10);
 	
 	
 	
@@ -119,6 +122,8 @@ void Application::Render(void)
 	framebuffer.DrawImage(*b_blue.imatge, b_blue.x, b_blue.y, FALSE);  
 	framebuffer.DrawImage(*b_cyan.imatge, b_cyan.x, b_cyan.y, FALSE); 
 	framebuffer.DrawImage(*b_pintar.imatge, b_pintar.x, b_pintar.y, FALSE);
+	framebuffer.DrawImage(*b_fill.imatge, b_fill.x, b_fill.y, FALSE);
+
 
 
 
@@ -233,6 +238,14 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		}
 		else if (b_pintar.IsMouseInside(mouse_position)) {
 			key = 5;
+		}
+		else if (b_fill.IsMouseInside(mouse_position)) {
+			if (Fill) {
+				Fill = FALSE;
+			}
+			else {
+				Fill = TRUE;
+			}
 		}
 
 
@@ -391,8 +404,14 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 
 	}
 	if (mouse_pressed == TRUE && key == 5) {
-		framebuffer.DrawRect(mouse_position.x, mouse_position.y, Border, Border, border_color,
-			1, TRUE, border_color);
+		if (Fill == FALSE) {
+			framebuffer.DrawRect(mouse_position.x, mouse_position.y, Border, Border, border_color,
+				1, TRUE, border_color);
+		}
+		else {
+			framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_position.x, mouse_position.y, fill_color, Border);
+		}
+
 	}
 }
 

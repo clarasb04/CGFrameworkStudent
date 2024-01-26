@@ -87,6 +87,7 @@ public:
 	Button b_cyan;
 	Button b_green;
 	Button b_pintar;
+	Button b_fill;
 
 	bool mouse_pressed;
 
