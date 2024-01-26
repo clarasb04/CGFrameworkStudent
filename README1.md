@@ -6,7 +6,7 @@
 
 Per poder utilitzar el "paint" creat es pot fer clicant els botons de la barra inferior o clicant les tecles del teclat assignades a cada funció. Alguns aclariments són els següents:
 
-- Per canviar el color del llapis o del contorn de les formes geomètriques s'ha de realitzar clicant els botons que es mostren per pantalla quan no hi ha l'opció d'omplir (tecla f).
+- Per canviar el color del llapis o del contorn de les formes geomètriques s'ha de realitzar clicant els botons que es mostren per pantalla quan no hi ha l'opció d'omplir (tecla f, o botó del cub de pintura).
 
 - Per canviar el color de l'interior, s'ha de dur a terme un cop hem seleccionat l'opció d'omplir. (És a dir, mentre l'opció d'omplir estigui seleccionada el color que se seleccionarà és el d'interior).
 
