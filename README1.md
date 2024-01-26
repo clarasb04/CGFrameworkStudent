@@ -10,7 +10,7 @@ Per poder utilitzar el "paint" creat es pot fer clicant els botons de la barra i
 
 - Per canviar el color de l'interior, s'ha de dur a terme un cop hem seleccionat l'opció d'omplir. (És a dir, mentre l'opció d'omplir estigui seleccionada el color que se seleccionarà és el d'interior).
 
-- Per dibuixar la línia hem de mantenir clicat el ratolí des de l'inici fins al final.
+- Per dibuixar la línia hem de mantenir clicat el ratolí des de l'inici fins al final. Si vols dibuixar una forma i alhora pintar-la des del centre, es pot fer amb l'opció de fill (agafa el punt d'inici i va pintant línies des de l'inici al punt on estàs). 
 
 - Els rectangles es dibuixa fent la seva diagonal ( mantenint el ratolí clicat des de l'inici de la diagonal fins al final)
 
