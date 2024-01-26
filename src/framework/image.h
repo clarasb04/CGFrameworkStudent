@@ -5,6 +5,13 @@
 
 #pragma once
 
+
+
+//hola clara proba del lab 2
+
+
+
+
 #include <string.h>
 #include <stdio.h>
 #include <iostream>
