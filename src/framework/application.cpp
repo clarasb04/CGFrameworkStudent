@@ -101,7 +101,7 @@ void Application::Render(void)
 {
 	
 
-	framebuffer.DrawRect(0, 0,1280, 52, Color::GRAY, 1, TRUE, Color::GRAY); 
+	framebuffer.DrawRect(0, 0,this->window_width, 52, Color::GRAY, 1, TRUE, Color::GRAY); 
 	framebuffer.DrawImage(*b_save.imatge, b_save.x, b_save.y, FALSE);  
 	framebuffer.DrawImage(*b_load.imatge, b_load.x, b_load.y, FALSE); 
 	framebuffer.DrawImage(*b_clear.imatge, b_clear.x, b_clear.y, FALSE);  

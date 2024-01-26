@@ -452,14 +452,14 @@ void Image::DrawImage(const Image& image, int x, int y, bool top) {
 		for (int i = 0; i < image.width * image.height; i++) {
 			int xi = i % image.width;
 			int yi = i / image.width;
-			SetPixel(x + xi, y + yi, image.pixels[i]);
+			SetPixelSafe(x + xi, y + yi, image.pixels[i]);
 		}
 	}
 	else {
 		for (int i = 0; i < image.width * image.height; i++) {
 			int xi = i % image.width;
 			int yi = i / image.width;
-			SetPixel(x + xi, y - yi, image.pixels[i]);
+			SetPixelSafe(x + xi, y - yi, image.pixels[i]);
 		}
 	}
 	
