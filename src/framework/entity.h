@@ -3,7 +3,7 @@
 #include "framework.h"
 #include "mesh.h"
 #include "main/includes.h"
-
+#include "image.h"
 
 class Entity {
 	
@@ -13,8 +13,6 @@ public:
 	//constructor
 	Entity();
 	Entity(Mesh malla_entr, Matrix44 matriu_entr);
-
-	~Entity();
 
 	void Render(Image* framebuffer, Camera* camera, const Color& c);
 };
