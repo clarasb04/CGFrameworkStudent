@@ -65,7 +65,7 @@ CG_SOURCES_APPEND(${DIR_SOURCES}/extra)
 CG_SOURCES_APPEND(${DIR_SOURCES}/framework)
 CG_SOURCES_APPEND(${DIR_SOURCES}/main)
 
-add_executable(ComputerGraphics ${CG_SOURCES})
+add_executable(ComputerGraphics ${CG_SOURCES} "src/framework/entity.h" "src/framework/entity.cpp")
 
 target_include_directories(ComputerGraphics PUBLIC ${DIR_SOURCES})
 
