@@ -98,6 +98,39 @@ void Camera::UpdateViewMatrix()
 
 	// Translate view matrix
 	// ...
+	Vector3 F;
+	Vector3 S; 
+	Vector3 T;
+	F = operator-(center,eye);
+	//normalitzar F
+	//S = Fxup
+	//S = S/|S|
+	//T = SXF
+
+	view_matrix.M[0][0]= S.x; 
+	view_matrix.M[1][0] = S.y; 
+	view_matrix.M[2][0] = S.z;
+	view_matrix.M[3][0] = 0; 
+
+	view_matrix.M[0][1] = T.x;
+	view_matrix.M[1][1] = T.y;
+	view_matrix.M[2][1] = T.z;
+	view_matrix.M[3][1] = 0;
+
+	view_matrix.M[0][2] = -F.x;
+	view_matrix.M[1][2] = -F.y;
+	view_matrix.M[2][2] = -F.z;
+	view_matrix.M[3][2] = 0;
+
+	view_matrix.M[0][3] = 0;
+	view_matrix.M[1][3] = 0;
+	view_matrix.M[2][3] = 0;
+	view_matrix.M[3][3] = 1;
+
+	view_matrix.TranslateLocal(-eye.x, -eye.y, -eye.z); //ns segur
+
+
+
 	view_matrix[0] = eye.x;
 
 	
