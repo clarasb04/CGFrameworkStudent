@@ -64,6 +64,7 @@ public:
 		glViewport( 0,0, width, height );
 		this->window_width = width;
 		this->window_height = height;
+		framebuffer.Resize(width, height);
 	}
 
 	Vector2 GetWindowSize()

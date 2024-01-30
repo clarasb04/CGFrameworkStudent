@@ -38,8 +38,17 @@ void Application::Init(void)
 	cam.fov = 45;
 	cam.near_plane = 0.01;
 	cam.far_plane = 100;
+	cam.SetOrthographic(cam.left, cam.right, cam.top, cam.bottom, cam.near_plane, cam.far_plane);
+
+	Mesh prova_m;
+	bool fet = prova_m.LoadOBJ("/meshes/lee.obj");
+	if (fet) {
+		std::cout << "fet " << std::endl;
+
+	}
 	prova = Entity();
-	prova.malla.CreateCube(50);
+	prova.malla = prova_m;
+	
 
 	
 	

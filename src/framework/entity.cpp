@@ -38,6 +38,15 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 		p2 = camera->ProjectVector(p2, negZ2); 
 		p3 = camera->ProjectVector(p3, negZ3);
 
+		p1.x = ((p1.x + 1)/2) * (framebuffer->width - 1);
+		p2.x = ((p2.x + 1) / 2) * (framebuffer->width - 1);
+		p3.x = ((p3.x + 1) / 2) * (framebuffer->width - 1);
+
+		p1.y = ((p1.y + 1) / 2) * (framebuffer->height - 1);
+		p2.y = ((p2.y + 1) / 2) * (framebuffer->height - 1);
+		p3.y = ((p3.y + 1) / 2) * (framebuffer->height - 1);
+
+
 		if (negZ1 && negZ2 && negZ3) {
 			framebuffer->DrawLineDDA(p1.x, p1.y, p2.x, p2.y, c, 1);
 			framebuffer->DrawLineDDA(p3.x, p3.y, p2.x, p2.y, c, 1);
