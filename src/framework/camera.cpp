@@ -87,7 +87,7 @@ void Camera::UpdateViewMatrix()
 	view_matrix.SetIdentity();
 
 	// Comment this line to create your own view matrix!
-	SetExampleViewMatrix();
+	//SetExampleViewMatrix();
 
 	// Remember how to fill a Matrix4x4 (check framework slides)
 	// Careful with the order of matrix multiplications, and be sure to use normalized vectors!
@@ -98,10 +98,14 @@ void Camera::UpdateViewMatrix()
 
 	// Translate view matrix
 	// ...
-	/*
+	
+	
+	//FET TOT CREC
+	
 	Vector3 F;
 	Vector3 S; 
 	Vector3 T;
+
 	F = operator-(center,eye);
 	//normalitzar F
 	float mod = sqrt(F.x * F.x + F.y * F.y + F.z * F.z);
@@ -109,17 +113,19 @@ void Camera::UpdateViewMatrix()
 	F.y = F.y / mod;
 	F.z = F.z / mod;
 
-	//S = Fxup //espero q up sigui un vector i no un punt, o ns la veritat ns com funciona vaig fcking perdut
+	//S = F X up 
 	S = operator*(F, up);
-
 	//S = S/|S|
-	float mod = sqrt(S.x * S.x + S.y * S.y + S.z * S.z);
+	mod = sqrt(S.x * S.x + S.y * S.y + S.z * S.z);
 	S.x = S.x / mod;
 	S.y = S.y / mod;
 	S.z = S.z / mod;
-	//T = SXF
 
-	view_matrix.M[0][0]= S.x; 
+	//T = S X F
+	T = operator*(S, F);
+
+
+	view_matrix.M[0][0] = S.x; 
 	view_matrix.M[1][0] = S.y; 
 	view_matrix.M[2][0] = S.z;
 	view_matrix.M[3][0] = 0; 
@@ -141,12 +147,7 @@ void Camera::UpdateViewMatrix()
 
 	view_matrix.TranslateLocal(-eye.x, -eye.y, -eye.z); //ns segur
 
-
-
-	view_matrix[0] = eye.x;*/
-
 	
-
 	UpdateViewProjectionMatrix();
 }
 
@@ -157,16 +158,56 @@ void Camera::UpdateProjectionMatrix()
 	projection_matrix.SetIdentity();
 
 	// Comment this line to create your own projection matrix!
-	SetExampleProjectionMatrix();
+	//SetExampleProjectionMatrix();
 
 	// Remember how to fill a Matrix4x4 (check framework slides)
 	
 	if (type == PERSPECTIVE) {
-		// projection_matrix.M[2][3] = -1;
-		// ...
+		
+		float f = 1.0 / tan(fov / 2.0);
+
+		projection_matrix.M[0][0] = f/aspect;
+		projection_matrix.M[0][1] = 0;
+		projection_matrix.M[0][2] = 0;
+		projection_matrix.M[0][3] = 0;
+
+		projection_matrix.M[1][0] = 0; 
+		projection_matrix.M[1][1] = f; 
+		projection_matrix.M[1][2] = 0;
+		projection_matrix.M[1][3] = 0;
+
+		projection_matrix.M[2][0] = 0;
+		projection_matrix.M[2][1] = 0;
+		projection_matrix.M[2][2] = (far_plane+near_plane)/(near_plane - far_plane);
+		projection_matrix.M[2][3] = -1;
+
+		projection_matrix.M[3][0] = 0;
+		projection_matrix.M[3][1] = 0;
+		projection_matrix.M[3][2] = 2*((far_plane * near_plane) / (near_plane - far_plane));
+		projection_matrix.M[3][3] = 0;
+	
+		
 	}
 	else if (type == ORTHOGRAPHIC) {
-		// ...
+		projection_matrix.M[0][0] = 2 / (right - left);
+		projection_matrix.M[0][1] = 0;
+		projection_matrix.M[0][2] = 0;
+		projection_matrix.M[0][3] = -(right + left)/(right - left);
+
+		projection_matrix.M[1][0] = 0;
+		projection_matrix.M[1][1] = 2 / (top - bottom);
+		projection_matrix.M[1][2] = 0;
+		projection_matrix.M[1][3] = -(top + bottom) / (top - bottom);
+
+		projection_matrix.M[2][0] = 0;
+		projection_matrix.M[2][1] = 0;
+		projection_matrix.M[2][2] = -2 / (far_plane - near_plane);
+		projection_matrix.M[2][3] = -(far_plane + near_plane)/ (far_plane - near_plane);
+
+		projection_matrix.M[3][0] = 0;
+		projection_matrix.M[3][1] = 0;
+		projection_matrix.M[3][2] = 0;
+		projection_matrix.M[3][3] = 1;
 	} 
 
 	UpdateViewProjectionMatrix();
