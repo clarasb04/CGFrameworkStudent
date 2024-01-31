@@ -108,21 +108,14 @@ void Camera::UpdateViewMatrix()
 
 	F = operator-(center,eye);
 	//normalitzar F
-	float mod = sqrt(F.x * F.x + F.y * F.y + F.z * F.z);
-	F.x = F.x / mod;
-	F.y = F.y / mod;
-	F.z = F.z / mod;
+	F.Normalize();
 
 	//S = F X up 
-	S = operator*(F, up);
+	S = F.Cross(up);
 	//S = S/|S|
-	mod = sqrt(S.x * S.x + S.y * S.y + S.z * S.z);
-	S.x = S.x / mod;
-	S.y = S.y / mod;
-	S.z = S.z / mod;
-
+	S.Normalize();
 	//T = S X F
-	T = operator*(S, F);
+	T = F.Cross(S);
 
 
 	view_matrix.M[0][0] = S.x; 
@@ -163,6 +156,7 @@ void Camera::UpdateProjectionMatrix()
 	// Remember how to fill a Matrix4x4 (check framework slides)
 	
 	if (type == PERSPECTIVE) {
+		
 		
 		float f = 1.0 / tan(fov / 2.0);
 
