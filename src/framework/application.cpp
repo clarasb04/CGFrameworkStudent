@@ -34,13 +34,18 @@ void Application::Init(void)
 	std::cout << "Initiating app..." << std::endl;
 	
 
-	cam = Camera();
-	cam.fov = PI/2;
-	cam.near_plane = 0.01;
-	cam.far_plane = 100;
-	cam.aspect = 1;
-	cam.SetOrthographic(cam.left, cam.right, cam.top, cam.bottom, cam.near_plane, cam.far_plane);
-	//cam.SetPerspective(cam.fov, cam.aspect, cam.near_plane, cam.far_plane);
+	cam = new Camera();
+	cam->eye = Vector3(0, 1, 2);
+	cam->center = Vector3(0, 0, 0);
+	cam->up = Vector3(0, 0, 1);
+	cam->fov = 45;
+	cam->near_plane = 0.01;
+	cam->far_plane = 100;
+	cam->aspect = 1;
+	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+
+	cam->LookAt(cam->eye, cam->center, cam->up);
+	//cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 	Mesh prova_m;
 	bool fet = prova_m.LoadOBJ("/meshes/lee.obj");
 	if (fet) {
@@ -59,7 +64,7 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	prova.Render(&framebuffer, &cam, Color::WHITE);
+	prova.Render(&framebuffer, cam, Color::WHITE);
 
 	framebuffer.Render();
 

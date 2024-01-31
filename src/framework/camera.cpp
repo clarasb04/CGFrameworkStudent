@@ -148,7 +148,7 @@ void Camera::UpdateViewMatrix()
 void Camera::UpdateProjectionMatrix()
 {
 	// Reset Matrix (Identity)
-	projection_matrix.SetIdentity();
+	//projection_matrix.SetIdentity();
 
 	// Comment this line to create your own projection matrix!
 	//SetExampleProjectionMatrix();
@@ -157,7 +157,7 @@ void Camera::UpdateProjectionMatrix()
 	
 	if (type == PERSPECTIVE) {
 		
-		
+		float fov_r = fov * DEG2RAD;
 		float f = 1 / tan(fov / 2);
 
 		projection_matrix.M[0][0] = f/aspect;
