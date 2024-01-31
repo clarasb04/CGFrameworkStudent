@@ -87,7 +87,7 @@ void Camera::UpdateViewMatrix()
 	view_matrix.SetIdentity();
 
 	// Comment this line to create your own view matrix!
-	//SetExampleViewMatrix();
+	SetExampleViewMatrix();
 
 	// Remember how to fill a Matrix4x4 (check framework slides)
 	// Careful with the order of matrix multiplications, and be sure to use normalized vectors!
@@ -98,13 +98,25 @@ void Camera::UpdateViewMatrix()
 
 	// Translate view matrix
 	// ...
+	/*
 	Vector3 F;
 	Vector3 S; 
 	Vector3 T;
 	F = operator-(center,eye);
 	//normalitzar F
-	//S = Fxup
+	float mod = sqrt(F.x * F.x + F.y * F.y + F.z * F.z);
+	F.x = F.x / mod;
+	F.y = F.y / mod;
+	F.z = F.z / mod;
+
+	//S = Fxup //espero q up sigui un vector i no un punt, o ns la veritat ns com funciona vaig fcking perdut
+	S = operator*(F, up);
+
 	//S = S/|S|
+	float mod = sqrt(S.x * S.x + S.y * S.y + S.z * S.z);
+	S.x = S.x / mod;
+	S.y = S.y / mod;
+	S.z = S.z / mod;
 	//T = SXF
 
 	view_matrix.M[0][0]= S.x; 
@@ -131,7 +143,7 @@ void Camera::UpdateViewMatrix()
 
 
 
-	view_matrix[0] = eye.x;
+	view_matrix[0] = eye.x;*/
 
 	
 
