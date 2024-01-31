@@ -115,7 +115,7 @@ void Camera::UpdateViewMatrix()
 	//S = S/|S|
 	S.Normalize();
 	//T = S X F
-	T = F.Cross(S);
+	T = S.Cross(F);
 
 
 	view_matrix.M[0][0] = S.x; 
@@ -139,7 +139,7 @@ void Camera::UpdateViewMatrix()
 	view_matrix.M[3][3] = 1;
 
 	view_matrix.TranslateLocal(-eye.x, -eye.y, -eye.z); //ns segur
-
+	
 	
 	UpdateViewProjectionMatrix();
 }
@@ -158,7 +158,7 @@ void Camera::UpdateProjectionMatrix()
 	if (type == PERSPECTIVE) {
 		
 		
-		float f = 1.0 / tan(fov / 2.0);
+		float f = 1 / tan(fov / 2);
 
 		projection_matrix.M[0][0] = f/aspect;
 		projection_matrix.M[0][1] = 0;
@@ -203,7 +203,7 @@ void Camera::UpdateProjectionMatrix()
 		projection_matrix.M[3][2] = 0;
 		projection_matrix.M[3][3] = 1;
 	} 
-
+	
 	UpdateViewProjectionMatrix();
 }
 

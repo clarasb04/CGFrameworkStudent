@@ -35,12 +35,12 @@ void Application::Init(void)
 	
 
 	cam = Camera();
-	cam.fov = PI;
+	cam.fov = PI/2;
 	cam.near_plane = 0.01;
 	cam.far_plane = 100;
 	cam.aspect = 1;
-	//cam.SetOrthographic(cam.left, cam.right, cam.top, cam.bottom, cam.near_plane, cam.far_plane);
-	cam.SetPerspective(cam.fov, cam.aspect, cam.near_plane, cam.far_plane);
+	cam.SetOrthographic(cam.left, cam.right, cam.top, cam.bottom, cam.near_plane, cam.far_plane);
+	//cam.SetPerspective(cam.fov, cam.aspect, cam.near_plane, cam.far_plane);
 	Mesh prova_m;
 	bool fet = prova_m.LoadOBJ("/meshes/lee.obj");
 	if (fet) {
