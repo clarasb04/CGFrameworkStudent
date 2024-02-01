@@ -21,5 +21,5 @@ public:
 	Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg);
 
 	void Render(Image* framebuffer, Camera* camera, const Color& c);
-	void Update(float seconds_elapsed);
+	void Update(float seconds_elapsed, float deg_s, float scale_max, float trans_s, bool rot_local, Vector3 eix_rot);
 };

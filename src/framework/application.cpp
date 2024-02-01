@@ -53,16 +53,17 @@ void Application::Init(void)
 	cara2_m.LoadOBJ("/meshes/cleo.obj");
 	Mesh cara3_m;
 	cara3_m.LoadOBJ("/meshes/anna.obj");
-	cara1 = Entity(cara1_m, Vector3(0, 0, 2), Vector3(1, 0, 0), Vector3(1, 1, 1), PI/2);
-	cara1.malla = cara1_m;
-	cara2 = Entity(cara2_m, Vector3(1, 0, 0), Vector3(0, 1, 0), Vector3(0, 1, 1), PI/2);
-	cara2.malla = cara2_m;
+	cara1 = Entity(cara1_m, Vector3(0.5f, 0, 2), Vector3(1, 0, 0), Vector3(1, 2, 1), 0);
 	
-	cara4 = Entity(cara1_m, Vector3(1, 0, 1), Vector3(0, 0.5f, 0), Vector3(1, 1, 0), PI/4);
-	cara4.malla = cara1_m;
-	
+	cara2 = Entity(cara2_m, Vector3(0, -0.5f, 0), Vector3(0, 1, 0), Vector3(1.5, 1.5, 1.5), PI/2);
+
 	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
-	cara3.malla = cara3_m; 
+	
+	cara4 = Entity(cara1_m, Vector3(0, 0, 0.25f), Vector3(0, 0.5f, 0), Vector3(1, 1, 0), PI/4);
+	
+	
+	
+	 
 	
 	
 }
@@ -70,10 +71,7 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	cara4.Render(&framebuffer, cam, Color::BLUE);
-	cara2.Render(&framebuffer, cam, Color::PURPLE);
-	cara3.Render(&framebuffer, cam, Color::GREEN);
-
+	
 
 	if (key == 1) {
 		//un sol objecte
@@ -100,9 +98,9 @@ void Application::Render(void)
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-	cara2.Update(seconds_elapsed);
-	cara3.Update(seconds_elapsed);
-	cara4.Update(seconds_elapsed);
+	cara2.Update(seconds_elapsed, 1.0f, 0, 0, true, Vector3(0.0f, 1.0f, 0.0f));
+	cara3.Update(seconds_elapsed, 1.5f, 0 ,1.0f, false, Vector3(0.0f, 1.0f, 0.0f));
+	cara4.Update(seconds_elapsed, 2,0,0, false, Vector3(1.0f, 0.0f, 0.0f));
 	
 
 	framebuffer.Fill(Color::BLACK);
@@ -197,28 +195,13 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		mouse_end_x = mouse_position.x;
 		mouse_end_y = mouse_position.y;
 		mouse_pressed = FALSE;
-	}
-	switch(key){
-	case 1: {
-		framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_end_x, mouse_end_y, border_color, Border);
-		break;
-	}
-	case 2: {
-		framebuffer.DrawRect(mouse_start_x, mouse_start_y, mouse_end_x- mouse_start_x, mouse_end_y- mouse_start_y, border_color, Border, Fill, fill_color);
-		break;
-	}
-	case 3: {
-		int dx = mouse_start_x - mouse_end_x;
-		int dy = mouse_start_y - mouse_end_y;
-		int r = round(sqrt(dx * dx + dy * dy));
-		framebuffer.DrawCircle(mouse_start_x, mouse_start_y, r, border_color, Border, Fill, fill_color);
-		break;
-	}
-	case 4: {
-		
-	}
 
 	}
+	if (event.button == SDL_BUTTON_RIGHT) {
+		Matrix44 rotate_eye;
+		rotate_eye.GetRotationOnly();
+	}
+	
 
 	
 	
@@ -228,23 +211,7 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 { 
-	if (mouse_pressed == TRUE && key == 7) {
-		
-		framebuffer.DrawRect(mouse_position.x, mouse_position.y, Border, Border, Color::BLACK,
-			1, TRUE, Color::BLACK);
-		
-
-	}
-	if (mouse_pressed == TRUE && key == 5) {
-		if (Fill == FALSE) {
-			framebuffer.DrawRect(mouse_position.x, mouse_position.y, Border, Border, border_color,
-				1, TRUE, border_color);
-		}
-		else {
-			framebuffer.DrawLineDDA(mouse_start_x, mouse_start_y, mouse_position.x, mouse_position.y, fill_color, Border);
-		}
-
-	}
+	
 }
 
 void Application::OnWheel(SDL_MouseWheelEvent event)

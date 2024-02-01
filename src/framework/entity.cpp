@@ -76,19 +76,34 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 	
 }
 
-void Entity::Update(float seconds_elapsed) {
+void Entity::Update(float seconds_elapsed, float deg_s, float scale_max, float trans_s, bool rot_local, Vector3 eix_rot) {
 	/*
 	float velocitat_rotacio = 10.0f;
 	matriu.Rotate((velocitat_rotacio * seconds_elapsed ), rot);
 	matriu.Translate(trans.x, trans.y, trans.z);
 	*/
-	float velocitat_rotacio = 1.0f;
-	matriu.Rotate(velocitat_rotacio * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
+	if (deg_s != 0) {
+		if (rot_local) {
+			matriu.RotateLocal(deg_s * seconds_elapsed, eix_rot);
+
+		}
+		else {
+			matriu.Rotate(deg_s * seconds_elapsed, eix_rot);
+
+		}
+	}
+
+	//float velocitat_rotacio = 1.0f;
+	//matriu.Rotate(velocitat_rotacio * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
 
 
+	if (trans_s != 0) {
+		matriu.Translate(trans_s * seconds_elapsed, 0.0f, 0.0f);
+	}
 
-	float velocitat_moviment = 1.0f;  // Ajusta a la velocitat desitjada.
-	matriu.Translate(velocitat_moviment * seconds_elapsed, 0.0f, 0.0f);
+	
+	//float velocitat_moviment = 1.0f;  // Ajusta a la velocitat desitjada.
+	//matriu.Translate(velocitat_moviment * seconds_elapsed, 0.0f, 0.0f);
 	/*scale_m.M[0][0] = scale.x;
 	scale_m.M[1][1] = scale.y;
 	scale_m.M[2][2] = scale.z;
