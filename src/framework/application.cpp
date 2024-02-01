@@ -44,8 +44,10 @@ void Application::Init(void)
 	cam->near_plane = 0.000001;
 	cam->far_plane = 100;
 	cam->aspect = 1;
-	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 
+
+	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+	perspective = true;
 	cam->LookAt(cam->eye, cam->center, cam->up);
 	//cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 	Mesh cara1_m;
@@ -61,11 +63,6 @@ void Application::Init(void)
 	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
 	
 	cara4 = Entity(cara1_m, Vector3(0, 0, 0.25f), Vector3(0, 0.5f, 0), Vector3(1, 1, 0), PI/4);
-	
-	
-	
-	 
-	
 	
 }
 
@@ -86,7 +83,6 @@ void Application::Render(void)
 		cara2.Render(&framebuffer, cam, Color::PURPLE);
 		cara3.Render(&framebuffer, cam, Color::GREEN);
 
-		//actualitzar les matrius aqui? si volem que cada una sigui diferent no ho podem fer a la funcio update de entity no?
 		
 
 	}
@@ -102,7 +98,6 @@ void Application::Update(float seconds_elapsed)
 	cara2.Update(seconds_elapsed, 1.0f, 0, 0, true, Vector3(0.0f, 1.0f, 0.0f));
 	cara3.Update(seconds_elapsed, 1.5f, 0 ,1.0f, false, Vector3(0.0f, 1.0f, 0.0f));
 	cara4.Update(seconds_elapsed, 2,0,0, false, Vector3(1.0f, 0.0f, 0.0f));
-	
 
 	framebuffer.Fill(Color::BLACK);
 }
@@ -115,21 +110,21 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
 		case SDLK_1: {
-			//un objecte
 			key = 1;
 			break;
 		}
 		case SDLK_2: {
-			//animacions
 			key = 2;
 			break;
 		}
 		case SDLK_o: {
+			perspective = false;
 			cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 			framebuffer.Fill(Color::BLACK);
 			break;
 		}
 		case SDLK_p: {
+			perspective = true;
 			cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 			framebuffer.Fill(Color::BLACK);
 			break;
@@ -142,33 +137,49 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 			property = 1;
 			break;
 		}
-		case SDLK_MINUS: {
+		case SDLK_MINUS: { // no va el codi aquest de restar
 			if (property == 0) {
-				if (cam->near_plane - 1 > 0) {
-					cam->near_plane -= 1;
-					cam->UpdateViewMatrix();
-					cam->UpdateProjectionMatrix();
+				if (cam->near_plane - 0.1f >= 0.0) {
+					cam->near_plane = cam->near_plane - 0.1f;
+					if(perspective){
+						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+					}
+					else {
+						cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+					}
 				}
 			}
 			else if (property == 1) {
-				if (cam->far_plane - 1 > 0) {
-					cam->far_plane -= 1;
-					cam->UpdateViewMatrix();
-					cam->UpdateProjectionMatrix();
+				if (cam->far_plane - 0.1f > 0) {
+					cam->far_plane -= 0.1f;
+					if (perspective) {
+						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+					}
+					else {
+						cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+					}
 				}
 			}
 
 		}
 		case SDLK_PLUS: {
 			if (property == 0) {
-				cam->near_plane += 1;
-				cam->UpdateViewMatrix();
-				cam->UpdateProjectionMatrix();
+				cam->near_plane += 0.1f;
+				if (perspective) {
+					cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+				}
+				else {
+					cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+				}
 			}
 			else if (property == 1) {
-				cam->far_plane += 1;
-				cam->UpdateViewMatrix();
-				cam->UpdateProjectionMatrix();
+				cam->far_plane += 0.1f;
+				if (perspective) {
+					cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+				}
+				else {
+					cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+				}
 			}
 		}
 
@@ -247,6 +258,13 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 void Application::OnWheel(SDL_MouseWheelEvent event)
 {
 	float dy = event.preciseY;
+	Vector3 dir = operator-(cam->center, cam->eye);
+	dir = operator*(0.1f * dy, dir);
+	Matrix44 translation_zoom;
+	translation_zoom.SetTranslation(dir.x, dir.y, dir.z);
+	cam->eye = operator*(translation_zoom, cam->eye);
+	cam->LookAt(cam->eye, cam->center, cam->up);
+
 
 	// ...
 }

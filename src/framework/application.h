@@ -80,6 +80,7 @@ public:
 	Entity cara3;
 	Entity cara4;
 	Camera* cam;
+	bool perspective;
 	
 	int property;
 	bool mouse_pressed_left;
