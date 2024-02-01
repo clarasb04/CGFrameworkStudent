@@ -18,10 +18,20 @@ Entity::Entity() {
 	malla = Mesh();
 }
 
-Entity::Entity(Mesh malla_entr, Matrix44 matriu_entr) {
+Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg) {
 	malla = malla_entr;
-	matriu = matriu_entr;
+	matriu.SetIdentity();
+	scale_m.SetIdentity();
+	scale_m.M[0][0] = scale.x;
+	scale_m.M[1][1] = scale.y;
+	scale_m.M[2][2] = scale.z;
+	matriu.Rotate(deg, rot);
+	matriu.Translate(trans.x, trans.y, trans.z);
+	matriu = scale_m * matriu;
+	
 }
+
+
 
 void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 	
@@ -67,6 +77,28 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 }
 
 void Entity::Update(float seconds_elapsed) {
+	/*
+	float velocitat_rotacio = 10.0f;
+	matriu.Rotate((velocitat_rotacio * seconds_elapsed ), rot);
+	matriu.Translate(trans.x, trans.y, trans.z);
+	*/
+	float velocitat_rotacio = 1.0f;
+	matriu.Rotate(velocitat_rotacio * seconds_elapsed, Vector3(0.0f, 1.0f, 0.0f));
 
+
+
+	float velocitat_moviment = 1.0f;  // Ajusta a la velocitat desitjada.
+	matriu.Translate(velocitat_moviment * seconds_elapsed, 0.0f, 0.0f);
+	/*scale_m.M[0][0] = scale.x;
+	scale_m.M[1][1] = scale.y;
+	scale_m.M[2][2] = scale.z;
+	matriu.Rotate((velocitat_rotacio * seconds_elapsed), rot);
+	matriu.Translate(trans.x* seconds_elapsed, trans.y* seconds_elapsed, trans.z* seconds_elapsed);
+	matriu = scale_m * matriu;
+	*/
+	
+	
+	
+	
 }
 

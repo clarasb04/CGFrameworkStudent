@@ -36,11 +36,11 @@ void Application::Init(void)
 	
 
 	cam = new Camera();
-	cam->eye = Vector3(0, 0, 2);
+	cam->eye = Vector3(0, 0, -1);
 	cam->center = Vector3(0, 0, 0);
 	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
-	cam->near_plane = 0.01;
+	cam->near_plane = 0.000001;
 	cam->far_plane = 100;
 	cam->aspect = 1;
 	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
@@ -53,16 +53,16 @@ void Application::Init(void)
 	cara2_m.LoadOBJ("/meshes/cleo.obj");
 	Mesh cara3_m;
 	cara3_m.LoadOBJ("/meshes/anna.obj");
-	cara1 = Entity();
+	cara1 = Entity(cara1_m, Vector3(0, 0, 2), Vector3(1, 0, 0), Vector3(1, 1, 1), PI/2);
 	cara1.malla = cara1_m;
-	cara2 = Entity();
+	cara2 = Entity(cara2_m, Vector3(1, 0, 0), Vector3(0, 1, 0), Vector3(0, 1, 1), PI/2);
 	cara2.malla = cara2_m;
-	cara3 = Entity();
-	cara3.malla = cara3_m;
-	cara4 = Entity();
-	cara4.malla = cara1_m;
-
 	
+	cara4 = Entity(cara1_m, Vector3(1, 0, 1), Vector3(0, 0.5f, 0), Vector3(1, 1, 0), PI/4);
+	cara4.malla = cara1_m;
+	
+	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
+	cara3.malla = cara3_m; 
 	
 	
 }
@@ -70,6 +70,9 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
+	cara4.Render(&framebuffer, cam, Color::BLUE);
+	cara2.Render(&framebuffer, cam, Color::PURPLE);
+	cara3.Render(&framebuffer, cam, Color::GREEN);
 
 
 	if (key == 1) {
@@ -100,6 +103,9 @@ void Application::Update(float seconds_elapsed)
 	cara2.Update(seconds_elapsed);
 	cara3.Update(seconds_elapsed);
 	cara4.Update(seconds_elapsed);
+	
+
+	framebuffer.Fill(Color::BLACK);
 }
 
 //keyboard press event 
