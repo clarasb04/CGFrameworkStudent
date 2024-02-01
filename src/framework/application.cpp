@@ -156,21 +156,10 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_c: {
 			
 		}
-		case SDLK_MINUS: { // no va el codi aquest de restar
+		case SDLK_MINUS:
 			if (property == 0) {
-				if (cam->near_plane - 0.1f >= 0.0) {
-					cam->near_plane = cam->near_plane - 0.1f;
-					if(perspective){
-						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
-					}
-					else {
-						cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
-					}
-				}
-			}
-			else if (property == 1) {
-				if (cam->far_plane - 0.1f > 0) {
-					cam->far_plane -= 0.1f;
+				if (cam->near_plane - 0.25f >= 0.0) {
+					cam->near_plane = cam->near_plane - 0.25f;
 					if (perspective) {
 						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 					}
@@ -179,11 +168,22 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 					}
 				}
 			}
+			else if (property == 1) {
+				if (cam->far_plane - 0.25f > 0) {
+					cam->far_plane -= 0.25f;
+					if (perspective) {
+						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+					}
+					else {
+						cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+					}
+				}
+			}
+			break;
 
-		}
-		case SDLK_PLUS: {
+		case SDLK_PLUS:
 			if (property == 0) {
-				cam->near_plane += 0.1f;
+				cam->near_plane += 0.25f;
 				if (perspective) {
 					cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 				}
@@ -192,7 +192,7 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 				}
 			}
 			else if (property == 1) {
-				cam->far_plane += 0.1f;
+				cam->far_plane += 0.25f;
 				if (perspective) {
 					cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 				}
@@ -200,7 +200,9 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 					cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 				}
 			}
-		}
+			break;
+
+		
 
 					
 	}
