@@ -249,31 +249,6 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 		mouse_end_y = mouse_position.y;
 		mouse_pressed_right = FALSE;
 		
-		
-		/*
-		float dx;
-		float dy;
-		dx = mouse_delta.x * 2 / (framebuffer.width * PI);
-		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
-		cam->center.x = dx;
-		cam->center.y = dy;
-		cam->center.z = 0;
-		cam->LookAt(cam->eye, cam->center, cam->up);
-		*/
-		/*
-		 
-		
-		float dx = mouse_end_x - mouse_start_x; 
-		float dy = mouse_end_y - mouse_start_y; 
-
-		
-		float sensitivity = 0.005f; // You may need to adjust this value 
-		 
-		cara1.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
-		cara2.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
-		cara3.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
-		cara4.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
-		*/
 	}
 	
 
@@ -288,8 +263,8 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 	if (mouse_pressed_left) {
 		float dx;
 		float dy;
-		dx = mouse_delta.x * 2 / (framebuffer.width * PI);
-		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
+		dx = mouse_delta.x * 4 / (framebuffer.width * PI);
+		dy = mouse_delta.y * 4 / (framebuffer.height * PI);
 		Matrix44 rotate_eye_x, rotate_eye_y;
 		Matrix44 translation_center; 
 		translation_center.SetTranslation(-cam->center.x,-cam->center.y, -cam->center.z );
