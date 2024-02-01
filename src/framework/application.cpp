@@ -20,6 +20,7 @@ Application::Application(const char* caption, int width, int height)
 	this->border_color = Color::WHITE;
 	this->mouse_pressed = FALSE;
 	this->num_punts = 0;
+	this->property = 0;
 
 	
 }
@@ -35,9 +36,9 @@ void Application::Init(void)
 	
 
 	cam = new Camera();
-	cam->eye = Vector3(0, 1, 2);
+	cam->eye = Vector3(0, 0, 2);
 	cam->center = Vector3(0, 0, 0);
-	cam->up = Vector3(0, 0, 1);
+	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
 	cam->near_plane = 0.01;
 	cam->far_plane = 100;
@@ -64,7 +65,17 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	prova.Render(&framebuffer, cam, Color::WHITE);
+
+
+	if (key == 1) {
+		//un sol objecte
+		prova.Render(&framebuffer, cam, Color::WHITE);
+
+	}
+	if (key == 2) {
+		//varis objectes animats
+		//pues aqui lo de la animacio
+	}
 
 	framebuffer.Render();
 
@@ -85,59 +96,63 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
 		case SDLK_1: {
-			//Draw Lines
+			//un objecte
 			key = 1;
 			break;
 		}
 		case SDLK_2: {
-			//Draw Rectangles
+			//animacions
 			key = 2;
 			break;
 		}
-		case SDLK_3: {
-			//Draw Cercles
-			key = 3;
-
+		case SDLK_o: {
+			cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+			framebuffer.Fill(Color::BLACK);
 			break;
 		}
-		case SDLK_4: {
-			//Draw Triangles
-			key = 4;
-	
+		case SDLK_p: {
+			cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+			framebuffer.Fill(Color::BLACK);
 			break;
 		}
-		case SDLK_5: {
-			//Paint
-			key = 5;
-			break;
-		}
-		case SDLK_6: {
-			//Animation
-			key = 6;
+		case SDLK_n: {
+			property = 0;
 			break;
 		}
 		case SDLK_f: {
-			//Fill Shapes
-			if (Fill) {
-				Fill = FALSE;
-			}
-			else {
-				Fill = TRUE;
-			}
-			break;
-		}
-		case SDLK_PLUS: {
-			//Incrase Border
-			Border += 1;
+			property = 1;
 			break;
 		}
 		case SDLK_MINUS: {
-			//Decrease Border
-			if (Border > 1) {
-				Border -= 1;
+			if (property == 0) {
+				if (cam->near_plane - 1 > 0) {
+					cam->near_plane -= 1;
+					cam->UpdateViewMatrix();
+					cam->UpdateProjectionMatrix();
+				}
 			}
-			break;
+			else if (property == 1) {
+				if (cam->far_plane - 1 > 0) {
+					cam->far_plane -= 1;
+					cam->UpdateViewMatrix();
+					cam->UpdateProjectionMatrix();
+				}
+			}
+
 		}
+		case SDLK_PLUS: {
+			if (property == 0) {
+				cam->near_plane += 1;
+				cam->UpdateViewMatrix();
+				cam->UpdateProjectionMatrix();
+			}
+			else if (property == 1) {
+				cam->far_plane += 1;
+				cam->UpdateViewMatrix();
+				cam->UpdateProjectionMatrix();
+			}
+		}
+
 					
 	}
 }
@@ -152,6 +167,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 
 
 	}
+
 	
 }
 

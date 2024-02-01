@@ -78,6 +78,7 @@ public:
 	Entity prova;
 	Camera* cam;
 	Vector3 eye, cent, up;
+	int property;
 	bool mouse_pressed;
 
 };
