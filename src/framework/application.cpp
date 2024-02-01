@@ -48,11 +48,11 @@ void Application::Init(void)
 	cam->LookAt(cam->eye, cam->center, cam->up);
 	//cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 	Mesh cara1_m;
-	bool fet = cara1_m.LoadOBJ("/meshes/lee.obj");
+	cara1_m.LoadOBJ("/meshes/lee.obj");
 	Mesh cara2_m;
-	bool fet = cara2_m.LoadOBJ("/meshes/cleo.obj");
+	cara2_m.LoadOBJ("/meshes/cleo.obj");
 	Mesh cara3_m;
-	bool fet = cara3_m.LoadOBJ("/meshes/anna.obj");
+	cara3_m.LoadOBJ("/meshes/anna.obj");
 	cara1 = Entity();
 	cara1.malla = cara1_m;
 	cara2 = Entity();
