@@ -37,7 +37,7 @@ void Application::Init(void)
 	
 
 	cam = new Camera();
-	cam->eye = Vector3(0, 0, -1);
+	cam->eye = Vector3(0, 0, -2);
 	cam->center = Vector3(0, 0, 0);
 	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
@@ -229,11 +229,16 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
 		Matrix44 rotate_eye_x, rotate_eye_y;
 		Matrix44 translation_center; 
-		//translation_center.SetTranslation(;
+		translation_center.SetTranslation(-cam->center.x,-cam->center.y, -cam->center.z );
 		rotate_eye_x.SetRotation(-dx, Vector3(0, 1.0f, 0));
 		rotate_eye_y.SetRotation(-dy, Vector3(1.0f, 0, 0));
+		
+		cam->eye = operator*(translation_center, cam->eye);
 		cam->eye = operator*(rotate_eye_x, cam->eye);
 		cam->eye = operator*(rotate_eye_y, cam->eye);
+
+		translation_center.SetTranslation(cam->center.x, cam->center.y, cam->center.z);
+		cam->eye = operator*(translation_center, cam->eye);
 
 		cam->LookAt(cam->eye, cam->center, cam->up);
 	}
