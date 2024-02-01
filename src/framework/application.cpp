@@ -46,7 +46,7 @@ void Application::Init(void)
 	cam->aspect = 1;
 
 
-	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+	//cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 	perspective = true;
 	cam->LookAt(cam->eye, cam->center, cam->up);
 	//cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
@@ -137,6 +137,25 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 			property = 1;
 			break;
 		}
+		case SDLK_v: {
+			if (cam->fov > 1.0f) {
+				cam->fov -= 0.01;
+				cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane); 
+
+			}
+			break;
+		}
+		case SDLK_b: {
+			if (cam->fov < 150.0f) {
+				cam->fov += 0.01;
+				cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane); 
+
+			}
+			break;
+		}
+		case SDLK_c: {
+			
+		}
 		case SDLK_MINUS: { // no va el codi aquest de restar
 			if (property == 0) {
 				if (cam->near_plane - 0.1f >= 0.0) {
@@ -194,8 +213,11 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 		mouse_start_x = mouse_position.x;
 		mouse_start_y = mouse_position.y;
 		mouse_pressed_left = TRUE;
-
-
+	}
+	if (event.button == SDL_BUTTON_RIGHT) {
+		mouse_start_x = mouse_position.x;
+		mouse_start_y = mouse_position.y;
+		mouse_pressed_right = TRUE;
 	}
 
 	
@@ -221,7 +243,35 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 
 	}
 	if (event.button == SDL_BUTTON_RIGHT) {
+		mouse_end_x = mouse_position.x;
+		mouse_end_y = mouse_position.y;
+		mouse_pressed_right = FALSE;
 		
+		
+		/*
+		float dx;
+		float dy;
+		dx = mouse_delta.x * 2 / (framebuffer.width * PI);
+		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
+		cam->center.x = dx;
+		cam->center.y = dy;
+		cam->center.z = 0;
+		cam->LookAt(cam->eye, cam->center, cam->up);
+		*/
+		/*
+		 
+		
+		float dx = mouse_end_x - mouse_start_x; 
+		float dy = mouse_end_y - mouse_start_y; 
+
+		
+		float sensitivity = 0.005f; // You may need to adjust this value 
+		 
+		cara1.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
+		cara2.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
+		cara3.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
+		cara4.matriu.Translate(dx * sensitivity, dy * sensitivity, 0); 
+		*/
 	}
 	
 
@@ -252,6 +302,17 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 		cam->eye = operator*(translation_center, cam->eye);
 
 		cam->LookAt(cam->eye, cam->center, cam->up);
+	}
+	if (mouse_pressed_right) {
+		float dx;
+		float dy;
+		dx = mouse_delta.x * 2 / (framebuffer.width * PI); 
+		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
+		Vector3 mov = cam->GetLocalVector(Vector3(-dx, -dy, 0)); 
+		cam->center = operator+(cam->center, mov);
+		cam->LookAt(cam->eye, cam->center, cam->up); 
+		
+		
 	}
 }
 

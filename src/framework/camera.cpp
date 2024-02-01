@@ -100,7 +100,6 @@ void Camera::UpdateViewMatrix()
 	// ...
 	
 	
-	//FET TOT CREC
 	
 	Vector3 F;
 	Vector3 S; 
@@ -114,6 +113,7 @@ void Camera::UpdateViewMatrix()
 	S = F.Cross(up);
 	//S = S/|S|
 	S.Normalize();
+
 	//T = S X F
 	T = S.Cross(F);
 
@@ -138,7 +138,7 @@ void Camera::UpdateViewMatrix()
 	view_matrix.M[2][3] = 0;
 	view_matrix.M[3][3] = 1;
 
-	view_matrix.TranslateLocal(-eye.x, -eye.y, -eye.z); //ns segur
+	view_matrix.TranslateLocal(-eye.x, -eye.y, -eye.z); 
 	
 	
 	UpdateViewProjectionMatrix();
