@@ -47,15 +47,20 @@ void Application::Init(void)
 
 	cam->LookAt(cam->eye, cam->center, cam->up);
 	//cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
-	Mesh prova_m;
-	bool fet = prova_m.LoadOBJ("/meshes/lee.obj");
-	if (fet) {
-		std::cout << "fet " << std::endl;
-
-	}
-	prova = Entity();
-	prova.malla = prova_m;
-	
+	Mesh cara1_m;
+	bool fet = cara1_m.LoadOBJ("/meshes/lee.obj");
+	Mesh cara2_m;
+	bool fet = cara2_m.LoadOBJ("/meshes/cleo.obj");
+	Mesh cara3_m;
+	bool fet = cara3_m.LoadOBJ("/meshes/anna.obj");
+	cara1 = Entity();
+	cara1.malla = cara1_m;
+	cara2 = Entity();
+	cara2.malla = cara2_m;
+	cara3 = Entity();
+	cara3.malla = cara3_m;
+	cara4 = Entity();
+	cara4.malla = cara1_m;
 
 	
 	
@@ -69,12 +74,19 @@ void Application::Render(void)
 
 	if (key == 1) {
 		//un sol objecte
-		prova.Render(&framebuffer, cam, Color::WHITE);
+		cara1.Render(&framebuffer, cam, Color::WHITE);
 
 	}
 	if (key == 2) {
 		//varis objectes animats
 		//pues aqui lo de la animacio
+		cara4.Render(&framebuffer, cam, Color::BLUE);
+		cara2.Render(&framebuffer, cam, Color::PURPLE);
+		cara3.Render(&framebuffer, cam, Color::GREEN);
+
+		//actualitzar les matrius aqui? si volem que cada una sigui diferent no ho podem fer a la funcio update de entity no?
+		
+
 	}
 
 	framebuffer.Render();
@@ -85,7 +97,9 @@ void Application::Render(void)
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-
+	cara2.Update(seconds_elapsed);
+	cara3.Update(seconds_elapsed);
+	cara4.Update(seconds_elapsed);
 }
 
 //keyboard press event 

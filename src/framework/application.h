@@ -75,7 +75,10 @@ public:
 		return Vector2(float(w), float(h));
 	}
 
-	Entity prova;
+	Entity cara1;
+	Entity cara2;
+	Entity cara3;
+	Entity cara4;
 	Camera* cam;
 	Vector3 eye, cent, up;
 	int property;
