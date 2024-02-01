@@ -80,8 +80,9 @@ public:
 	Entity cara3;
 	Entity cara4;
 	Camera* cam;
-	Vector3 eye, cent, up;
+	
 	int property;
-	bool mouse_pressed;
+	bool mouse_pressed_left;
+	bool mouse_pressed_right;
 
 };

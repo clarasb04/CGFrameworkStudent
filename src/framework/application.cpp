@@ -18,7 +18,8 @@ Application::Application(const char* caption, int width, int height)
 	this->keystate = SDL_GetKeyboardState(nullptr);
 	this->framebuffer.Resize(w, h);
 	this->border_color = Color::WHITE;
-	this->mouse_pressed = FALSE;
+	this->mouse_pressed_left = FALSE;
+	this->mouse_pressed_right = FALSE;
 	this->num_punts = 0;
 	this->property = 0;
 
@@ -53,7 +54,7 @@ void Application::Init(void)
 	cara2_m.LoadOBJ("/meshes/cleo.obj");
 	Mesh cara3_m;
 	cara3_m.LoadOBJ("/meshes/anna.obj");
-	cara1 = Entity(cara1_m, Vector3(0.5f, 0, 2), Vector3(1, 0, 0), Vector3(1, 2, 1), 0);
+	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
 	
 	cara2 = Entity(cara2_m, Vector3(0, -0.5f, 0), Vector3(0, 1, 0), Vector3(1.5, 1.5, 1.5), PI/2);
 
@@ -181,7 +182,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 	if (event.button == SDL_BUTTON_LEFT) {
 		mouse_start_x = mouse_position.x;
 		mouse_start_y = mouse_position.y;
-		mouse_pressed = TRUE;
+		mouse_pressed_left = TRUE;
 
 
 	}
@@ -194,12 +195,22 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	if (event.button == SDL_BUTTON_LEFT) {
 		mouse_end_x = mouse_position.x;
 		mouse_end_y = mouse_position.y;
-		mouse_pressed = FALSE;
+		/*float dx = mouse_end_x - mouse_start_x;
+		float dy = mouse_end_y - mouse_start_y; 
+		dx = dx*2 /(framebuffer.width*PI); 
+		dy = dy*2 / (framebuffer.height* PI);
+		Matrix44 rotate_eye_x, rotate_eye_y;
+		rotate_eye_x.SetRotation(dx, Vector3(0, 1.0f, 0));
+		rotate_eye_y.SetRotation(dy, Vector3(1.0f, 0, 0));
+		cam->eye = operator*(rotate_eye_x, cam->eye);
+		cam->eye = operator*(rotate_eye_y, cam->eye);
+
+		cam->LookAt(cam->eye, cam->center, cam->up);*/
+		mouse_pressed_left = FALSE;
 
 	}
 	if (event.button == SDL_BUTTON_RIGHT) {
-		Matrix44 rotate_eye;
-		rotate_eye.GetRotationOnly();
+		
 	}
 	
 
@@ -211,7 +222,21 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 { 
-	
+	if (mouse_pressed_left) {
+		float dx;
+		float dy;
+		dx = mouse_delta.x * 2 / (framebuffer.width * PI);
+		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
+		Matrix44 rotate_eye_x, rotate_eye_y;
+		Matrix44 translation_center; 
+		//translation_center.SetTranslation(;
+		rotate_eye_x.SetRotation(-dx, Vector3(0, 1.0f, 0));
+		rotate_eye_y.SetRotation(-dy, Vector3(1.0f, 0, 0));
+		cam->eye = operator*(rotate_eye_x, cam->eye);
+		cam->eye = operator*(rotate_eye_y, cam->eye);
+
+		cam->LookAt(cam->eye, cam->center, cam->up);
+	}
 }
 
 void Application::OnWheel(SDL_MouseWheelEvent event)
