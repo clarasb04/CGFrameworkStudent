@@ -308,7 +308,7 @@ void Application::OnMouseMove(SDL_MouseButtonEvent event)
 		float dy;
 		dx = mouse_delta.x * 2 / (framebuffer.width * PI); 
 		dy = mouse_delta.y * 2 / (framebuffer.height * PI);
-		Vector3 mov = cam->GetLocalVector(Vector3(-dx, -dy, 0)); 
+		Vector3 mov = cam->GetLocalVector(Vector3(dx, -dy, 0)); 
 		cam->center = operator+(cam->center, mov);
 		cam->LookAt(cam->eye, cam->center, cam->up); 
 		
