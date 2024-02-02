@@ -44,7 +44,7 @@ void Application::Init(void)
 	cam->near_plane = 0.000001;
 	cam->far_plane = 100;
 	cam->aspect = 1;
-
+	//holaaaaaaa
 	perspective = true;
 	cam->LookAt(cam->eye, cam->center, cam->up);
 	
