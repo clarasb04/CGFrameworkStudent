@@ -63,7 +63,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 			continue;
 		}
 
-		framebuffer->DrawTriangle(Vector2(p1.x, p1.y), Vector2(p2.x, p2.y), Vector2(p3.x, p3.y), Color::GREEN, 1, 1, Color::GREEN);
+		framebuffer->DrawTriangle(Vector2(p1.x, p1.y), Vector2(p2.x, p2.y), Vector2(p3.x, p3.y), c, 1, 1, c);
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p2.x, p2.y, c, 1);
 		//framebuffer->DrawLineDDA(p3.x, p3.y, p2.x, p2.y, c, 1);
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p3.x, p3.y, c, 1);

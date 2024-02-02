@@ -626,3 +626,38 @@ void ParticleSystem::Update(float dt) {
 		}
 	}
 };
+
+void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color& c0, const Color& c1, const Color& c2) {
+
+
+	Matrix44 mat;
+	mat.M[0][0] = p0.x ;
+	mat.M[0][1] = p1.x;
+	mat.M[0][2] = p2.x;
+
+	mat.M[1][0] = p0.y;
+	mat.M[1][1] = p1.y;
+	mat.M[1][2] = p2.y;
+
+	mat.M[2][0] = 1;
+	mat.M[2][1] = 1;
+	mat.M[2][2] = 1;
+
+	mat.Inverse();
+
+
+	std::vector<Cell> table;
+	table.resize(height);
+	ScanLineDDA(p0.x, p0.y, p1.x, p1.y, table);
+	ScanLineDDA(p1.x, p1.y, p2.x, p2.y, table);
+	ScanLineDDA(p2.x, p2.y, p0.x, p0.y, table);
+	for (int i = 0; i < height; i++) {
+		if (table[i].xmin <= table[i].xmax) {
+			for (int j = table[i].xmin; j <= table[i].xmax; j++) {
+				//SetPixelSafe(j, i, fillColor);
+			}
+		}
+	}
+
+};
+
