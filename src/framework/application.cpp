@@ -79,9 +79,6 @@ void Application::Render(void)
 		cara4.Render(&framebuffer, cam, Color::BLUE);
 		cara2.Render(&framebuffer, cam, Color::PURPLE);
 		cara3.Render(&framebuffer, cam, Color::GREEN);
-
-		
-
 	}
 
 	framebuffer.Render();
@@ -150,35 +147,29 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 			}
 			break;
 		}
-		case SDLK_c: {
-			
-		}
-		case SDLK_MINUS:
+		case SDLK_MINUS:{
 			if (property == 0) {
-				if (cam->near_plane - 0.25f >= 0.0) {
-					cam->near_plane = cam->near_plane - 0.25f;
-					if (perspective) {
-						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
-					}
-					else {
-						cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
-					}
+				cam->near_plane = cam->near_plane - 0.25f;
+				if (perspective) {
+					cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
+				}
+				else {
+					cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 				}
 			}
 			else if (property == 1) {
-				if (cam->far_plane - 0.25f > 0) {
-					cam->far_plane -= 0.25f;
-					if (perspective) {
-						cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
-					}
-					else {
-						cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
-					}
+				cam->far_plane -= 0.25f;
+				if (perspective) {
+					cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 				}
+				else {
+					cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+				}
+				
 			}
 			break;
-
-		case SDLK_PLUS:
+		}
+		case SDLK_PLUS:{
 			if (property == 0) {
 				cam->near_plane += 0.25f;
 				if (perspective) {
@@ -198,7 +189,7 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 				}
 			}
 			break;
-
+		}
 					
 	}
 }
