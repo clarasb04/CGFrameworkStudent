@@ -137,7 +137,7 @@ void Camera::UpdateViewMatrix()
 void Camera::UpdateProjectionMatrix()
 {
 	// Reset Matrix (Identity)
-	//projection_matrix.SetIdentity();
+	projection_matrix.SetIdentity();
 
 	// Comment this line to create your own projection matrix!
 	//SetExampleProjectionMatrix();
