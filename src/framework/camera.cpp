@@ -89,17 +89,6 @@ void Camera::UpdateViewMatrix()
 	// Comment this line to create your own view matrix!
 	//SetExampleViewMatrix();
 
-	// Remember how to fill a Matrix4x4 (check framework slides)
-	// Careful with the order of matrix multiplications, and be sure to use normalized vectors!
-	
-	// Create the view matrix rotation
-	// ...
-	// view_matrix.M[3][3] = 1.0;
-
-	// Translate view matrix
-	// ...
-	
-	
 	
 	Vector3 F;
 	Vector3 S; 
@@ -153,7 +142,6 @@ void Camera::UpdateProjectionMatrix()
 	// Comment this line to create your own projection matrix!
 	//SetExampleProjectionMatrix();
 
-	// Remember how to fill a Matrix4x4 (check framework slides)
 	
 	if (type == PERSPECTIVE) {
 		

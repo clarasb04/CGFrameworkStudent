@@ -45,11 +45,9 @@ void Application::Init(void)
 	cam->far_plane = 100;
 	cam->aspect = 1;
 
-
-	//cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 	perspective = true;
 	cam->LookAt(cam->eye, cam->center, cam->up);
-	//cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+	
 	Mesh cara1_m;
 	cara1_m.LoadOBJ("/meshes/lee.obj");
 	Mesh cara2_m;
@@ -78,7 +76,6 @@ void Application::Render(void)
 	}
 	if (key == 2) {
 		//varis objectes animats
-		//pues aqui lo de la animacio
 		cara4.Render(&framebuffer, cam, Color::BLUE);
 		cara2.Render(&framebuffer, cam, Color::PURPLE);
 		cara3.Render(&framebuffer, cam, Color::GREEN);
@@ -202,8 +199,6 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 			}
 			break;
 
-		
-
 					
 	}
 }
@@ -230,17 +225,6 @@ void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 	if (event.button == SDL_BUTTON_LEFT) {
 		mouse_end_x = mouse_position.x;
 		mouse_end_y = mouse_position.y;
-		/*float dx = mouse_end_x - mouse_start_x;
-		float dy = mouse_end_y - mouse_start_y; 
-		dx = dx*2 /(framebuffer.width*PI); 
-		dy = dy*2 / (framebuffer.height* PI);
-		Matrix44 rotate_eye_x, rotate_eye_y;
-		rotate_eye_x.SetRotation(dx, Vector3(0, 1.0f, 0));
-		rotate_eye_y.SetRotation(dy, Vector3(1.0f, 0, 0));
-		cam->eye = operator*(rotate_eye_x, cam->eye);
-		cam->eye = operator*(rotate_eye_y, cam->eye);
-
-		cam->LookAt(cam->eye, cam->center, cam->up);*/
 		mouse_pressed_left = FALSE;
 
 	}
@@ -303,8 +287,6 @@ void Application::OnWheel(SDL_MouseWheelEvent event)
 	cam->eye = operator*(translation_zoom, cam->eye);
 	cam->LookAt(cam->eye, cam->center, cam->up);
 
-
-	// ...
 }
 
 void Application::OnFileChanged(const char* filename)
