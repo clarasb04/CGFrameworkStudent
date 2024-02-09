@@ -23,6 +23,8 @@ Application::Application(const char* caption, int width, int height)
 	this->num_punts = 0;
 	this->property = 0;
 
+	this->zBuffer.Resize(w, h);
+
 	
 }
 

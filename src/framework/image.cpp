@@ -643,6 +643,7 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 	mat.M[2][1] = 1;
 	mat.M[2][2] = 1;
 
+	mat.Transpose();
 	mat.Inverse();
 
 
@@ -654,7 +655,12 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 	for (int i = 0; i < height; i++) {
 		if (table[i].xmin <= table[i].xmax) {
 			for (int j = table[i].xmin; j <= table[i].xmax; j++) {
-				//SetPixelSafe(j, i, fillColor);
+				Vector3 bcoord = mat * Vector3(j, i, 1);
+				bcoord.Clamp(0, 1);
+				float sum = bcoord.x + bcoord.y + bcoord.z;
+				bcoord = bcoord / sum;
+				Color inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
+				SetPixelSafe(j, i, inter_c);
 			}
 		}
 	}
