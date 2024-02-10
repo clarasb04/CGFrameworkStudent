@@ -33,7 +33,7 @@ Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float
 
 
 
-void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
+void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, FloatImage* zBuf) {
 	
 	for (int i = 0; i < malla.GetVertices().size(); i+=3) {
 		Vector3 p1;
@@ -63,7 +63,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
 			continue;
 		}
 
-		framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, 1), Vector3(p2.x, p2.y,1 ), Vector3(p3.x, p3.y,1 ), Color::GREEN, Color::BLUE, Color::RED);
+		framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, p1.z), Vector3(p2.x, p2.y, p2.z), Vector3(p3.x, p3.y, p3.z ), Color::GREEN, Color::BLUE, Color::RED, zBuf);
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p2.x, p2.y, c, 1);
 		//framebuffer->DrawLineDDA(p3.x, p3.y, p2.x, p2.y, c, 1);
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p3.x, p3.y, c, 1);

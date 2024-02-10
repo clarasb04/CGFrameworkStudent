@@ -97,7 +97,7 @@ public:
 	void ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table);
 
 	void Image::DrawImage(const Image& image, int x, int y, bool top);
-	void DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color& c0, const Color& c1, const Color& c2);
+	void DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuf);
 
 	// Used to easy code
 #ifndef IGNORE_LAMBDAS

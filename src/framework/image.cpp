@@ -627,7 +627,7 @@ void ParticleSystem::Update(float dt) {
 	}
 };
 
-void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color& c0, const Color& c1, const Color& c2) {
+void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color& c0, const Color& c1, const Color& c2, FloatImage* zBuf) {
 
 
 	Matrix44 mat;
@@ -659,8 +659,15 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 				bcoord.Clamp(0, 1);
 				float sum = bcoord.x + bcoord.y + bcoord.z;
 				bcoord = bcoord / sum;
-				Color inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
-				SetPixelSafe(j, i, inter_c);
+				
+
+				float pixel_z = bcoord.x * p0.z + bcoord.y * p1.z + bcoord.z * p2.z;
+				if (zBuf->GetPixel(j, i) == -1.0f || zBuf->GetPixel(j, i) > pixel_z) {
+					Color inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
+					zBuf->SetPixel(j, i, pixel_z);
+					SetPixelSafe(j, i, inter_c);
+				}
+				
 			}
 		}
 	}

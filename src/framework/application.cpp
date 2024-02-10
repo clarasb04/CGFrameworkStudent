@@ -69,18 +69,18 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	
+	zBuffer.Fill(-1.0f);
 
 	if (key == 1) {
 		//un sol objecte
-		cara1.Render(&framebuffer, cam, Color::WHITE);
+		cara1.Render(&framebuffer, cam, Color::WHITE, &zBuffer);
 
 	}
 	if (key == 2) {
 		//varis objectes animats
-		cara4.Render(&framebuffer, cam, Color::BLUE);
-		cara2.Render(&framebuffer, cam, Color::PURPLE);
-		cara3.Render(&framebuffer, cam, Color::GREEN);
+		cara4.Render(&framebuffer, cam, Color::BLUE, &zBuffer);
+		cara2.Render(&framebuffer, cam, Color::PURPLE, &zBuffer);
+		cara3.Render(&framebuffer, cam, Color::GREEN, &zBuffer);
 	}
 
 	framebuffer.Render();
