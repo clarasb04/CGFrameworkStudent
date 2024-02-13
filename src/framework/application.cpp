@@ -22,7 +22,7 @@ Application::Application(const char* caption, int width, int height)
 	this->mouse_pressed_right = FALSE;
 	this->num_punts = 0;
 	this->property = 0;
-
+	 
 	this->zBuffer.Resize(w, h);
 
 	
@@ -39,7 +39,7 @@ void Application::Init(void)
 	
 
 	cam = new Camera();
-	cam->eye = Vector3(0, 0, -2);
+	cam->eye = Vector3(0, 0, 2);
 	cam->center = Vector3(0, 0, 0);
 	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
@@ -63,6 +63,11 @@ void Application::Init(void)
 	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
 	
 	cara4 = Entity(cara1_m, Vector3(0, 0, 0.25f), Vector3(0, 0.5f, 0), Vector3(1, 1, 0), PI/4);
+	
+	Image t1;
+	t1.LoadTGA("/textures/lee_color_specular.tga");
+	t1.FlipY();
+	cara1.texture = t1;
 	
 }
 

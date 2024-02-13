@@ -16,6 +16,7 @@
 Entity::Entity() {
 	matriu = Matrix44();
 	malla = Mesh();
+	texture = Image();
 }
 
 Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg) {
@@ -63,7 +64,14 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, FloatIma
 			continue;
 		}
 
-		framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, p1.z), Vector3(p2.x, p2.y, p2.z), Vector3(p3.x, p3.y, p3.z ), Color::GREEN, Color::BLUE, Color::RED, zBuf);
+		Vector2 uv0 = malla.GetUVs()[1];
+		Vector2 uv1 = malla.GetUVs()[i+1];
+		Vector2 uv2 = malla.GetUVs()[i+2];
+		
+		framebuffer->DrawTriangleInterpolated(p1, p2, p3, Color::WHITE, Color::WHITE, Color::WHITE, zBuf, &texture, uv0, uv1, uv2);
+		
+
+		//framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, p1.z), Vector3(p2.x, p2.y, p2.z), Vector3(p3.x, p3.y, p3.z ), Color::GREEN, Color::BLUE, Color::RED, zBuf, );
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p2.x, p2.y, c, 1);
 		//framebuffer->DrawLineDDA(p3.x, p3.y, p2.x, p2.y, c, 1);
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p3.x, p3.y, c, 1);
