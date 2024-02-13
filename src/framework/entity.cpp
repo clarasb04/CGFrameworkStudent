@@ -64,7 +64,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, FloatIma
 			continue;
 		}
 
-		Vector2 uv0 = malla.GetUVs()[1];
+		Vector2 uv0 = malla.GetUVs()[i];
 		Vector2 uv1 = malla.GetUVs()[i+1];
 		Vector2 uv2 = malla.GetUVs()[i+2];
 		

@@ -644,7 +644,7 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 	mat.M[2][2] = 1;
 
 	mat.Transpose();
-	mat.Inverse();
+	mat.Inverse(); 
 
 
 	std::vector<Cell> table;
@@ -662,23 +662,22 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 				
 
 				float pixel_z = bcoord.x * p0.z + bcoord.y * p1.z + bcoord.z * p2.z;
+				Color inter_c;
+
+				
 				if (zBuf->GetPixel(j, i) == -1.0f || zBuf->GetPixel(j, i) > pixel_z) {
 					
-				
-					Color inter_c;
-					
-					if (texture != nullptr){
-						Vector2 inter_uv = uv0* bcoord.x + uv1*bcoord.y + uv2*bcoord.z;
+					if (texture != nullptr) {
+						Vector2 inter_uv = uv0 * bcoord.x + uv1 * bcoord.y + uv2 * bcoord.z;
 
 						inter_uv.x = inter_uv.x * (texture->width - 1);
 						inter_uv.y = inter_uv.y * (texture->height - 1);
-
 						inter_c = texture->GetPixel(inter_uv.x, inter_uv.y);
 					}
 					else {
-						inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2; 
+						inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
 					}
-
+					
 					zBuf->SetPixel(j, i, pixel_z);
 					SetPixelSafe(j, i, inter_c); 
 				}

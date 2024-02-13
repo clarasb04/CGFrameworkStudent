@@ -54,10 +54,11 @@ void Application::Init(void)
 	cara1_m.LoadOBJ("/meshes/lee.obj");
 	Mesh cara2_m;
 	cara2_m.LoadOBJ("/meshes/cleo.obj");
+
 	Mesh cara3_m;
 	cara3_m.LoadOBJ("/meshes/anna.obj");
 	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
-	
+	cara22 = Entity(cara2_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
 	cara2 = Entity(cara2_m, Vector3(0, -0.5f, 0), Vector3(0, 1, 0), Vector3(1.5, 1.5, 1.5), PI/2);
 
 	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
@@ -66,8 +67,13 @@ void Application::Init(void)
 	
 	Image t1;
 	t1.LoadTGA("/textures/lee_color_specular.tga");
-	t1.FlipY();
+	t1.FlipY(); 
 	cara1.texture = t1;
+
+	Image t2;
+	t2.LoadTGA("/textures/cleo_color_specular.tga");
+	t2.FlipY();
+	cara22.texture = t2;
 	
 }
 
@@ -78,7 +84,7 @@ void Application::Render(void)
 
 	if (key == 1) {
 		//un sol objecte
-		cara1.Render(&framebuffer, cam, Color::WHITE, &zBuffer);
+		cara22.Render(&framebuffer, cam, Color::WHITE, &zBuffer);
 
 	}
 	if (key == 2) {
