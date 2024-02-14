@@ -22,6 +22,10 @@ Application::Application(const char* caption, int width, int height)
 	this->mouse_pressed_right = FALSE;
 	this->num_punts = 0;
 	this->property = 0;
+
+	this->occlusions = true;
+	this->interpolated = true;
+	this->mesh = true;
 	 
 	this->zBuffer.Resize(w, h);
 
@@ -80,18 +84,18 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	zBuffer.Fill(-1.0f);
+	zBuffer.Fill(1000000.0f);
 
 	if (key == 1) {
 		//un sol objecte
-		cara22.Render(&framebuffer, cam, Color::WHITE, &zBuffer);
+		cara22.Render(&framebuffer, cam, Color::WHITE, TRUE, &zBuffer);
 
 	}
 	if (key == 2) {
 		//varis objectes animats
-		cara4.Render(&framebuffer, cam, Color::BLUE, &zBuffer);
-		cara2.Render(&framebuffer, cam, Color::PURPLE, &zBuffer);
-		cara3.Render(&framebuffer, cam, Color::GREEN, &zBuffer);
+		cara4.Render(&framebuffer, cam, Color::BLUE, FALSE, &zBuffer);
+		cara2.Render(&framebuffer, cam, Color::PURPLE, FALSE, &zBuffer);
+		cara3.Render(&framebuffer, cam, Color::GREEN, FALSE, &zBuffer);
 	}
 
 	framebuffer.Render();
@@ -200,6 +204,39 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 				else {
 					cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 				}
+			}
+			break;
+		}
+		case SDLK_c: {
+			if (!interpolated) {
+
+				interpolated = true;
+			}
+			else {
+
+				interpolated = false;
+			}
+			break;
+		}
+		case SDLK_z: {
+			if (!occlusions) {
+
+				occlusions = true;
+			}
+			else {
+
+				occlusions = false;
+			}
+			break;
+		}
+		case SDLK_i: {
+			if (!mesh) {
+
+				mesh = true;
+			}
+			else {
+
+				mesh = false;
 			}
 			break;
 		}

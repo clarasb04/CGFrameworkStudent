@@ -417,33 +417,21 @@ void Image::DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2
 }
 
 void Image::ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table) {
-	if (y0 < 0 || y1 < 0 || y0 >= height || y1 >= height) {
-		return;
-	}
-	if (y0 > y1) {
-		std::swap(x0, x1);
-		std::swap(y0, y1);
-	}
-	int dx = x1 - x0;
-	int  dy = y1 - y0;
+	float dx = x1 - x0;
+	float dy = y1 - y0;
 
-	if (dy == 0) {
-		return;
-	}
+	float d = std::max(abs(dx), abs(dy));
+	Vector2 v = Vector2(dx / d, dy / d);
+	float x = x0, y = y0;
 
-	float m = static_cast<float>(dx) / static_cast<float>(dy);
-	float x = static_cast<float>(x0);
-
-	for (int y = y0; y <= y1; ++y) {
-		if (y >= 0 && y < height) {
-			if (x < table[y].xmin) {
-				table[y].xmin = static_cast<int>(x);
-			}
-			if (x > table[y].xmax) {
-				table[y].xmax = static_cast<int>(x);
-			}
+	for (float i = 0; i <= d; i++) {
+		//Update the table only if the calculated y coordinates are within the range of the image
+		if (y >= 0 && y < table.size()) {
+			table[floor(y)].xmin = std::min(static_cast<int>(floor(x)), table[floor(y)].xmin);
+			table[floor(y)].xmax = std::max(static_cast<int>(floor(x)), table[floor(y)].xmax);
 		}
-		x += m;
+		x += v.x;
+		y += v.y;
 	}
 }
 
@@ -632,20 +620,63 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 
 	Matrix44 mat;
 	mat.M[0][0] = p0.x ;
-	mat.M[0][1] = p1.x;
-	mat.M[0][2] = p2.x;
+	mat.M[1][0] = p1.x;
+	mat.M[2][0] = p2.x;
 
-	mat.M[1][0] = p0.y;
+	mat.M[0][1] = p0.y;
 	mat.M[1][1] = p1.y;
-	mat.M[1][2] = p2.y;
+	mat.M[2][1] = p2.y;
 
-	mat.M[2][0] = 1;
-	mat.M[2][1] = 1;
+	mat.M[0][2] = 1;
+	mat.M[1][2] = 1;
 	mat.M[2][2] = 1;
 
-	mat.Transpose();
 	mat.Inverse(); 
 
+
+	//Create table
+	std::vector<Cell> table(height);
+	//Update table with the min and max x values of the triangle
+	ScanLineDDA(p0.x, p0.y, p1.x, p1.y, table);
+	ScanLineDDA(p1.x, p1.y, p2.x, p2.y, table);
+	ScanLineDDA(p0.x, p0.y, p2.x, p2.y, table);
+	//Paint the triangle
+	for (int i = 0; i < table.size(); i++) {
+		//Paint each row of the triangle from minx to maxx (included)
+		for (int j = table[i].xmin; j <= table[i].xmax+1; j++) {
+			Vector3 bcoord = mat * Vector3(j, i, 1);
+			bcoord.Clamp(0, 1);
+			float sum = bcoord.x + bcoord.y + bcoord.z;
+			bcoord = bcoord / sum;
+
+
+			float pixel_z = bcoord.x * p0.z + bcoord.y * p1.z + bcoord.z * p2.z;
+			Color inter_c;
+
+
+			if (zBuf->GetPixel(j, i) > pixel_z) {
+				if (texture != nullptr) {
+					Vector2 inter_uv = uv0 * bcoord.x + uv1 * bcoord.y + uv2 * bcoord.z;
+
+					inter_uv.x = inter_uv.x * (texture->width - 1);
+					inter_uv.y = inter_uv.y * (texture->height - 1);
+					inter_c = texture->GetPixel(inter_uv.x, inter_uv.y);
+				}
+				else {
+					inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
+				}
+
+				zBuf->SetPixel(j, i, pixel_z);
+				SetPixelSafe(j, i, inter_c);
+			}
+		}
+	}
+
+
+
+
+
+	/*
 
 	std::vector<Cell> table;
 	table.resize(height);
@@ -684,7 +715,8 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 				
 			}
 		}
-	}
+	}*/
+		
 
 };
 

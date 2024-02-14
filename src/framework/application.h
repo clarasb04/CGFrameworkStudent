@@ -26,6 +26,9 @@ public:
 	Color border_color;
 	Color fill_color;
 
+	bool interpolated;
+	bool occlusions;
+	bool mesh;
 
 	// Window
 
