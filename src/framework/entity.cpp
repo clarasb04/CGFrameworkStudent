@@ -48,6 +48,12 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, bool tex
 		p2 = operator *(matriu, malla.GetVertices()[i+1]);
 		p3 = operator *(matriu, malla.GetVertices()[i+2]);
 
+		Vector3 dist_p1 = camera->eye - p1;
+		Vector3 dist_p2 = camera->eye - p2;
+		Vector3 dist_p3 = camera->eye - p3;
+		Vector3 zetas = Vector3(sqrt(dist_p1.x * dist_p1.x + dist_p1.y * dist_p1.y + dist_p1.z * dist_p1.z),
+			sqrt(dist_p2.x * dist_p2.x + dist_p2.y * dist_p2.y + dist_p2.z * dist_p2.z),
+			sqrt(dist_p3.x * dist_p3.x + dist_p3.y * dist_p3.y + dist_p3.z * dist_p3.z));
 
 		bool negZ1, negZ2, negZ3; 
 		p1 = camera->ProjectVector(p1, negZ1);
@@ -81,9 +87,9 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, bool tex
 		//framebuffer->DrawLineDDA(p1.x, p1.y, p3.x, p3.y, c, 1);
 		switch (mode) {
 		case eRenderMode::POINTCLOUD:
-			framebuffer->SetPixel(p1.x, p1.y, c);
-			framebuffer->SetPixel(p2.x, p2.y, c);
-			framebuffer->SetPixel(p3.x, p3.y, c);
+			framebuffer->SetPixelSafe(p1.x, p1.y, c);
+			framebuffer->SetPixelSafe(p2.x, p2.y, c);
+			framebuffer->SetPixelSafe(p3.x, p3.y, c);
 
 			break;
 
@@ -98,7 +104,7 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, bool tex
 			break;
 
 		case eRenderMode::TRIANGLES_INTERPOLATED:
-			framebuffer->DrawTriangleInterpolated(p1, p2, p3, Color::RED, Color::BLUE, Color::GREEN, zBuf, &texture, uv0, uv1, uv2);
+			framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, zetas.x), Vector3(p2.x, p2.y, zetas.y), Vector3(p3.x, p3.y, zetas.z), Color::RED, Color::BLUE, Color::GREEN, zBuf, &texture, uv0, uv1, uv2);
 			break;
 		}
 		

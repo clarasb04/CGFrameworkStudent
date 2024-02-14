@@ -63,7 +63,7 @@ void Application::Init(void)
 	Mesh cara3_m;
 	cara3_m.LoadOBJ("/meshes/anna.obj");
 	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
-	cara22 = Entity(cara2_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara22 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
 	cara22.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
 	cara2 = Entity(cara2_m, Vector3(0, -0.5f, 0), Vector3(0, 1, 0), Vector3(1.5, 1.5, 1.5), PI/2);
 
@@ -79,7 +79,7 @@ void Application::Init(void)
 	Image t2;
 	t2.LoadTGA("/textures/cleo_color_specular.tga");
 	t2.FlipY();
-	cara22.texture = t2;
+	cara22.texture = t1;
 	
 }
 
