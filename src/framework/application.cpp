@@ -52,6 +52,7 @@ void Application::Init(void)
 	cam->aspect = 1;
 	//holaaaaaaa
 	perspective = true;
+	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 	cam->LookAt(cam->eye, cam->center, cam->up);
 	
 	Mesh cara1_m;
@@ -63,6 +64,7 @@ void Application::Init(void)
 	cara3_m.LoadOBJ("/meshes/anna.obj");
 	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
 	cara22 = Entity(cara2_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara22.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
 	cara2 = Entity(cara2_m, Vector3(0, -0.5f, 0), Vector3(0, 1, 0), Vector3(1.5, 1.5, 1.5), PI/2);
 
 	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
