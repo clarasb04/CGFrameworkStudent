@@ -40,7 +40,6 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	
 
 	cam = new Camera();
 	cam->eye = Vector3(0, 0, 2);
@@ -50,7 +49,6 @@ void Application::Init(void)
 	cam->near_plane = 0.000001;
 	cam->far_plane = 100;
 	cam->aspect = 1;
-	//holaaaaaaa
 	perspective = true;
 	cam->SetPerspective(cam->fov, cam->aspect, cam->near_plane, cam->far_plane);
 	cam->LookAt(cam->eye, cam->center, cam->up);
@@ -59,28 +57,54 @@ void Application::Init(void)
 	cara1_m.LoadOBJ("/meshes/lee.obj");
 	Mesh cara2_m;
 	cara2_m.LoadOBJ("/meshes/cleo.obj");
-
-	Mesh cara3_m;
+	Mesh cara3_m; 
 	cara3_m.LoadOBJ("/meshes/anna.obj");
-	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
-	cara22 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
-	cara22.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
-	cara2 = Entity(cara2_m, Vector3(0, -0.5f, 0), Vector3(0, 1, 0), Vector3(1.5, 1.5, 1.5), PI/2);
-
-	cara3 = Entity(cara3_m, Vector3(0, 0.5f, 0), Vector3(0, 1, 0), Vector3(1, 1, 1), PI/2);
 	
-	cara4 = Entity(cara1_m, Vector3(0, 0, 0.25f), Vector3(0, 0.5f, 0), Vector3(1, 1, 0), PI/4);
+	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara1.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+
+	cara2 = Entity(cara2_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara2.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+
+	cara3 = Entity(cara3_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara3.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+
+	cara1m = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+
+	cara2m = Entity(cara2_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+
+	cara3m = Entity(cara3_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);
+	
 	
 	Image t1;
 	t1.LoadTGA("/textures/lee_color_specular.tga");
 	t1.FlipY(); 
-	cara1.texture = t1;
+	Image t2; 
+	t2.LoadTGA("/textures/cleo_color_specular.tga"); 
+	t2.FlipY(); 
+	Image t3; 
+	t3.LoadTGA("/textures/anna_color_specular.tga"); 
+	t3.FlipY();
 
-	Image t2;
-	t2.LoadTGA("/textures/cleo_color_specular.tga");
-	t2.FlipY();
-	cara22.texture = t1;
-	
+	Image t1_n;
+	t1_n.LoadTGA("/textures/lee_normal.tga");
+	t1_n.FlipY();
+	Image t2_n;
+	t2_n.LoadTGA("/textures/cleo_normal.tga");
+	t2_n.FlipY();
+	Image t3_n;
+	t3_n.LoadTGA("/textures/anna_normal.tga");
+	t3_n.FlipY();
+
+	cara1.texture = t1;
+	cara2.texture = t2;
+	cara3.texture = t3;
+	cara1m.texture = t1_n;
+	cara2m.texture = t2_n;
+	cara3m.texture = t3_n;
 }
 
 // Render one frame
@@ -88,17 +112,9 @@ void Application::Render(void)
 {
 	zBuffer.Fill(1000000.0f);
 
-	if (key == 1) {
-		//un sol objecte
-		cara22.Render(&framebuffer, cam, Color::WHITE, TRUE, &zBuffer);
+	
+	cara3m.Render(&framebuffer, cam, Color::WHITE, TRUE, &zBuffer);
 
-	}
-	if (key == 2) {
-		//varis objectes animats
-		cara4.Render(&framebuffer, cam, Color::BLUE, FALSE, &zBuffer);
-		cara2.Render(&framebuffer, cam, Color::PURPLE, FALSE, &zBuffer);
-		cara3.Render(&framebuffer, cam, Color::GREEN, FALSE, &zBuffer);
-	}
 
 	framebuffer.Render();
 
@@ -108,9 +124,6 @@ void Application::Render(void)
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-	cara2.Update(seconds_elapsed, 1.0f, 0, 0, true, Vector3(0.0f, 1.0f, 0.0f));
-	cara3.Update(seconds_elapsed, 1.5f, 0 ,1.0f, false, Vector3(0.0f, 1.0f, 0.0f));
-	cara4.Update(seconds_elapsed, 2,0,0, false, Vector3(1.0f, 0.0f, 0.0f));
 
 	framebuffer.Fill(Color::BLACK);
 }
@@ -122,14 +135,6 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 	switch(event.keysym.sym) {
 		case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
-		case SDLK_1: {
-			key = 1;
-			break;
-		}
-		case SDLK_2: {
-			key = 2;
-			break;
-		}
 		case SDLK_o: {
 			perspective = false;
 			cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);

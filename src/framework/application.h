@@ -82,8 +82,9 @@ public:
 	Entity cara1;
 	Entity cara2;
 	Entity cara3;
-	Entity cara4;
-	Entity cara22;
+	Entity cara1m;
+	Entity cara2m;
+	Entity cara3m;
 	Camera* cam;
 	bool perspective;
 	
