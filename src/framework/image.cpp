@@ -643,75 +643,35 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 	//Paint the triangle
 	for (int i = 0; i < table.size(); i++) {
 		//Paint each row of the triangle from minx to maxx (included)
-		for (int j = table[i].xmin; j <= table[i].xmax+1; j++) {
-			Vector3 bcoord = mat * Vector3(j, i, 1);
-			bcoord.Clamp(0, 1);
-			float sum = bcoord.x + bcoord.y + bcoord.z;
-			bcoord = bcoord / sum;
-
-
-			float pixel_z = bcoord.x * p0.z + bcoord.y * p1.z + bcoord.z * p2.z;
-			Color inter_c;
-
-			if(zBuf_flag){
-				if (zBuf->GetPixel(j, i) > pixel_z ) {
-					if (texture != nullptr) {
-						Vector2 inter_uv = uv0 * bcoord.x + uv1 * bcoord.y + uv2 * bcoord.z;
-
-						inter_uv.x = inter_uv.x * (texture->width - 1);
-						inter_uv.y = inter_uv.y * (texture->height - 1);
-						inter_c = texture->GetPixel(inter_uv.x, inter_uv.y);
-					}
-					else {
-						inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
-					}
-
-					zBuf->SetPixel(j, i, pixel_z);
-					SetPixelSafe(j, i, inter_c);
-				}
-			}
-			else {
-				if (texture != nullptr) {
-					Vector2 inter_uv = uv0 * bcoord.x + uv1 * bcoord.y + uv2 * bcoord.z; 
-
-					inter_uv.x = inter_uv.x * (texture->width - 1); 
-					inter_uv.y = inter_uv.y * (texture->height - 1); 
-					inter_c = texture->GetPixel(inter_uv.x, inter_uv.y); 
-				}
-				else {
-					inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2; 
-				} 
-				SetPixelSafe(j, i, inter_c); 
-			}
-		}
-	}
-
-
-
-
-
-	/*
-
-	std::vector<Cell> table;
-	table.resize(height);
-	ScanLineDDA(p0.x, p0.y, p1.x, p1.y, table);
-	ScanLineDDA(p1.x, p1.y, p2.x, p2.y, table);
-	ScanLineDDA(p2.x, p2.y, p0.x, p0.y, table);
-	for (int i = 0; i < height; i++) {
 		if (table[i].xmin <= table[i].xmax) {
-			for (int j = table[i].xmin; j <= table[i].xmax; j++) {
+			for (int j = table[i].xmin; j <= table[i].xmax + 1; j++) {
 				Vector3 bcoord = mat * Vector3(j, i, 1);
 				bcoord.Clamp(0, 1);
 				float sum = bcoord.x + bcoord.y + bcoord.z;
 				bcoord = bcoord / sum;
-				
+
 
 				float pixel_z = bcoord.x * p0.z + bcoord.y * p1.z + bcoord.z * p2.z;
 				Color inter_c;
 
-				
-				if (zBuf->GetPixel(j, i) == -1.0f || zBuf->GetPixel(j, i) > pixel_z) {
-					
+				if (zBuf_flag) {
+					if (zBuf->GetPixel(j, i) > pixel_z) {
+						if (texture != nullptr) {
+							Vector2 inter_uv = uv0 * bcoord.x + uv1 * bcoord.y + uv2 * bcoord.z;
+
+							inter_uv.x = inter_uv.x * (texture->width - 1);
+							inter_uv.y = inter_uv.y * (texture->height - 1);
+							inter_c = texture->GetPixel(inter_uv.x, inter_uv.y);
+						}
+						else {
+							inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
+						}
+
+						zBuf->SetPixel(j, i, pixel_z);
+						SetPixelSafe(j, i, inter_c);
+					}
+				}
+				else {
 					if (texture != nullptr) {
 						Vector2 inter_uv = uv0 * bcoord.x + uv1 * bcoord.y + uv2 * bcoord.z;
 
@@ -722,15 +682,11 @@ void Image::DrawTriangleInterpolated(const Vector3& p0, const Vector3& p1, const
 					else {
 						inter_c = bcoord.x * c0 + bcoord.y * c1 + bcoord.z * c2;
 					}
-					
-					zBuf->SetPixel(j, i, pixel_z);
-					SetPixelSafe(j, i, inter_c); 
+					SetPixelSafe(j, i, inter_c);
 				}
-				
 			}
 		}
-	}*/
-		
+	}		
 
 };
 

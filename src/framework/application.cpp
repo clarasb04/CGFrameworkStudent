@@ -46,7 +46,7 @@ void Application::Init(void)
 	cam->center = Vector3(0, 0, 0);
 	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
-	cam->near_plane = 0.000001;
+	cam->near_plane = 0.01;
 	cam->far_plane = 100;
 	cam->aspect = 1;
 	perspective = true;
@@ -112,7 +112,7 @@ void Application::Render(void)
 {
 	zBuffer.Fill(FLT_MAX); 
 
-	cara1.Render(&framebuffer, cam, Color::WHITE, occlusions, &zBuffer, textur);
+	cara2.Render(&framebuffer, cam, Color::WHITE, occlusions, &zBuffer, textur);
 
 	framebuffer.Render();
 
