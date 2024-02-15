@@ -23,9 +23,9 @@ Application::Application(const char* caption, int width, int height)
 	this->num_punts = 0;
 	this->property = 0;
 
-	this->occlusions = true;
-	this->interpolated = true;
-	this->textur = true;
+	this->occlusions = TRUE; 
+	this->interpolated = FALSE; 
+	this->textur = TRUE;  
 	 
 	this->zBuffer.Resize(w, h);
 
@@ -112,7 +112,7 @@ void Application::Render(void)
 {
 	zBuffer.Fill(FLT_MAX); 
 
-	cara2.Render(&framebuffer, cam, Color::WHITE, occlusions, &zBuffer, textur);
+	cara1.Render(&framebuffer, cam, Color::WHITE, occlusions, &zBuffer, textur);
 
 	framebuffer.Render();
 
@@ -219,34 +219,54 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 				cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
 				cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
 				cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES);
-				interpolated = true;
+				interpolated = TRUE;
 			}
 			else {
+				textur = FALSE; 
 				cara1.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
 				cara2.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
 				cara3.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
 				cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
 				cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
 				cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);  
-				interpolated = false;
+				interpolated = FALSE;
 			}
 			break;
 		}
 		case SDLK_z: {
 			if (!occlusions) {
-				occlusions = true;
+				occlusions = TRUE;
 			}
 			else {
-				occlusions = false;
+				occlusions = FALSE;
 			}
 			break;
 		}
 		case SDLK_t: {
 			if (!textur) {
-				textur = true;
+				textur = TRUE;
+				cara1.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara2.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara3.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);  
+				cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				interpolated = FALSE;  
+					
 			}
-			else {
-				textur = false;
+			else {				
+			
+				if (!interpolated) {
+					cara1.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+					cara2.setRenderMode(Entity::eRenderMode::TRIANGLES);  
+					cara3.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+					cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+					cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+					cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+					interpolated = TRUE;
+				}
+				textur = FALSE; 
+				  
 			}
 			break;
 		}
