@@ -38,7 +38,7 @@ Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float
 
 
 
-void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, bool texture_flag, FloatImage* zBuf) {
+void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, bool zBuf_flag, FloatImage* zBuf, bool textur) {
 	
 	for (int i = 0; i < malla.GetVertices().size(); i+=3) {
 		Vector3 p1;
@@ -104,7 +104,12 @@ void Entity::Render(Image* framebuffer, Camera* camera, const Color& c, bool tex
 			break;
 
 		case eRenderMode::TRIANGLES_INTERPOLATED:
-			framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, zetas.x), Vector3(p2.x, p2.y, zetas.y), Vector3(p3.x, p3.y, zetas.z), Color::RED, Color::BLUE, Color::GREEN, zBuf, &texture, uv0, uv1, uv2);
+			if (textur) {
+				framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, zetas.x), Vector3(p2.x, p2.y, zetas.y), Vector3(p3.x, p3.y, zetas.z), Color::RED, Color::BLUE, Color::GREEN, zBuf, &texture, uv0, uv1, uv2, zBuf_flag);
+			}
+			else {
+				framebuffer->DrawTriangleInterpolated(Vector3(p1.x, p1.y, zetas.x), Vector3(p2.x, p2.y, zetas.y), Vector3(p3.x, p3.y, zetas.z), Color::RED, Color::BLUE, Color::GREEN, zBuf, nullptr, uv0, uv1, uv2, zBuf_flag);
+			}
 			break;
 		}
 		

@@ -25,7 +25,7 @@ Application::Application(const char* caption, int width, int height)
 
 	this->occlusions = true;
 	this->interpolated = true;
-	this->mesh = true;
+	this->textur = true;
 	 
 	this->zBuffer.Resize(w, h);
 
@@ -110,15 +110,12 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	zBuffer.Fill(1000000.0f);
+	zBuffer.Fill(FLT_MAX); 
 
-	
-	cara3m.Render(&framebuffer, cam, Color::WHITE, TRUE, &zBuffer);
-
+	cara1.Render(&framebuffer, cam, Color::WHITE, occlusions, &zBuffer, textur);
 
 	framebuffer.Render();
 
-	
 }
 
 // Called after render
@@ -216,34 +213,40 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		}
 		case SDLK_c: {
 			if (!interpolated) {
-
+				cara1.setRenderMode(Entity::eRenderMode::TRIANGLES);
+				cara2.setRenderMode(Entity::eRenderMode::TRIANGLES);
+				cara3.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+				cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+				cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES); 
+				cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES);
 				interpolated = true;
 			}
 			else {
-
+				cara1.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara2.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara3.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara1m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara2m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED); 
+				cara3m.setRenderMode(Entity::eRenderMode::TRIANGLES_INTERPOLATED);  
 				interpolated = false;
 			}
 			break;
 		}
 		case SDLK_z: {
 			if (!occlusions) {
-
 				occlusions = true;
 			}
 			else {
-
 				occlusions = false;
 			}
 			break;
 		}
-		case SDLK_i: {
-			if (!mesh) {
-
-				mesh = true;
+		case SDLK_t: {
+			if (!textur) {
+				textur = true;
 			}
 			else {
-
-				mesh = false;
+				textur = false;
 			}
 			break;
 		}

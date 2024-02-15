@@ -28,7 +28,7 @@ public:
 
 	bool interpolated;
 	bool occlusions;
-	bool mesh;
+	bool textur;
 
 	// Window
 
