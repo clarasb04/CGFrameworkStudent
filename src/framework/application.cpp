@@ -49,7 +49,7 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	mode = 3;
+	mode = 6;
 	
 	shader->Enable();
 	shader->SetUniform1("u_mode", mode);
