@@ -28,13 +28,19 @@ void main()
 
 	}
 	else if(u_mode==5){
-		
+		//aquest crec q el canviare
+		vec3 cond_x = vec3(clamp(sin(v_uv.x*100)*4, 0.0, 1.0));
+		vec3 cond_y = vec3(clamp(sin(v_uv.y*100)*4, 0.0, 1.0));
+		vec3 color = vec3(abs(cond_x-cond_y));
+		gl_FragColor = vec4(color, 1.0);
 
 
 	}
 	else if(u_mode==6){
+		float resta = v_uv.y - (sin(v_uv.x*6.3)*0.25 + 0.5);
+		float zona = step(resta, 0.0);
+		vec3 color = mix(vec3(0.0, abs(1-zona), 0.0), vec3(0.0, zona, 0.0), v_uv.y);
 		
-		vec3 color = mix(vec3(0.0,0.0,0.0), vec3(0.0,1.0,0.0), sin(v_uv.y * 7));
 		gl_FragColor = vec4(color, 1.0);
 	}
 	
