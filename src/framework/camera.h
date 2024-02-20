@@ -17,7 +17,7 @@ class Camera
 public:
 
 	// Types of cameras available
-	enum { PERSPECTIVE, ORTHOGRAPHIC }; 
+	enum { PERSPECTIVE, ORTHOGRAPHIC };
 	char type;
 
 	// Vectors to define the orientation of the camera

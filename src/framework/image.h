@@ -20,11 +20,6 @@ class FloatImage;
 class Entity;
 class Camera;
 
-struct Cell {
-	int xmin = INT_MAX;
-	int xmax = INT_MIN;
-};
-
 // A matrix of pixels
 class Image
 {
@@ -53,7 +48,6 @@ public:
 	~Image();
 
 	void Render();
-
 
 	// Get the pixel at position x,y
 	Color GetPixel(unsigned int x, unsigned int y) const { return pixels[y * width + x]; }
@@ -84,12 +78,7 @@ public:
 	bool LoadTGA(const char* filename, bool flip_y = false);
 	bool SaveTGA(const char* filename);
 
-	void DrawRect(int x, int y, int w, int h, const Color& borderColor, int borderWidth, bool isFilled = false, const Color& fillColor = Color::WHITE);
-	void DrawCircle(int x, int y, int r, const Color& borderColor, int borderWidth, bool isFilled, const Color& fillColor);
-	void DrawTriangle(const Vector2& p0, const Vector2& p1, const Vector2& p2, const Color& borderColor, int borderWidth, bool isFilled, const Color& fillColor);
-	void ScanLineDDA(int x0, int y0, int x1, int y1, std::vector<Cell>& table);
-
-	void Image::DrawImage(const Image& image, int x, int y, bool top);
+	void DrawRect(int x, int y, int w, int h, const Color& c);
 
 	// Used to easy code
 #ifndef IGNORE_LAMBDAS
@@ -104,12 +93,6 @@ public:
 			pixels[pos] = callback(pixels[pos]);
 		return *this;
 	}
-
-
-
-
-	//Drawing Lines
-	void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c, int borderWidth);
 #endif
 };
 
@@ -141,39 +124,4 @@ public:
 	inline void SetPixel(unsigned int x, unsigned int y, const float& v) { pixels[y * width + x] = v; }
 
 	void Resize(unsigned int width, unsigned int height);
-};
-
-class Button {
-public:
-	Image* imatge;
-	unsigned int x;
-	unsigned int y;
-
-	//Constructor
-	Button();
-	Button( Image* imatge, unsigned int x, unsigned int y);
-
-	bool IsMouseInside(Vector2 mousePosition);
-
-};
-
-class ParticleSystem {
-	static const int MAX_PARTICLES = 10000;
-
-	struct Particle {
-		Vector2 position;
-		Vector2 velocity; // Normalized speed and direction of the particle
-		Color color;
-		float acceleration;
-		float ttl; // Time left until the particle expires
-		bool inactive; // Particle is not used/expired, so it can be recreated
-	};
-
-	Particle particles[MAX_PARTICLES];
-
-public:
-	void Init();
-	void Render(Image* framebuffer);
-	void Update(float dt);
-
 };

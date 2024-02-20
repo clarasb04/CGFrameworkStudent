@@ -6,7 +6,7 @@
 Camera::Camera()
 {
 	view_matrix.SetIdentity();
-	SetOrthographic(-1,1,1,-1,-1,1);
+	SetOrthographic(-1, 1, 1, -1, -1, 1);
 }
 
 Vector3 Camera::GetLocalVector(const Vector3& v)
@@ -91,7 +91,7 @@ void Camera::UpdateViewMatrix()
 
 	// Remember how to fill a Matrix4x4 (check framework slides)
 	// Careful with the order of matrix multiplications, and be sure to use normalized vectors!
-	
+
 	// Create the view matrix rotation
 	// ...
 	// view_matrix.M[3][3] = 1.0;
@@ -112,14 +112,14 @@ void Camera::UpdateProjectionMatrix()
 	SetExampleProjectionMatrix();
 
 	// Remember how to fill a Matrix4x4 (check framework slides)
-	
+
 	if (type == PERSPECTIVE) {
 		// projection_matrix.M[2][3] = -1;
 		// ...
 	}
 	else if (type == ORTHOGRAPHIC) {
 		// ...
-	} 
+	}
 
 	UpdateViewProjectionMatrix();
 }
@@ -145,7 +145,7 @@ void Camera::SetExampleViewMatrix()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z);
-	glGetFloatv(GL_MODELVIEW_MATRIX, view_matrix.m );
+	glGetFloatv(GL_MODELVIEW_MATRIX, view_matrix.m);
 }
 
 void Camera::SetExampleProjectionMatrix()
@@ -156,9 +156,8 @@ void Camera::SetExampleProjectionMatrix()
 	if (type == PERSPECTIVE)
 		gluPerspective(fov, aspect, near_plane, far_plane);
 	else
-		glOrtho(left,right,bottom,top,near_plane,far_plane);
+		glOrtho(left, right, bottom, top, near_plane, far_plane);
 
-	glGetFloatv(GL_PROJECTION_MATRIX, projection_matrix.m );
+	glGetFloatv(GL_PROJECTION_MATRIX, projection_matrix.m);
 	glMatrixMode(GL_MODELVIEW);
 }
-
