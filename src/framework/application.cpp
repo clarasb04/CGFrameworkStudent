@@ -6,6 +6,7 @@
 Shader* shader;
 Mesh quad;
 int mode;
+int tecla;
 
 Matrix44 model_m;
 Matrix44 viewproject_m;
@@ -42,20 +43,23 @@ void Application::Init(void)
 	shader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
 	//model_m.SetIdentity();
 	//viewproject_m.
-	//textura = Texture::Get("")
+	textura = Texture::Get("images/fruits.png");
 }
 
 // Render one frame
 void Application::Render(void)
 {
 	// ...
-	mode = 5;
+	mode = 4;
+	tecla = 2;
 	
 	shader->Enable();
 	shader->SetUniform1("u_mode", mode);
+	shader->SetUniform1("u_tecla", tecla);
+
 	//shader->SetMatrix44("u_modelmatrix", model_m);
 	//shader->SetMatrix44("u_viewprojection")
-	//shader->SetTexture("u_texture", textura);
+	shader->SetTexture("u_texture", textura);
 	quad.Render();
 	shader->Disable();
 }
