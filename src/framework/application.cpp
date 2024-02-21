@@ -50,12 +50,15 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	mode = 4;
+	mode = 5;
 	tecla = 2;
 	
 	shader->Enable();
 	shader->SetUniform1("u_mode", mode);
 	shader->SetUniform1("u_tecla", tecla);
+	shader->SetFloat("u_height", this->window_height);
+	shader->SetFloat("u_width", this->window_width);
+ 
 
 	//shader->SetMatrix44("u_modelmatrix", model_m);
 	//shader->SetMatrix44("u_viewprojection")

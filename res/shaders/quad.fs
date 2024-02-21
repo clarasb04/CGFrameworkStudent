@@ -2,6 +2,8 @@ varying vec2 v_uv;
 uniform int u_mode;
 uniform int u_tecla;
 uniform sampler2D u_texture;
+uniform float u_height;
+uniform float u_width; 
 
 void main()
 {
@@ -60,13 +62,37 @@ void main()
 			gl_FragColor = vec4(col_fin, 1.0);
 		}
 		else if(u_mode==3){
-
+			vec3 color = texture2D(u_texture, v_uv).xyz; 
+			float cond = (color.x + color.y) / 2.0;
+			vec3 col_fin = vec3(cond, cond, 0.0);
+			gl_FragColor = vec4(col_fin, 1.0);
 		}
 		else if(u_mode==4){
 			vec3 color = texture2D(u_texture, v_uv).xyz;
 			float cond = step((color.x+color.y+color.z), 1.5);
 			vec3 col_fin = vec3(abs(1-cond));
 			gl_FragColor = vec4(col_fin, 1.0);
+		}
+		else if(u_mode==5){
+			//no vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa es un intent falido no cal q miris res 
+			float radi = min(u_height, u_width) / 2.0;
+			float dist = distance(vec2(0.5, 0.5), v_uv);
+
+			float cond = smoothstep(0.25, radi/5.0, dist);
+			vec4 col_fin = mix(texture(u_texture, v_uv), vec4(0.0, 0.0, 0.0, 1.0), cond);
+			gl_FragColor = col_fin;
+
+		}
+		else if(u_mode==6){
+			vec4 col_fin = vec4(0.0);
+			vec2 mida = vec2(u_width, u_height);
+			for (float i = -5.0; i <= 5.0; i += 1.0) {
+				for (float j = -5.0; j <= 5.0; j += 1.0) {
+					
+					col_fin += texture(u_texture, v_uv + vec2(i, j) / mida) / 121.0; 
+				}
+			}
+			gl_FragColor = col_fin;
 		}
 	}
 	
