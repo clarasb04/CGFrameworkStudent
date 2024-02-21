@@ -50,7 +50,7 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	mode = 2;
+	mode = 1;
 	tecla = 3;
 	
 	shader->Enable();
@@ -80,7 +80,11 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 	switch (event.keysym.sym) {
 	case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
+		case SDLK_1{
+
 	}
+	}
+	
 }
 
 void Application::OnMouseButtonDown(SDL_MouseButtonEvent event)

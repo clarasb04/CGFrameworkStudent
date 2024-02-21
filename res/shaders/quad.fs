@@ -75,12 +75,19 @@ void main()
 		}
 		else if(u_mode==5){
 			//no vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa es un intent falido
-			float radi = min(u_height, u_width) / 2.0;
-			float dist = distance(vec2(0.5, 0.5), v_uv);
+			//float radi = min(u_height, u_width) / 2.0;
+			//float dist = distance(vec2(0.5, 0.5), v_uv);
 
-			float cond = smoothstep(0.25, radi/5.0, dist);
-			vec4 col_fin = mix(texture(u_texture, v_uv), vec4(0.0, 0.0, 0.0, 1.0), cond);
-			gl_FragColor = col_fin;
+			//float cond = smoothstep(0.25, radi/5.0, dist);
+			//vec4 col_fin = mix(texture(u_texture, v_uv), vec4(0.0, 0.0, 0.0, 1.0), cond);
+			//gl_FragColor = col_fin;
+			float dist = distance(vec2(0.5,0.5), v_uv);
+			vec3 color = texture2D(u_texture, v_uv).xyz;
+			float red = clamp( color.r - dist, 0.0, 1.0);
+			float green = clamp( color.g - dist, 0.0, 1.0);
+			float blue = clamp( color.b - dist, 0.0, 1.0);
+			gl_FragColor = vec4(red, green, blue, 1.0);
+
 
 		}
 		else if(u_mode==6){
@@ -96,6 +103,10 @@ void main()
 		}
 	}
 	else if(u_tecla==3){
+		if(u_mode==1){
+			vec4 color = texture(u_texture, vec2(v_uv.x, clamp(v_uv.y + 0.2*sin(v_uv.x*100), 0.0, 1.0)));
+			gl_FragColor = color;
+		}
 		if(u_mode==2){
 			float p = 20.0;  
 			float x_pixel= floor(v_uv.x * p) / p;
