@@ -5,8 +5,8 @@
 
 Shader* shader;
 Mesh quad;
-int mode;
-int tecla;
+int mode=1;
+int tecla=1;
 
 Matrix44 model_m;
 Matrix44 viewproject_m;
@@ -50,8 +50,6 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	mode = 1;
-	tecla = 3;
 	
 	shader->Enable();
 	shader->SetUniform1("u_mode", mode);
@@ -80,9 +78,56 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 	switch (event.keysym.sym) {
 	case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
-		case SDLK_1{
-
+	case SDLK_1: {
+		tecla = 1;
+		break;
 	}
+	case SDLK_2: {
+		tecla = 2;
+		break;
+	}
+	case SDLK_3: {
+		tecla = 3;
+
+		break;
+	}
+	case SDLK_4: {
+		tecla = 4;
+
+		break;
+	}
+	case SDLK_a: {
+		mode = 1;
+
+		break;
+	}
+	case SDLK_b: {
+		mode = 2;
+
+		break;
+	}
+	case SDLK_c: {
+		mode = 3;
+
+		break;
+	}
+	case SDLK_d: {
+		mode = 4;
+
+		break;
+	}
+	case SDLK_e: {
+		mode = 5;
+
+		break;
+	}
+	case SDLK_f: {
+		mode = 6;
+
+		break;
+	}
+
+		
 	}
 	
 }
