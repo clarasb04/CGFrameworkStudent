@@ -74,7 +74,7 @@ void main()
 			gl_FragColor = vec4(col_fin, 1.0);
 		}
 		else if(u_mode==5){
-			//no vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa es un intent falido no cal q miris res 
+			//no vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa es un intent falido
 			float radi = min(u_height, u_width) / 2.0;
 			float dist = distance(vec2(0.5, 0.5), v_uv);
 
