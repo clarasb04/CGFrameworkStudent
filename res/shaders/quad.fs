@@ -95,5 +95,14 @@ void main()
 			gl_FragColor = col_fin;
 		}
 	}
+	else if(u_tecla==3){
+		if(u_mode==2){
+			float p = 20.0;  
+			float x_pixel= floor(v_uv.x * p) / p;
+			float y_pixel= floor(v_uv.y * p) / p;
+			vec4 col_fin = texture(u_texture, vec2(x_pixel, y_pixel));	
+			gl_FragColor = col_fin;
+		}
+	}
 	
 }

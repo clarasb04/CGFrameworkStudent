@@ -50,8 +50,8 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	mode = 5;
-	tecla = 2;
+	mode = 2;
+	tecla = 3;
 	
 	shader->Enable();
 	shader->SetUniform1("u_mode", mode);
