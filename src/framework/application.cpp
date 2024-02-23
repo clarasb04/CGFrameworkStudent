@@ -2,16 +2,22 @@
 #include "mesh.h"
 #include "shader.h"
 #include "utils.h" 
+#include "entity.h"
 
 Shader* shader;
 Mesh quad;
+Mesh cara1_m;
+Entity cara1;
+
 int mode=1;
 int tecla=1;
 
+Camera* cam;
 Matrix44 model_m;
 Matrix44 viewproject_m;
 
 Texture* textura; 
+
 
 
 
@@ -41,6 +47,24 @@ void Application::Init(void)
 	std::cout << "Initiating app..." << std::endl;
 	quad.CreateQuad();
 	shader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
+
+	cam = new Camera();
+	cam->eye = Vector3(0, 0, 2);
+	cam->center = Vector3(0, 0, 0);
+	cam->up = Vector3(0, 1, 0);
+	cam->fov = 45;
+	cam->near_plane = 0.01;
+	cam->far_plane = 100;
+	cam->aspect = 1;
+	cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
+	cam->LookAt(cam->eye, cam->center, cam->up);
+
+	
+	cara1_m.LoadOBJ("/meshes/lee.obj");
+	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+
+
+
 	//model_m.SetIdentity();
 	//viewproject_m.
 	textura = Texture::Get("images/fruits.png");

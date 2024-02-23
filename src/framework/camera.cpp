@@ -86,18 +86,49 @@ void Camera::UpdateViewMatrix()
 	// Reset Matrix (Identity)
 	view_matrix.SetIdentity();
 
-	// Comment this line to create your own projection matrix!
-	SetExampleViewMatrix();
+	// Comment this line to create your own view matrix!
+	//SetExampleViewMatrix();
 
-	// Remember how to fill a Matrix4x4 (check framework slides)
-	// Careful with the order of matrix multiplications, and be sure to use normalized vectors!
 
-	// Create the view matrix rotation
-	// ...
-	// view_matrix.M[3][3] = 1.0;
+	Vector3 F;
+	Vector3 S;
+	Vector3 T;
 
-	// Translate view matrix
-	// ...
+	F = operator-(center, eye);
+	//normalitzar F
+	F.Normalize();
+
+	//S = F X up 
+	S = F.Cross(up);
+	//S = S/|S|
+	S.Normalize();
+
+	//T = S X F
+	T = S.Cross(F);
+
+
+	view_matrix.M[0][0] = S.x;
+	view_matrix.M[1][0] = S.y;
+	view_matrix.M[2][0] = S.z;
+	view_matrix.M[3][0] = 0;
+
+	view_matrix.M[0][1] = T.x;
+	view_matrix.M[1][1] = T.y;
+	view_matrix.M[2][1] = T.z;
+	view_matrix.M[3][1] = 0;
+
+	view_matrix.M[0][2] = -F.x;
+	view_matrix.M[1][2] = -F.y;
+	view_matrix.M[2][2] = -F.z;
+	view_matrix.M[3][2] = 0;
+
+	view_matrix.M[0][3] = 0;
+	view_matrix.M[1][3] = 0;
+	view_matrix.M[2][3] = 0;
+	view_matrix.M[3][3] = 1;
+
+	view_matrix.TranslateLocal(-eye.x, -eye.y, -eye.z);
+
 
 	UpdateViewProjectionMatrix();
 }
@@ -109,16 +140,56 @@ void Camera::UpdateProjectionMatrix()
 	projection_matrix.SetIdentity();
 
 	// Comment this line to create your own projection matrix!
-	SetExampleProjectionMatrix();
+	//SetExampleProjectionMatrix();
 
-	// Remember how to fill a Matrix4x4 (check framework slides)
 
 	if (type == PERSPECTIVE) {
-		// projection_matrix.M[2][3] = -1;
-		// ...
+
+		float fov_r = fov * DEG2RAD;
+		float f = 1 / tan(fov / 2);
+
+		projection_matrix.M[0][0] = f / aspect;
+		projection_matrix.M[0][1] = 0;
+		projection_matrix.M[0][2] = 0;
+		projection_matrix.M[0][3] = 0;
+
+		projection_matrix.M[1][0] = 0;
+		projection_matrix.M[1][1] = f;
+		projection_matrix.M[1][2] = 0;
+		projection_matrix.M[1][3] = 0;
+
+		projection_matrix.M[2][0] = 0;
+		projection_matrix.M[2][1] = 0;
+		projection_matrix.M[2][2] = (far_plane + near_plane) / (near_plane - far_plane);
+		projection_matrix.M[2][3] = -1;
+
+		projection_matrix.M[3][0] = 0;
+		projection_matrix.M[3][1] = 0;
+		projection_matrix.M[3][2] = 2 * ((far_plane * near_plane) / (near_plane - far_plane));
+		projection_matrix.M[3][3] = 0;
+
+
 	}
 	else if (type == ORTHOGRAPHIC) {
-		// ...
+		projection_matrix.M[0][0] = 2 / (right - left);
+		projection_matrix.M[0][1] = 0;
+		projection_matrix.M[0][2] = 0;
+		projection_matrix.M[0][3] = -(right + left) / (right - left);
+
+		projection_matrix.M[1][0] = 0;
+		projection_matrix.M[1][1] = 2 / (top - bottom);
+		projection_matrix.M[1][2] = 0;
+		projection_matrix.M[1][3] = -(top + bottom) / (top - bottom);
+
+		projection_matrix.M[2][0] = 0;
+		projection_matrix.M[2][1] = 0;
+		projection_matrix.M[2][2] = -2 / (far_plane - near_plane);
+		projection_matrix.M[2][3] = -(far_plane + near_plane) / (far_plane - near_plane);
+
+		projection_matrix.M[3][0] = 0;
+		projection_matrix.M[3][1] = 0;
+		projection_matrix.M[3][2] = 0;
+		projection_matrix.M[3][3] = 1;
 	}
 
 	UpdateViewProjectionMatrix();
