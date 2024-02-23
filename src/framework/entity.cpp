@@ -9,6 +9,7 @@
 #include "camera.h"
 #include "mesh.h"
 #include "entity.h"
+#include "shader.h"
 #include <algorithm>
 
 #pragma once
@@ -33,43 +34,10 @@ Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float
 
 
 
-void Entity::Render(Image* framebuffer, Camera* camera, const Color& c) {
-	
-	for (int i = 0; i < malla.GetVertices().size(); i+=3) {
-		Vector3 p1;
-		Vector3 p2;
-		Vector3 p3;
-		p1 = operator *(matriu, malla.GetVertices()[i]);
-		p2 = operator *(matriu, malla.GetVertices()[i+1]);
-		p3 = operator *(matriu, malla.GetVertices()[i+2]);
-
-
-		bool negZ1, negZ2, negZ3; 
-		p1 = camera->ProjectVector(p1, negZ1);
-		p2 = camera->ProjectVector(p2, negZ2); 
-		p3 = camera->ProjectVector(p3, negZ3);
-		
-		p1.x = ((p1.x + 1)/2) * (framebuffer->width - 1);
-		p2.x = ((p2.x + 1) / 2) * (framebuffer->width - 1);
-		p3.x = ((p3.x + 1) / 2) * (framebuffer->width - 1);
-
-		p1.y = ((p1.y + 1) / 2) * (framebuffer->height - 1);
-		p2.y = ((p2.y + 1) / 2) * (framebuffer->height - 1);
-		p3.y = ((p3.y + 1) / 2) * (framebuffer->height - 1);
-		
-		
-
-		if (negZ1 || negZ2 || negZ3) {
-			continue;
-		}
-
-		framebuffer->DrawLineDDA(p1.x, p1.y, p2.x, p2.y, c, 1);
-		framebuffer->DrawLineDDA(p3.x, p3.y, p2.x, p2.y, c, 1);
-		framebuffer->DrawLineDDA(p1.x, p1.y, p3.x, p3.y, c, 1);
-		
-	}
-	
-	
+void Entity::Render(Shader* raster) {
+	raster->SetMatrix44("u_model", matriu);
+	raster->SetTexture("u_textcara", textura);
+	malla.Render();
 	
 }
 

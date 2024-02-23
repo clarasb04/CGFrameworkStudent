@@ -4,6 +4,8 @@
 #include "mesh.h"
 #include "main/includes.h"
 #include "image.h"
+#include "shader.h"
+#include "texture.h"
 
 class Entity {
 	
@@ -14,12 +16,14 @@ public:
 	float deg;
 	Matrix44 scale_m;
 
+	Texture* textura;
+
 	Mesh malla;
 	Matrix44 matriu;
 	//constructor
 	Entity();
 	Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg);
 
-	void Render(Image* framebuffer, Camera* camera, const Color& c);
+	void Render(Shader* raster);
 	void Update(float seconds_elapsed, float deg_s, float scale_max, float trans_s, bool rot_local, Vector3 eix_rot);
 };

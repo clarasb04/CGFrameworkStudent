@@ -232,3 +232,20 @@ void Camera::SetExampleProjectionMatrix()
 	glGetFloatv(GL_PROJECTION_MATRIX, projection_matrix.m);
 	glMatrixMode(GL_MODELVIEW);
 }
+
+void Camera::Orbit(float angle, const Vector3& axis)
+{
+	Matrix44 R;
+	R.SetRotation(angle, axis);
+	Vector3 new_front = R * (eye - center);
+	eye = center + new_front;
+	UpdateViewMatrix();
+}
+
+void Camera::Zoom(float distance)
+{
+	Vector3 new_front = eye - center;
+	eye = center + new_front * distance;
+	UpdateViewMatrix();
+}
+

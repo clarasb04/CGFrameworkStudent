@@ -13,10 +13,12 @@ int mode=1;
 int tecla=1;
 
 Camera* cam;
+Shader* raster;
 Matrix44 model_m;
 Matrix44 viewproject_m;
 
 Texture* textura; 
+Texture* text_cara;
 
 
 
@@ -47,9 +49,10 @@ void Application::Init(void)
 	std::cout << "Initiating app..." << std::endl;
 	quad.CreateQuad();
 	shader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
+	raster = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
 
 	cam = new Camera();
-	cam->eye = Vector3(0, 0, 2);
+	cam->eye = Vector3(0, 0, -2);
 	cam->center = Vector3(0, 0, 0);
 	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
@@ -60,33 +63,45 @@ void Application::Init(void)
 	cam->LookAt(cam->eye, cam->center, cam->up);
 
 	
+
 	cara1_m.LoadOBJ("/meshes/lee.obj");
-	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1, 1, 1), 0);
+	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(3), 0);
 
-
-
-	//model_m.SetIdentity();
-	//viewproject_m.
 	textura = Texture::Get("images/fruits.png");
+	text_cara = Texture::Get("/textures/lee_color_specular.tga");
+	cara1.textura = text_cara;
+
 }
 
 // Render one frame
 void Application::Render(void)
 {
 	// ...
-	
-	shader->Enable();
-	shader->SetUniform1("u_mode", mode);
-	shader->SetUniform1("u_tecla", tecla);
-	shader->SetFloat("u_height", this->window_height);
-	shader->SetFloat("u_width", this->window_width);
+	if (tecla == 1 || tecla == 2) {
+		shader->Enable();
+		shader->SetUniform1("u_mode", mode);
+		shader->SetUniform1("u_tecla", tecla);
+		shader->SetFloat("u_height", this->window_height);
+		shader->SetFloat("u_width", this->window_width);
  
 
-	//shader->SetMatrix44("u_modelmatrix", model_m);
-	//shader->SetMatrix44("u_viewprojection")
-	shader->SetTexture("u_texture", textura);
-	quad.Render();
-	shader->Disable();
+	
+		shader->SetTexture("u_texture", textura);
+		quad.Render();
+		shader->Disable();
+	}
+	else {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL); 
+
+		raster->Enable();
+		raster->SetMatrix44("u_viewprojection", cam->viewprojection_matrix);
+		cara1.Render(raster);
+		raster->Disable();
+
+	}
+	
 }
 
 // Called after render
@@ -165,20 +180,21 @@ void Application::OnMouseButtonDown(SDL_MouseButtonEvent event)
 
 void Application::OnMouseButtonUp(SDL_MouseButtonEvent event)
 {
-	if (event.button == SDL_BUTTON_LEFT) {
-
-	}
+	
 }
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 {
-
+	if (event.button == SDL_BUTTON_LEFT) {
+		cam->Orbit(-mouse_delta.x * 0.01, Vector3::UP);
+		cam->Orbit(-mouse_delta.y * 0.01, Vector3::RIGHT);
+	}
 }
 
 void Application::OnWheel(SDL_MouseWheelEvent event)
 {
 	float dy = event.preciseY;
-
+	cam->Zoom(dy < 0 ? 1.1 : 0.9);
 	// ...
 }
 
