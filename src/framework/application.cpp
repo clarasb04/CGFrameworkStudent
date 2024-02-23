@@ -77,13 +77,13 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	if (tecla == 1 || tecla == 2) {
+	if (tecla == 1 || tecla == 2 || tecla==3) {
 		shader->Enable();
 		shader->SetUniform1("u_mode", mode);
 		shader->SetUniform1("u_tecla", tecla);
 		shader->SetFloat("u_height", this->window_height);
 		shader->SetFloat("u_width", this->window_width);
- 
+		shader->SetFloat("u_sec", time);
 
 	
 		shader->SetTexture("u_texture", textura);
@@ -107,7 +107,7 @@ void Application::Render(void)
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-
+	time += seconds_elapsed; 
 }
 
 //keyboard press event 
