@@ -37,6 +37,9 @@ Application::Application(const char* caption, int width, int height)
 	this->window_height = h;
 	this->keystate = SDL_GetKeyboardState(nullptr);
 
+	this->mouse_pressed_left = false;
+	this->mouse_pressed_right = false;
+
 	this->framebuffer.Resize(w, h);
 }
 
@@ -52,13 +55,13 @@ void Application::Init(void)
 	raster = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
 
 	cam = new Camera();
-	cam->eye = Vector3(0, 0, -2);
+	cam->eye = Vector3(0, 0, 2);
 	cam->center = Vector3(0, 0, 0);
 	cam->up = Vector3(0, 1, 0);
 	cam->fov = 45;
 	cam->near_plane = 0.01;
 	cam->far_plane = 100;
-	cam->aspect = 1;
+	cam->aspect = this->window_height/ this->window_width;
 	cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 	cam->LookAt(cam->eye, cam->center, cam->up);
 
@@ -165,6 +168,22 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
 		break;
 	}
+	case SDLK_DOWN: {
+		cam->Orbit(-0.25, Vector3::RIGHT);
+		break;
+	}
+	case SDLK_UP: {
+		cam->Orbit(0.25, Vector3::RIGHT);
+		break;
+	}
+	case SDLK_RIGHT: {
+		cam->Orbit(-0.25, Vector3::UP);
+		break;
+	}
+	case SDLK_LEFT: {
+		cam->Orbit(0.25, Vector3::UP);
+		break;
+	}
 
 		
 	}
@@ -174,20 +193,45 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 void Application::OnMouseButtonDown(SDL_MouseButtonEvent event)
 {
 	if (event.button == SDL_BUTTON_LEFT) {
-
+		mouse_pressed_left = true;
+		past_mouse = mouse_position;
+	}
+	if (event.button == SDL_BUTTON_RIGHT) {
+		mouse_pressed_right = true; 
+		past_mouse = mouse_position;
 	}
 }
 
 void Application::OnMouseButtonUp(SDL_MouseButtonEvent event)
 {
-	
+	if (event.button == SDL_BUTTON_LEFT) {
+		mouse_pressed_left = false;
+
+	}
+	if (event.button == SDL_BUTTON_RIGHT) {
+		mouse_pressed_right = false;
+
+	}
 }
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 {
-	if (event.button == SDL_BUTTON_LEFT) {
-		cam->Orbit(-mouse_delta.x * 0.01, Vector3::UP);
-		cam->Orbit(-mouse_delta.y * 0.01, Vector3::RIGHT);
+	if (mouse_pressed_left) {
+		Vector2 delt = mouse_position - past_mouse;
+		past_mouse = mouse_position;
+		cam->Orbit(-delt.x*0.01 , Vector3::UP);
+		cam->Orbit(-delt.y*0.01 , Vector3::RIGHT);
+	}
+	if (mouse_pressed_right) {
+		float dx;
+		float dy;
+		Vector2 delt = mouse_position - past_mouse;
+		past_mouse = mouse_position;
+		dx = delt.x * 2 / (framebuffer.width * PI); 
+		dy = delt.y * 2 / (framebuffer.height * PI); 
+		Vector3 mov = cam->GetLocalVector(Vector3(dx, -dy, 0));
+		cam->center = operator+(cam->center, mov);
+		cam->LookAt(cam->eye, cam->center, cam->up);
 	}
 }
 

@@ -34,9 +34,9 @@ void main()
 
 		}
 		else if(u_mode==5){
-			//aquest crec q el canviare
-			vec3 cond_x = vec3(clamp(sin(v_uv.x*100)*4, 0.0, 1.0));
-			vec3 cond_y = vec3(clamp(sin(v_uv.y*100)*4, 0.0, 1.0));
+			
+			float cond_x = step(((v_uv.x*16)-floor(v_uv.x*16)), 0.5);
+			float cond_y = step(((v_uv.y*16)-floor(v_uv.y*16)), 0.5);
 			vec3 color = vec3(abs(cond_x-cond_y));
 			gl_FragColor = vec4(color, 1.0);
 
@@ -99,7 +99,7 @@ void main()
 	}
 	else if(u_tecla==3){
 		if(u_mode==1){
-			vec4 color = texture(u_texture, vec2(v_uv.x, clamp(v_uv.y + 0.2*sin(v_uv.x*100+u_sec), 0.0, 1.0)));
+			vec4 color = texture(u_texture, vec2(v_uv.x, clamp(v_uv.y + 0.05*sin(v_uv.x*100+u_sec*2), 0.0, 1.0)));
 			gl_FragColor = color;
 		}
 		if(u_mode==2){
