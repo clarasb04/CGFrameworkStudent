@@ -35,8 +35,8 @@ void main()
 		}
 		else if(u_mode==5){
 			
-			float cond_x = step(((v_uv.x*16)-floor(v_uv.x*16)), 0.5);
-			float cond_y = step(((v_uv.y*16)-floor(v_uv.y*16)), 0.5);
+			float cond_x = step(((v_uv.x*10)-floor(v_uv.x*10)), 0.5);
+			float cond_y = step(((v_uv.y*10)-floor(v_uv.y*10)), 0.5);
 			vec3 color = vec3(abs(cond_x-cond_y));
 			gl_FragColor = vec4(color, 1.0);
 

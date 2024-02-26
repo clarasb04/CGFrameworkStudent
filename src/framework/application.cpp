@@ -168,22 +168,6 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 
 		break;
 	}
-	case SDLK_DOWN: {
-		cam->Orbit(-0.25, Vector3::RIGHT);
-		break;
-	}
-	case SDLK_UP: {
-		cam->Orbit(0.25, Vector3::RIGHT);
-		break;
-	}
-	case SDLK_RIGHT: {
-		cam->Orbit(-0.25, Vector3::UP);
-		break;
-	}
-	case SDLK_LEFT: {
-		cam->Orbit(0.25, Vector3::UP);
-		break;
-	}
 
 		
 	}
@@ -239,7 +223,6 @@ void Application::OnWheel(SDL_MouseWheelEvent event)
 {
 	float dy = event.preciseY;
 	cam->Zoom(dy < 0 ? 1.1 : 0.9);
-	// ...
 }
 
 void Application::OnFileChanged(const char* filename)
