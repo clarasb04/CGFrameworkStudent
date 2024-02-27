@@ -9,6 +9,7 @@
 #include "camera.h"
 #include "mesh.h"
 #include "entity.h"
+#include "material.h"
 #include "shader.h"
 #include <algorithm>
 

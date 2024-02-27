@@ -8,6 +8,8 @@
 #include "framework.h"
 #include "image.h"
 #include "entity.h"
+#include "material.h"
+#include "light.h"
 
 class Application
 {
@@ -29,6 +31,12 @@ public:
 	Vector2 past_mouse;
 	bool mouse_pressed_left;
 	bool mouse_pressed_right;
+
+	Vector3 Ia;
+	Light l1;
+	Light l2;
+
+	Entity cara1;
 
 	void OnKeyPressed(SDL_KeyboardEvent event);
 	void OnMouseButtonDown(SDL_MouseButtonEvent event);

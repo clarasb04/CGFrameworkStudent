@@ -6,6 +6,7 @@
 #include "image.h"
 #include "shader.h"
 #include "texture.h"
+#include "material.h"
 
 class Entity {
 	
@@ -16,10 +17,10 @@ public:
 	float deg;
 	Matrix44 scale_m;
 
-	Texture* textura;
-
+	
 	Mesh malla;
 	Matrix44 matriu;
+	Material material;
 	//constructor
 	Entity();
 	Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg);
