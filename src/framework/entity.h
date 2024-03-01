@@ -17,6 +17,7 @@ public:
 	float deg;
 	Matrix44 scale_m;
 
+	Shader* shader;
 	
 	Mesh malla;
 	Matrix44 matriu;
@@ -25,6 +26,6 @@ public:
 	Entity();
 	Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg);
 
-	void Render(Shader* raster);
+	void Render(sUniformData u_data);
 	void Update(float seconds_elapsed, float deg_s, float scale_max, float trans_s, bool rot_local, Vector3 eix_rot);
 };

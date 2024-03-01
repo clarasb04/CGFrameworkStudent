@@ -4,8 +4,16 @@
 #include "shader.h"
 #pragma once
 
-void Material::Enable() {
+void Material::Enable(const sUniformData& u_data) {
 	this->shader->Enable();
+	this->shader->SetMatrix44("u_viewprojection", u_data.view_proj_matrix);
+	this->shader->SetMatrix44("u_model", u_data.model);
+	this->shader->SetTexture("u_textura", textura); //mirar si es el punter a la pract anterior
+	this->shader->SetUniform3("u_Ka", Ka);
+	this->shader->SetUniform3("u_Kd", Kd);
+	this->shader->SetUniform3("u_Ks", Ks);
+	this->shader->SetUniform1("u_shinness", shinness);
+
 }
 
 void Material::Disable() {

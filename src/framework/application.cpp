@@ -3,11 +3,16 @@
 #include "shader.h"
 #include "utils.h" 
 #include "entity.h"
+#include "material.h"
 
-Shader* shader;
-Mesh quad;
+#pragma once
+
+
+//moure aixo a la app.h
 Mesh cara1_m;
 Entity cara1;
+
+sUniformData u_data;
 
 int mode=1;
 int tecla=1;
@@ -16,10 +21,6 @@ Camera* cam;
 Shader* raster;
 Matrix44 model_m;
 Matrix44 viewproject_m;
-
-Texture* textura; 
-Texture* text_cara;
-
 
 
 
@@ -50,9 +51,8 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	quad.CreateQuad();
-	shader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
-	raster = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
+	//canviar el nom al fitxer quan els fem
+	cara1.material.shader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
 
 	cam = new Camera();
 	cam->eye = Vector3(0, 0, 2);
@@ -70,9 +70,7 @@ void Application::Init(void)
 	cara1_m.LoadOBJ("/meshes/lee.obj");
 	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(3), 0);
 
-	textura = Texture::Get("images/fruits.png");
-	text_cara = Texture::Get("/textures/lee_color_specular.tga");
-	cara1.textura = text_cara;
+	cara1.material.textura = Texture::Get("/textures/lee_color_specular.tga");;
 
 }
 
@@ -80,30 +78,21 @@ void Application::Init(void)
 void Application::Render(void)
 {
 	// ...
-	if (tecla == 1 || tecla == 2 || tecla==3) {
-		shader->Enable();
-		shader->SetUniform1("u_mode", mode);
-		shader->SetUniform1("u_tecla", tecla);
-		shader->SetFloat("u_height", this->window_height);
-		shader->SetFloat("u_width", this->window_width);
-		shader->SetFloat("u_sec", time);
+	
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL); 
+
+
+	//tmb s'ha de pujar tots les flags de la interactivitat q calgui al shader
+
+	u_data.Ia = this->Ia;
+	u_data.view_proj_matrix = cam->GetViewProjectionMatrix();
+	cara1.Render(u_data);
+	raster->Disable();
 
 	
-		shader->SetTexture("u_texture", textura);
-		quad.Render();
-		shader->Disable();
-	}
-	else {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL); 
-
-		raster->Enable();
-		raster->SetMatrix44("u_viewprojection", cam->viewprojection_matrix);
-		cara1.Render(raster);
-		raster->Disable();
-
-	}
 	
 }
 
@@ -120,54 +109,7 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 	switch (event.keysym.sym) {
 	case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
-	case SDLK_1: {
-		tecla = 1;
-		break;
-	}
-	case SDLK_2: {
-		tecla = 2;
-		break;
-	}
-	case SDLK_3: {
-		tecla = 3;
-
-		break;
-	}
-	case SDLK_4: {
-		tecla = 4;
-
-		break;
-	}
-	case SDLK_a: {
-		mode = 1;
-
-		break;
-	}
-	case SDLK_b: {
-		mode = 2;
-
-		break;
-	}
-	case SDLK_c: {
-		mode = 3;
-
-		break;
-	}
-	case SDLK_d: {
-		mode = 4;
-
-		break;
-	}
-	case SDLK_e: {
-		mode = 5;
-
-		break;
-	}
-	case SDLK_f: {
-		mode = 6;
-
-		break;
-	}
+	
 
 		
 	}

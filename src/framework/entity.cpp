@@ -35,9 +35,9 @@ Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float
 
 
 
-void Entity::Render(Shader* raster) {
-	raster->SetMatrix44("u_model", matriu);
-	raster->SetTexture("u_textcara", textura);
+void Entity::Render(sUniformData u_data) {
+	u_data.model = this->matriu;
+	material.Enable(u_data);
 	malla.Render();
 	
 }
