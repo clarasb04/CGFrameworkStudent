@@ -74,7 +74,7 @@ void Application::Render(void)
 	u_data.Ia = this->Ia;
 	u_data.view_proj_matrix = cam->GetViewProjectionMatrix();
 	cara1.Render(u_data);
-	c
+	
 
 	
 	

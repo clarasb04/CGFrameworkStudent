@@ -1,11 +1,12 @@
 // Global variables from the CPU
 uniform mat4 u_model;
 uniform mat4 u_viewprojection;
-unifrom sampler2D u_textura;
-unifrom vec3 u_Ka;
-unifrom vec3 u_Kd;
-unifrom vec3 u_Ks;
-unifrom float u_shinness;
+uniform sampler2D u_textura;
+uniform vec3 u_Ka;
+uniform vec3 u_Kd;
+uniform vec3 u_Ks;
+uniform vec3 u_ia;
+uniform float u_shinness;
 
 
 // Variables to pass to the fragment shader
@@ -35,7 +36,7 @@ void main()
 	
 	// pgonh model ip
 
-	vec3 ip = u_Ka*
+	vec3 ip = u_Ka*u_ia + 1/()*(u_Kd*dot()* +u_Ks*
 
 	// ip en varying
 	v_color_fin = ip;
