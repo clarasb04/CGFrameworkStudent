@@ -41,11 +41,5 @@ public:
 
 };
 
-Material::Material()
-{
-}
 
-Material::~Material()
-{
-}
 

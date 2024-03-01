@@ -18,6 +18,7 @@
 Entity::Entity() {
 	matriu = Matrix44();
 	malla = Mesh();
+	material = Material();
 }
 
 Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float deg) {
@@ -39,6 +40,7 @@ void Entity::Render(sUniformData u_data) {
 	u_data.model = this->matriu;
 	material.Enable(u_data);
 	malla.Render();
+	material.Disable();
 	
 }
 

@@ -36,7 +36,20 @@ public:
 	Light l1;
 	Light l2;
 
+
+
+	Mesh cara1_m;
 	Entity cara1;
+
+	sUniformData u_data;
+
+	int mode = 1;
+	int tecla = 1;
+
+	Camera* cam;
+	Shader* raster;
+	Matrix44 model_m;
+	Matrix44 viewproject_m;
 
 	void OnKeyPressed(SDL_KeyboardEvent event);
 	void OnMouseButtonDown(SDL_MouseButtonEvent event);

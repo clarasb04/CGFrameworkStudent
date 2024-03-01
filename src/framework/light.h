@@ -26,10 +26,3 @@ private:
 
 };
 
-Light::Light()
-{
-}
-
-Light::~Light()
-{
-}

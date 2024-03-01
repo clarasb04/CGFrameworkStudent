@@ -8,23 +8,6 @@
 #pragma once
 
 
-//moure aixo a la app.h
-Mesh cara1_m;
-Entity cara1;
-
-sUniformData u_data;
-
-int mode=1;
-int tecla=1;
-
-Camera* cam;
-Shader* raster;
-Matrix44 model_m;
-Matrix44 viewproject_m;
-
-
-
-
 Application::Application(const char* caption, int width, int height)
 {
 	this->window = createWindow(caption, width, height);
@@ -52,7 +35,6 @@ void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
 	//canviar el nom al fitxer quan els fem
-	cara1.material.shader = Shader::Get("shaders/quad.vs", "shaders/quad.fs");
 
 	cam = new Camera();
 	cam->eye = Vector3(0, 0, 2);
@@ -69,6 +51,8 @@ void Application::Init(void)
 
 	cara1_m.LoadOBJ("/meshes/lee.obj");
 	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(3), 0);
+	cara1.material.shader = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
+
 
 	cara1.material.textura = Texture::Get("/textures/lee_color_specular.tga");;
 
@@ -90,7 +74,7 @@ void Application::Render(void)
 	u_data.Ia = this->Ia;
 	u_data.view_proj_matrix = cam->GetViewProjectionMatrix();
 	cara1.Render(u_data);
-	raster->Disable();
+	
 
 	
 	
