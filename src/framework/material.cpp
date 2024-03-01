@@ -21,6 +21,7 @@ void Material::Enable(const sUniformData& u_data) {
 	shader->Enable();
 	this->shader->SetMatrix44("u_viewprojection", u_data.view_proj_matrix);
 	this->shader->SetMatrix44("u_model", u_data.model);
+	this->shader->SetUniform3("u_ia", u_data.Ia);
 	this->shader->SetTexture("u_textura", textura); //mirar si es el punter a la pract anterior
 	this->shader->SetUniform3("u_Ka", Ka);
 	this->shader->SetUniform3("u_Kd", Kd);
