@@ -97,7 +97,14 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 	switch (event.keysym.sym) {
 	case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
-	
+	case SDLK_g: {
+		cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs"), Texture::Get("/textures/lee_color_specular.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f);
+		break;
+	}
+	case SDLK_p: {
+		cara1.material = Material(Shader::Get("shaders/phong.vs", "shaders/phong.fs"), Texture::Get("/textures/lee_color_specular.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 20.0f);
+		break;
+	}
 
 		
 	}
