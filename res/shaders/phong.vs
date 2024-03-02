@@ -2,15 +2,7 @@
 uniform mat4 u_model;
 uniform mat4 u_viewprojection;
 uniform sampler2D u_textura;
-uniform vec3 u_Ka;
-uniform vec3 u_Kd;
-uniform vec3 u_Ks;
-uniform vec3 u_ia;
-uniform float u_shinness;
-uniform vec3 u_light;
-uniform vec3 u_eye;
-uniform vec3 u_is;
-uniform vec3 u_id;
+
 
 
 // Variables to pass to the fragment shader
@@ -38,18 +30,5 @@ void main()
 	// Project the vertex using the model view projection matrix
 	gl_Position = u_viewprojection * vec4(world_position, 1.0); //output of the vertex shader
 	
-	// pgonh model ip
-
-	vec3 L = normalize(u_light - v_world_position);
-	vec3 N = normalize(v_world_normal);
-	vec3 V = normalize(u_eye - v_world_position);
-	vec3 R = reflect(-L,N);
-	float dist = distance(u_light, v_world_position);
-	
-
-	vec3 ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
-
-	// ip en varying
-	v_color_fin = ip;
 
 }
