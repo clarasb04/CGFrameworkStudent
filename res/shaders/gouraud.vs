@@ -7,6 +7,10 @@ uniform vec3 u_Kd;
 uniform vec3 u_Ks;
 uniform vec3 u_ia;
 uniform float u_shinness;
+uniform vec3 u_light;
+uniform vec3 u_eye;
+uniform vec3 u_is;
+uniform vec3 u_id;
 
 
 // Variables to pass to the fragment shader
@@ -36,7 +40,14 @@ void main()
 	
 	// pgonh model ip
 
-	vec3 ip = u_Ka*u_ia + 1/()*(u_Kd*dot()* +u_Ks*
+	vec3 L = normalize(u_light - v_world_position);
+	vec3 N = normalize(v_world_normal);
+	vec3 V = normalize(u_eye - v_world_position);
+	vec3 R = reflect(-L,N);
+	float dist = distance(u_light, v_world_position);
+	
+
+	vec3 ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*dot(L,N)*u_id + u_Ks* pow(dot(R,V), u_shinness)*u_is);
 
 	// ip en varying
 	v_color_fin = ip;

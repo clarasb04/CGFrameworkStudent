@@ -20,9 +20,9 @@ public:
 
 
 	Light();
-	~Light();
+	Light(const Vector3& p, const Vector3& id, const Vector3& is);
 
-private:
+
 
 };
 

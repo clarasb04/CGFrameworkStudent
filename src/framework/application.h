@@ -43,6 +43,7 @@ public:
 
 	sUniformData u_data;
 
+
 	int mode = 1;
 	int tecla = 1;
 

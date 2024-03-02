@@ -14,6 +14,8 @@ struct sUniformData
 	Matrix44 view_proj_matrix;
 	Matrix44 model;
 	Vector3 Ia;
+	Light llum;
+	Vector3 eye;
 
 };
 
@@ -31,7 +33,7 @@ public:
 
 
 	Material();
-	~Material();
+	Material(Shader* shader, Texture* t, const Vector3& ka, const Vector3& kd, const Vector3& ks, float s);
 
 	void Enable(const sUniformData& u_data);
 	void Disable();

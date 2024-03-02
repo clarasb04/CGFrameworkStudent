@@ -8,6 +8,9 @@ Light::Light()
 	Is=0;
 }
 
-Light::~Light()
+Light::Light(const Vector3& p, const Vector3& id, const Vector3& is)
 {
+	this->position = p;
+	this->Id = id;
+	this->Is = is;
 }

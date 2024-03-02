@@ -47,14 +47,16 @@ void Application::Init(void)
 	cam->SetOrthographic(cam->left, cam->right, cam->top, cam->bottom, cam->near_plane, cam->far_plane);
 	cam->LookAt(cam->eye, cam->center, cam->up);
 
-	
+	Ia = Vector3(0.5f, 0.5f, 0.5f);
 
 	cara1_m.LoadOBJ("/meshes/lee.obj");
 	cara1 = Entity(cara1_m, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(3), 0);
-	cara1.material.shader = Shader::Get("shaders/raster.vs", "shaders/raster.fs");
 
 
-	cara1.material.textura = Texture::Get("/textures/lee_color_specular.tga");;
+
+	cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs") , Texture::Get("/textures/lee_color_specular.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f );
+
+	l1 = Light(Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
 
 }
 
@@ -70,9 +72,11 @@ void Application::Render(void)
 
 
 	//tmb s'ha de pujar tots les flags de la interactivitat q calgui al shader
-
+	
 	u_data.Ia = this->Ia;
 	u_data.view_proj_matrix = cam->GetViewProjectionMatrix();
+	u_data.llum = l1;
+	u_data.eye = cam->eye;
 	cara1.Render(u_data);
 	
 
