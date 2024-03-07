@@ -14,8 +14,10 @@ struct sUniformData
 	Matrix44 view_proj_matrix;
 	Matrix44 model;
 	Vector3 Ia;
-	Light llum;
+	Light llum[10];
 	Vector3 eye;
+	Vector3 flags;
+	int n_llums;
 
 };
 
@@ -25,17 +27,19 @@ class Material
 {
 public:
 	Shader* shader;
-	Texture* textura;
+	Texture* textura_s;
+	Texture* textura_n;
 	Vector3 Ka;
 	Vector3 Kd;
 	Vector3 Ks;
 	float shinness;
+	
 
 
 	Material();
-	Material(Shader* shader, Texture* t, const Vector3& ka, const Vector3& kd, const Vector3& ks, float s);
+	Material(Shader* shader, Texture* t_s, Texture* t_n, const Vector3& ka, const Vector3& kd, const Vector3& ks, float s);
 
-	void Enable(const sUniformData& u_data);
+	void Enable(const sUniformData& u_data, int l);
 	void Disable();
 
 

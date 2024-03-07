@@ -35,8 +35,10 @@ public:
 	Vector3 Ia;
 	Light l1;
 	Light l2;
+	Light l3;
+	int num_llums;
 
-
+	Vector3 flags;
 
 	Mesh cara1_m;
 	Entity cara1;

@@ -38,9 +38,20 @@ Entity::Entity(Mesh malla_entr, Vector3 trans, Vector3 rot, Vector3 scale, float
 
 void Entity::Render(sUniformData u_data) {
 	u_data.model = this->matriu;
-	material.Enable(u_data);
-	malla.Render();
+	glDisable(GL_BLEND);
+	if (u_data.n_llums) {
+		material.Enable(u_data, 0);
+		malla.Render();
+	}
+	for (int l = 0; l <= u_data.n_llums; l++) {
+		material.Enable(u_data, l);
+		malla.Render();
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_ONE, GL_ONE);
+	}
 	material.Disable();
+	
+	
 	
 }
 

@@ -25,6 +25,7 @@ Application::Application(const char* caption, int width, int height)
 	this->mouse_pressed_right = false;
 
 	this->framebuffer.Resize(w, h);
+	this->flags = Vector3(0);
 }
 
 Application::~Application()
@@ -54,10 +55,15 @@ void Application::Init(void)
 
 
 
-	cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs") , Texture::Get("/textures/lee_color_specular.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f );
+	cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs") , Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f );
 
-	l1 = Light(Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
-
+	l1 = Light(Vector3(1.0f, 0.0f, 1.0f), Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
+	l2 = Light(Vector3(-1.0, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f));
+	l3 = Light(Vector3(0.0, 0.0f, -1.0f), Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 0.0f, 1.0f));
+	u_data.n_llums = 1;
+	u_data.llum[1] = l2;
+	u_data.llum[2] = l1;
+	u_data.llum[3] = l3;
 }
 
 // Render one frame
@@ -72,11 +78,11 @@ void Application::Render(void)
 
 
 	//tmb s'ha de pujar tots les flags de la interactivitat q calgui al shader
-	
+	u_data.n_llums = num_llums;
 	u_data.Ia = this->Ia;
 	u_data.view_proj_matrix = cam->GetViewProjectionMatrix();
-	u_data.llum = l1;
 	u_data.eye = cam->eye;
+	u_data.flags = flags;
 	cara1.Render(u_data);
 	
 
@@ -98,15 +104,81 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 	case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
 	case SDLK_g: {
-		cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs"), Texture::Get("/textures/lee_color_specular.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f);
+		cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs"), Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f);
 		break;
 	}
 	case SDLK_p: {
-		cara1.material = Material(Shader::Get("shaders/phong.vs", "shaders/phong.fs"), Texture::Get("/textures/lee_color_specular.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 20.0f);
+		cara1.material = Material(Shader::Get("shaders/phong.vs", "shaders/phong.fs"), Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 20.0f);
+		break;
+	}
+	case SDLK_n:{
+		if (flags.z == 0) {
+			flags.z = 1;
+		}
+		else {
+			flags.z = 0;
+		}
+		break;
+	}
+	case SDLK_c: {
+		if (flags.x == 0) {
+			flags.x = 1;
+		}
+		else {
+			flags.x = 0;
+		}
+		break;
+	}
+	case SDLK_s: {
+		if (flags.y == 0) {
+			flags.y = 1;
+		}
+		else {
+			flags.y = 0;
+		}
+		break;
+	}
+	case SDLK_1: {
+		num_llums = 1;
+		break;
+	}
+	case SDLK_2: {
+		num_llums = 2;
+		break;
+	}
+	case SDLK_3: {
+		num_llums = 3;
+		break;
+	}
+	case SDLK_4: {
+		num_llums = 4;
+		break;
+	}
+	case SDLK_5: {
+		num_llums = 5;
+		break;
+	}
+	case SDLK_6: {
+		num_llums = 6;
+		break;
+	}
+	case SDLK_7: {
+		num_llums = 7;
+		break;
+	}
+	case SDLK_8: {
+		num_llums = 8;
+		break;
+	}
+	case SDLK_9: {
+		num_llums = 9;
+		break;
+	}
+	case SDLK_0: {
+		num_llums = 0;
 		break;
 	}
 
-		
 	}
 	
 }

@@ -1,7 +1,7 @@
 // Global variables from the CPU
 uniform mat4 u_model;
 uniform mat4 u_viewprojection;
-uniform sampler2D u_textura;
+uniform sampler2D u_textura_s;
 uniform vec3 u_Ka;
 uniform vec3 u_Kd;
 uniform vec3 u_Ks;
@@ -11,6 +11,7 @@ uniform vec3 u_light;
 uniform vec3 u_eye;
 uniform vec3 u_is;
 uniform vec3 u_id;
+uniform int u_num_llum;
 
 
 // Variables to pass to the fragment shader
@@ -45,9 +46,17 @@ void main()
 	vec3 V = normalize(u_eye - v_world_position);
 	vec3 R = reflect(-L,N);
 	float dist = distance(u_light, v_world_position);
-	
 
-	vec3 ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+	vec3 ip = 0;
+
+	if(u_num_llum==0){
+		vec3 ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+	}
+	else{
+		vec3 ip = 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+	}
+
+	
 
 	// ip en varying
 	v_color_fin = ip;

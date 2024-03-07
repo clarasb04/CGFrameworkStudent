@@ -1,7 +1,7 @@
 // Global variables from the CPU
 uniform mat4 u_model;
 uniform mat4 u_viewprojection;
-uniform sampler2D u_textura;
+
 
 
 
