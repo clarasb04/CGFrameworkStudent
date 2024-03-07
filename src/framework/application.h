@@ -36,6 +36,12 @@ public:
 	Light l1;
 	Light l2;
 	Light l3;
+	Light l4;
+	Light l5;
+	Light l6;
+	Light l7;
+	Light l8;
+	Light l9;
 	int num_llums;
 
 	Vector3 flags;

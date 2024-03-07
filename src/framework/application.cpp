@@ -59,11 +59,24 @@ void Application::Init(void)
 
 	l1 = Light(Vector3(1.0f, 0.0f, 1.0f), Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
 	l2 = Light(Vector3(-1.0, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f));
-	l3 = Light(Vector3(0.0, 0.0f, -1.0f), Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 0.0f, 1.0f));
+	l3 = Light(Vector3(0.0, 0.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 0.0f, 1.0f));
+	l4 = Light(Vector3(0.0, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+	l5 = Light(Vector3(0.0, -1.0f, -1.0f), Vector3(1.0f, 0.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f));
+	l6 = Light(Vector3(1.0, 0.0f, -1.0f), Vector3(0.0f, 1.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+	l7 = Light(Vector3(1.0, 1.0f, -1.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f));
+	l8 = Light(Vector3(0.0, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 0.0f), Vector3(0.0f, 1.0f, 1.0f));
+	l9 = Light(Vector3(-1.0,- 1.0f, -1.0f), Vector3(1.0f, 0.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f));
 	u_data.n_llums = 1;
-	u_data.llum[1] = l2;
-	u_data.llum[2] = l1;
+	u_data.llum[1] = l1;
+	u_data.llum[2] = l2;
 	u_data.llum[3] = l3;
+	u_data.llum[4] = l4;
+	u_data.llum[5] = l5;
+	u_data.llum[6] = l6;
+	u_data.llum[7] = l7;
+	u_data.llum[8] = l8;
+	u_data.llum[9] = l9;
+	
 }
 
 // Render one frame
@@ -93,7 +106,7 @@ void Application::Render(void)
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-	time += seconds_elapsed; 
+	
 }
 
 //keyboard press event 

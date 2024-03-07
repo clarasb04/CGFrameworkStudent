@@ -21,14 +21,16 @@ void main()
 {
 	// Set the ouput color per pixel
 	vec3 color = texture2D(u_textcara_s, v_uv).xyz;
-
+	vec3 Ks = u_Ks;
+	vec3 Ka = u_Ka;
+	vec3 Kd = u_Kd;
 	if(u_flags.y==1){
-		u_Ks = vec3(texture2D(u_textcara_s, v_uv).a);
-		u_Ka = vec3((u_Ka.x+color.x)/2, (u_Ka.y+color.y)/2, (u_Ka.z+color.z)/2);
+		Ks = vec3(texture2D(u_textcara_s, v_uv).a);
+		Ka = vec3((u_Ka.x+color.x)/2, (u_Ka.y+color.y)/2, (u_Ka.z+color.z)/2);
 	}
 		
 	if(u_flags.x==1){
-		u_Kd = color;
+		Kd = color;
 	}
 	vec3 final_normal = v_world_normal;
 	if(u_flags.z==1){
@@ -46,14 +48,16 @@ void main()
 	vec3 R = reflect(-L,N);
 	float dist = distance(u_light, v_world_position);
 	
+	vec3 ip;
+
 	if(u_num_llum==0){
-		vec3 ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+		 ip = Ka*u_ia + 1/(dist*dist)*(Kd*clamp(dot(L,N),0,1)*u_id + Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
 	}
 	else{
-		vec3 ip = 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+		ip = 1/(dist*dist)*(Kd*clamp(dot(L,N),0,1)*u_id + Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
 	}
 
 	
 
-	gl_FragColor = vec4( ip, 1.0 );
+	gl_FragColor = vec4(ip, 1.0 );
 }

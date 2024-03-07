@@ -47,13 +47,13 @@ void main()
 	vec3 R = reflect(-L,N);
 	float dist = distance(u_light, v_world_position);
 
-	vec3 ip = 0;
+	vec3 ip;
 
 	if(u_num_llum==0){
-		vec3 ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+		ip = u_Ka*u_ia + 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
 	}
 	else{
-		vec3 ip = 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
+		ip = 1/(dist*dist)*(u_Kd*clamp(dot(L,N),0,1)*u_id + u_Ks* pow(clamp(dot(R,V),0,1), u_shinness)*u_is);
 	}
 
 	
