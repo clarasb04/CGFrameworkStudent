@@ -66,7 +66,7 @@ void Application::Init(void)
 	l7 = Light(Vector3(1.0, 1.0f, -1.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f));
 	l8 = Light(Vector3(0.0, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 0.0f), Vector3(0.0f, 1.0f, 1.0f));
 	l9 = Light(Vector3(-1.0,- 1.0f, -1.0f), Vector3(1.0f, 0.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f));
-	u_data.n_llums = 1;
+	num_llums = 1;
 	u_data.llum[1] = l1;
 	u_data.llum[2] = l2;
 	u_data.llum[3] = l3;
@@ -117,11 +117,11 @@ void Application::OnKeyPressed(SDL_KeyboardEvent event)
 	case SDLK_ESCAPE: exit(0); break; // ESC key, kill the app
 
 	case SDLK_g: {
-		cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs"), Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 10.0f);
+		cara1.material = Material(Shader::Get("shaders/gouraud.vs", "shaders/gouraud.fs"), Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.4f), Vector3(0.8f), Vector3(0.5f), 10.0f);
 		break;
 	}
 	case SDLK_p: {
-		cara1.material = Material(Shader::Get("shaders/phong.vs", "shaders/phong.fs"), Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.3f, 0.3f, 0.3f), Vector3(0.8f, 0.8f, 0.8f), Vector3(0.5f, 0.5f, 0.5f), 20.0f);
+		cara1.material = Material(Shader::Get("shaders/phong.vs", "shaders/phong.fs"), Texture::Get("/textures/lee_color_specular.tga"), Texture::Get("/textures/lee_normal.tga"), Vector3(0.3f), Vector3(0.9f), Vector3(0.5f), 20.0f);
 		break;
 	}
 	case SDLK_n:{

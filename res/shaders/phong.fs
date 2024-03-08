@@ -26,7 +26,6 @@ void main()
 	vec3 Kd = u_Kd;
 	if(u_flags.y==1){
 		Ks = vec3(texture2D(u_textcara_s, v_uv).a);
-		Ka = vec3((u_Ka.x+color.x)/2, (u_Ka.y+color.y)/2, (u_Ka.z+color.z)/2);
 	}
 		
 	if(u_flags.x==1){
