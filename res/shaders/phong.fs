@@ -16,6 +16,7 @@ uniform sampler2D u_textcara_s;
 uniform sampler2D u_textcara_n;
 uniform vec3 u_flags;
 uniform int u_num_llum;
+uniform mat4 u_model;
 
 void main()
 {
@@ -37,8 +38,10 @@ void main()
 	if(u_flags.z==1){
 		vec3 normals = texture2D(u_textcara_n, v_uv).xyz;
 		vec3 comp_normals = vec3((normals.x-0.5)*2, (normals.y-0.5)*2, (normals.z-0.5)*2);
+		vec3 world_nomal = (u_model * vec4(comp_normals.xyz, 0.0)).xyz;
 		float mix_factor = 0.5;
-		final_normal = mix(v_world_normal, comp_normals, mix_factor);
+		final_normal = mix(v_world_normal, world_nomal, mix_factor);
+
 	}
 
 
