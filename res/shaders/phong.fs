@@ -30,7 +30,9 @@ void main()
 		
 	if(u_flags.x==1){
 		Kd = color;
+		Ka = u_Ka * color;
 	}
+
 	vec3 final_normal = v_world_normal;
 	if(u_flags.z==1){
 		vec3 normals = texture2D(u_textcara_n, v_uv).xyz;
